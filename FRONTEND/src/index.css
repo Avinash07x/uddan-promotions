@@ -1,0 +1,120 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+/* Tailwind Core */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================= ROOT ================= */
+:root {
+  --background: 232 47% 4%;
+  --foreground: 210 40% 98%;
+
+  --border: 232 30% 14%;
+
+  --primary: 32 96% 56%;
+  --secondary: 232 36% 14%;
+
+  --cyan: 188 95% 54%;
+  --violet: 262 78% 65%;
+
+  --radius: 0.75rem;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+}
+
+/* ================= BASE ================= */
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    -webkit-font-smoothing: antialiased;
+    cursor: none;
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* in index.css */
+  html.has-scroll-smooth {
+    overflow: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+}
+
+/* ================= COMPONENTS ================= */
+@layer components {
+
+  /* Button */
+  .btn {
+    @apply px-5 py-2.5 rounded-lg font-medium text-white;
+    background: linear-gradient(120deg, hsl(var(--primary)), orange);
+    transition: all 0.3s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px hsl(var(--primary) / 0.35);
+  }
+
+  /* Glass Card */
+  .glass {
+    @apply rounded-xl border;
+    background: hsl(var(--secondary) / 0.5);
+    backdrop-filter: blur(12px);
+  }
+
+  /* Card Hover */
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px hsl(var(--primary) / 0.3);
+  }
+}
+
+/* ================= UTILITIES ================= */
+@layer utilities {
+
+  /* Gradient Text */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg,
+        hsl(var(--primary)),
+        hsl(var(--cyan)));
+  }
+
+  /* Warm Gradient */
+  .text-gradient-warm {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg,
+        orange,
+        hsl(var(--primary)));
+  }
+
+  /* Cool Gradient */
+  .text-gradient-cool {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg,
+        hsl(var(--cyan)),
+        hsl(var(--violet)));
+  }
+
+}
