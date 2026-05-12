@@ -5,27 +5,10 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const cities = [
-  "Amsterdam",
-  "Copenhagen",
-  "Dubai",
-  "Dublin",
-  "Frankfurt",
-  "Geneva",
-  "Hong Kong",
-  "London",
-  "Luxembourg City",
-  "Munich",
-  "New York City",
-  "Oslo",
-  "Paris",
-  "San Francisco",
-  "Singapore",
-  "Stockholm",
-  "Sydney",
-  "Thailand",
-  "Tokyo",
-  "Toronto",
-  "Zurich",
+  "Amsterdam","Copenhagen","Dubai","Dublin","Frankfurt","Geneva",
+  "Hong Kong","London","Luxembourg City","Munich","New York City",
+  "Oslo","Paris","San Francisco","Singapore","Stockholm",
+  "Sydney","Thailand","Tokyo","Toronto",
 ];
 
 const services = ["App Dev", "Marketing", "Software", "Web Design"];
@@ -33,110 +16,177 @@ const services = ["App Dev", "Marketing", "Software", "Web Design"];
 export default function LocalServicePages() {
   const sectionRef = useRef(null);
   const cardRefs = useRef([]);
+  const serviceRefs = useRef([]);
 
+  // reset refs
+  cardRefs.current = [];
+  serviceRefs.current = [];
+
+  /* ================= SCROLL ================= */
   useEffect(() => {
-    const cards = cardRefs.current;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        cardRefs.current,
+        { opacity: 0, y: 60 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.07,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 85%",
+          },
+        }
+      );
+    }, sectionRef);
 
-    gsap.fromTo(
-      cards,
-      {
-        opacity: 0,
-        y: 40,
-        scale: 0.95,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.8,
-        ease: "power3.out",
-        stagger: 0.05,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-        },
-      }
-    );
-
-    gsap.fromTo(
-      ".section-title",
-      { opacity: 0, y: 20 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 85%",
-        },
-      }
-    );
+    return () => ctx.revert();
   }, []);
+
+  /* ================= HOVER ================= */
+  const handleEnter = (i) => {
+    const data = serviceRefs.current[i];
+    if (!data) return;
+
+    const { container, items } = data;
+
+    gsap.killTweensOf([container, items]);
+
+    // expand height
+    gsap.to(container, {
+      height: 85,
+      duration: 0.35,
+      ease: "power2.out",
+    });
+
+    // items bottom -> up
+    gsap.fromTo(
+      items,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        stagger: 0.08,
+        duration: 0.4,
+        ease: "power3.out",
+        delay: 0.1,
+      }
+    );
+  };
+
+  const handleLeave = (i) => {
+    const data = serviceRefs.current[i];
+    if (!data) return;
+
+    const { container, items } = data;
+
+    gsap.killTweensOf([container, items]);
+
+    // items down
+    gsap.to(items, {
+      opacity: 0,
+      y: 40,
+      duration: 0.25,
+      ease: "power2.inOut",
+    });
+
+    // collapse
+    gsap.to(container, {
+      height: 0,
+      duration: 0.3,
+      ease: "power2.inOut",
+      delay: 0.1,
+    });
+  };
 
   return (
     <section
       ref={sectionRef}
-      className="py-24 bg-gradient-to-br from-[#0F172A] via-[#111827] to-[#0B1220] text-white"
+      className="py-24 bg-[#0B1220] text-white relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-6">
+      {/* glow */}
+      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-cyan-500/10 blur-[140px]" />
 
-        {/* Heading */}
-        <div className="text-center mb-16 section-title">
-          <h2 className="text-4xl md:text-5xl font-bold">
-            Local Service <span className="text-cyan-400">Landing Pages</span>
+      <div className="max-w-7xl mx-auto px-5">
+
+        {/* heading */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold">
+            Global <span className="text-cyan-400">Service Cities</span>
           </h2>
-          <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
-            Explore deep-dive pages tailored to each market’s search behaviour,
-            regulations and customer expectations. Every location page includes
-            city-specific SEO research, case studies and testimonials.
-          </p>
         </div>
 
-        {/* Grid */}
+        {/* grid */}
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
           {cities.map((city, i) => (
             <div
-              key={i}
-              ref={(el) => (cardRefs.current[i] = el)}
-              className="group bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-md hover:bg-white/10 transition-all duration-300 cursor-pointer"
+              key={city}
+              ref={(el) => el && cardRefs.current.push(el)}
+              onMouseEnter={() => handleEnter(i)}
+              onMouseLeave={() => handleLeave(i)}
+              className="group h-[400px] relative rounded-2xl overflow-hidden cursor-pointer bg-white/5 border border-white/10 backdrop-blur-xl hover:border-cyan-400/40 hover:shadow-[0_0_40px_rgba(34,211,238,0.15)] transition-all duration-300"
             >
-              {/* City Name */}
-              <h3 className="text-lg font-semibold group-hover:text-cyan-400 transition">
-                {city}
-              </h3>
 
-              {/* Services */}
-              <div className="mt-3 flex flex-wrap gap-2">
-                {services.map((s, idx) => (
-                  <span
-                    key={idx}
-                    className="text-xs px-2 py-1 rounded-full bg-white/10 text-gray-300 group-hover:bg-cyan-500/20 group-hover:text-cyan-300 transition"
-                  >
-                    {s}
-                  </span>
-                ))}
+              {/* IMAGE */}
+              <div className="absolute inset-0">
+                <img
+                  src={`https://source.unsplash.com/600x800/?${city}`}
+                  alt={city}
+                  className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
               </div>
 
-              {/* Hover Line */}
-              <div className="mt-4 h-[2px] w-0 group-hover:w-full bg-cyan-400 transition-all duration-300"></div>
+              {/* CITY BADGE */}
+              <div className="absolute top-4 left-4 z-10 text-xs bg-black/40 px-3 py-1 rounded">
+                🌍 {city}
+              </div>
+
+              {/* CONTENT */}
+              <div className="absolute bottom-0 left-0 w-full p-5 z-10">
+
+                <h3 className="text-lg font-semibold mb-2 group-hover:text-cyan-400">
+                  {city}
+                </h3>
+
+                {/* SERVICES */}
+                <div
+                  ref={(el) => {
+                    if (!serviceRefs.current[i]) {
+                      serviceRefs.current[i] = { items: [], container: null };
+                    }
+                    serviceRefs.current[i].container = el;
+                  }}
+                  className="overflow-hidden h-[0px]"
+                >
+                  {services.map((s, idx) => (
+                    <p
+                      key={idx}
+                      ref={(el) => {
+                        if (!serviceRefs.current[i]) {
+                          serviceRefs.current[i] = { items: [], container: null };
+                        }
+                        serviceRefs.current[i].items[idx] = el;
+                      }}
+                      className="text-sm text-gray-300 opacity-0 translate-y-10"
+                    >
+                      • {s}
+                    </p>
+                  ))}
+                </div>
+
+              </div>
+
+              {/* glow border */}
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-500 border border-cyan-400/20" />
+
             </div>
           ))}
+
         </div>
-
-        {/* CTA Section */}
-        {/* <div className="mt-20 text-center">
-          <h3 className="text-2xl md:text-3xl font-semibold">
-            Cities we serve globally
-          </h3>
-          <p className="text-gray-400 mt-2">
-            Don’t see your city? We work globally—let’s talk.
-          </p>
-
-          <button className="mt-6 px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-600 transition font-medium shadow-lg shadow-cyan-500/20">
-            Contact Us
-          </button>
-        </div> */}
       </div>
     </section>
   );

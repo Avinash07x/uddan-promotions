@@ -6,21 +6,23 @@ import {
 import { useEffect, useRef, useState } from "react";
 
 const stats = [
-  {
-    number: 4.2,
-    suffix: "x",
-    label: "Average engagement uplift",
+    {
+    number: 120,
+    display: "120+",
+    label: "High-converting digital launches delivered across industries",
   },
-  {
-    number: 2500,
-    display: "2.5k+",
-    label: "Qualified leads generated monthly",
-  },
-  {
-    number: 38,
+    {
+    number: 35,
     suffix: "%",
-    label: "Cost per lead reduction",
+    label: "Average reduction in customer acquisition cost within 6 months",
   },
+  {
+    number: 4.9,
+    suffix: "/5",
+    label: "Client satisfaction score from funded startups to enterprises",
+  },
+
+
 ];
 
 export default function Stats() {

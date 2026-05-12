@@ -34,7 +34,10 @@
   body {
     background-color: hsl(var(--background));
     -webkit-font-smoothing: antialiased;
-    cursor: none;
+    /* cursor: none; */
+    height: 100%;
+    position: relative;
+    overflow-x: hidden;
     color: hsl(var(--foreground));
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;

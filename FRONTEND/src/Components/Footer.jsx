@@ -1,216 +1,574 @@
-import React from "react";
-import { Send } from "lucide-react";
-import Logo from "../assets/uddan1.png";
+import React, {
+  useEffect,
+  useState,
+} from "react";
 
-/* 🔥 Reusable underline class */
-const linkClass =
-  "relative inline-block text-white/60 hover:text-cyan-400 transition duration-300 after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[1px] after:bg-cyan-400 after:scale-x-0 after:origin-left after:transition-transform after:duration-[2000ms] hover:after:scale-x-100";
+import {
+  Link,
+  useLocation,
+} from "react-router-dom";
 
-const certifications = [
-  "ISO 9001:2015",
-  "MSME Registered",
-  "NASSCOM Community",
-  "Startup India",
-];
-
-const locations = [
-  {
-    name: "Bikaner",
-    link: "https://www.google.com/maps?q=Bikaner+Rajasthan",
-  },
-  {
-    name: "Jaipur",
-    link: "https://www.google.com/maps?q=Jaipur+Rajasthan",
-  },
-  {
-    name: "Mumbai",
-    link: "https://www.google.com/maps?q=Mumbai+Maharashtra",
-  },
-  {
-    name: "EU (Italy)",
-    link: "https://www.google.com/maps?q=Italy",
-  },
-];
+const API =
+  "http://localhost:5000";
 
 const Footer = () => {
+  const location = useLocation();
+
+  const [info, setInfo] =
+    useState(null);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  /* FETCH COMPANY INFO */
+
+  useEffect(() => {
+    fetchCompanyInfo();
+  }, []);
+
+  const fetchCompanyInfo =
+    async () => {
+      try {
+        const res = await fetch(
+          `${API}/api/company-info`
+        );
+
+        const data =
+          await res.json();
+
+        if (data.success) {
+          setInfo(data.info);
+        }
+      } catch (error) {
+        console.log(
+          "Footer API Error:",
+          error
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+  /* ACTIVE LINK */
+
+  const isActive = (path) =>
+    location.pathname === path;
+
+  const linkClass = (path) =>
+    `group relative inline-block transition-all duration-300 pb-1 whitespace-nowrap
+    ${
+      isActive(path)
+        ? "text-cyan-400 font-bold"
+        : "text-white/60 hover:text-cyan-400"
+    }`;
+
+  /* SCROLL TOP */
+
+  const handleScrollTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  /* LOADING */
+
+  if (loading) {
+    return (
+      <footer className="bg-[#070d1a] py-20 text-center text-white">
+        Loading Footer...
+      </footer>
+    );
+  }
+
   return (
     <footer className="border-t border-white/10 bg-[#070d1a] relative overflow-hidden">
+      {/* GLOW EFFECTS */}
 
-      {/* 🌌 Glow */}
       <div className="absolute -top-40 -left-40 w-[400px] h-[400px] bg-cyan-500/10 blur-[120px]" />
+
       <div className="absolute -bottom-40 -right-40 w-[400px] h-[400px] bg-purple-500/10 blur-[120px]" />
 
-      <div className="container mx-auto px-5 md:px-10 pt-20 pb-10 relative">
+      {/* CONTAINER */}
 
-        {/* GRID */}
-        <div className="grid lg:grid-cols-12 gap-10 mb-14">
-
+      <div className="max-w-7xl mx-auto px-5 md:px-10 pt-20 pb-10 relative">
+        <div className="grid gap-12 lg:grid-cols-12 mb-14">
           {/* BRAND */}
+
           <div className="lg:col-span-5">
+            {/* LOGO */}
+
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-lg border border-cyan-400/30 flex items-center justify-center bg-cyan-400/10">
-                <img src={Logo} alt="logo" className="w-8 h-8" />
-              </div>
+              <img
+                src={
+                  info?.logo
+                    ? `${API}${info.logo}`
+                    : "/placeholder.png"
+                }
+                alt="logo"
+                className="w-10 h-10 rounded-md"
+              />
+
               <div>
-                <p className="text-white font-semibold text-lg">
-                  Uddan <span className="text-cyan-400">Promotions</span>
-                </p>
-                <p className="text-xs text-white/40 uppercase">
-                  Digital Growth Agency
-                </p>
+                <h3 className="text-white font-semibold text-lg leading-tight">
+                  {info?.companyName ||
+                    "Company Name"}
+
+                  <span className="text-cyan-400">
+                    {" "}
+                    {info?.tagline ||
+                      "Promotion"}
+                  </span>
+                </h3>
               </div>
             </div>
+
+            {/* DESCRIPTION */}
 
             <p className="text-white/60 text-sm leading-relaxed mb-5 max-w-md">
-              We design, build and grow digital experiences that help ambitious
-              teams outperform their targets across India & EU.
+              {info?.description ||
+                "We design, build and scale modern digital experiences for ambitious brands."}
             </p>
 
-            <p className="text-xs text-white/40 mb-3">
-              CIN: U72900RJ2017PTC059869
-            </p>
+            {/* COMPANY INFO */}
 
-            <p className="text-xs text-white/40 mb-3">
-              Mon–Fri: 9:00–18:00 IST · 24×7 support for retainers
-            </p>
+            <div className="text-xs text-white/40 space-y-2 mb-5">
+              {info?.cin && (
+                <p>
+                  CIN: {info.cin}
+                </p>
+              )}
 
-            {/* 📍 Locations */}
-            <div className="flex flex-wrap gap-2 text-sm mb-5">
-              {locations.map((loc, i) => (
+              {info?.workingHours && (
+                <p>
+                  {
+                    info.workingHours
+                  }
+                </p>
+              )}
+            </div>
+
+            {/* LOCATIONS */}
+
+            <div className="flex flex-wrap gap-3 text-sm text-white/60 mb-5">
+              {info?.locations &&
+                info.locations.length >
+                  0 ? (
+                info.locations.map(
+                  (
+                    loc,
+                    index
+                  ) => (
+                    <a
+                      key={index}
+                      href={
+                        loc.mapLink
+                      }
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:text-cyan-400 transition"
+                    >
+                      {loc.name}
+                    </a>
+                  )
+                )
+              ) : (
+                <>
+                  <span>
+                    Jaipur
+                  </span>
+
+                  <span>
+                    Mumbai
+                  </span>
+
+                  <span>
+                    Global Delivery
+                  </span>
+                </>
+              )}
+            </div>
+
+            {/* CERTIFICATIONS */}
+
+            <div className="flex flex-wrap gap-2 mb-5">
+              {info?.certifications &&
+              info.certifications
+                .length > 0 ? (
+                info.certifications.map(
+                  (
+                    c,
+                    index
+                  ) => (
+                    <span
+                      key={index}
+                      className="text-[11px] px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/50"
+                    >
+                      {c}
+                    </span>
+                  )
+                )
+              ) : (
+                <>
+                  <span className="text-[11px] px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/50">
+                    ISO Certified
+                  </span>
+
+                  <span className="text-[11px] px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/50">
+                    Startup India
+                  </span>
+                </>
+              )}
+            </div>
+
+            {/* CONTACT */}
+
+            <div className="text-sm text-white/60 space-y-2">
+              {info?.phone && (
+                <p>
+                  📞{" "}
+                  <a
+                    href={`tel:${info.phone}`}
+                    className="hover:text-cyan-400 transition"
+                  >
+                    {info.phone}
+                  </a>
+                </p>
+              )}
+
+              {info?.email && (
+                <p>
+                  ✉️{" "}
+                  <a
+                    href={`mailto:${info.email}`}
+                    className="hover:text-cyan-400 transition"
+                  >
+                    {info.email}
+                  </a>
+                </p>
+              )}
+            </div>
+
+            {/* SOCIAL LINKS */}
+
+            <div className="flex flex-wrap items-center gap-4 mt-6">
+              {info?.facebook && (
                 <a
-                  key={i}
-                  href={loc.link}
+                  href={
+                    info.facebook
+                  }
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className={linkClass}
+                  rel="noreferrer"
+                  className="text-white/60 hover:text-cyan-400 transition"
                 >
-                  {loc.name}
-                  {i !== locations.length - 1 && " •"}
+                  Facebook
                 </a>
-              ))}
-              <span className="text-white/40"> • Global Delivery</span>
-            </div>
+              )}
 
-            {/* Certifications */}
-            <div className="flex flex-wrap gap-2 mb-6">
-              {certifications.map((c) => (
-                <span
-                  key={c}
-                  className="text-[11px] px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/50"
-                >
-                  {c}
-                </span>
-              ))}
-            </div>
-
-            {/* Contact */}
-            <div className="text-sm text-white/60 space-y-1">
-              <p>
-                📞{" "}
-                <a href="tel:+918619036818" className={linkClass}>
-                  +91-8619036818
-                </a>
-              </p>
-              <p>
-                ✉️{" "}
+              {info?.instagram && (
                 <a
-                  href="mailto:contact@uddanpromotions.com"
-                  className={linkClass}
+                  href={
+                    info.instagram
+                  }
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-white/60 hover:text-cyan-400 transition"
                 >
-                  contact@uddanpromotions.com
+                  Instagram
                 </a>
-              </p>
+              )}
+
+              {info?.linkedin && (
+                <a
+                  href={
+                    info.linkedin
+                  }
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-white/60 hover:text-cyan-400 transition"
+                >
+                  LinkedIn
+                </a>
+              )}
+
+              {info?.youtube && (
+                <a
+                  href={
+                    info.youtube
+                  }
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-white/60 hover:text-cyan-400 transition"
+                >
+                  YouTube
+                </a>
+              )}
             </div>
           </div>
 
           {/* NAVIGATION */}
+
           <div className="lg:col-span-2">
             <h4 className="text-xs uppercase tracking-[0.18em] text-white font-semibold mb-4">
               Navigation
             </h4>
+
             <ul className="space-y-2 text-sm">
               {[
-                "Home",
-                "Solutions",
-                "About",
-                "Insights",
-                "Industries",
-                "Playbooks",
+                {
+                  name: "Home",
+                  path: "/",
+                },
+
+                {
+                  name: "Services",
+                  path:
+                    "/services",
+                },
+
+                {
+                  name: "About",
+                  path:
+                    "/about/about-us",
+                },
+
+                {
+                  name: "Insights",
+                  path:
+                    "/resources/insights-blog",
+                },
+
+                {
+                  name:
+                    "Industries",
+                  path:
+                    "/industries",
+                },
+
+                {
+                  name:
+                    "Playbooks",
+                  path:
+                    "/resources/playbooks",
+                },
               ].map((item) => (
-                <li key={item}>
-                  <a href="#" className={linkClass}>
-                    {item}
-                  </a>
+                <li key={item.name}>
+                  <Link
+                    to={item.path}
+                    onClick={
+                      handleScrollTop
+                    }
+                    className={linkClass(
+                      item.path
+                    )}
+                  >
+                    {item.name}
+
+                    <span
+                      className={`absolute left-0 -bottom-1 h-[2px] bg-cyan-400 transition-all duration-300
+                      ${
+                        isActive(
+                          item.path
+                        )
+                          ? "w-full"
+                          : "w-0 group-hover:w-full"
+                      }`}
+                    />
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* SOLUTIONS */}
+          {/* CORE SOLUTIONS */}
+
           <div className="lg:col-span-2">
             <h4 className="text-xs uppercase tracking-[0.18em] text-white font-semibold mb-4">
               Core Solutions
             </h4>
-            <ul className="space-y-2 text-sm">
+
+            <ul className="space-y-3 text-sm">
               {[
-                "Web Development",
-                "Custom Platforms",
-                "Mobile Apps",
-                "Digital Marketing",
-                "E-commerce Growth",
-                "Automation & DevOps",
+                {
+                  name:
+                    "Web Development",
+                  path:
+                    "/solutions/web-design-development",
+                },
+
+                {
+                  name:
+                    "Mobile Apps",
+                  path:
+                    "/solutions/mobile-apps-native-hybrid",
+                },
+
+                {
+                  name:
+                    "Custom Platforms",
+                  path:
+                    "/solutions/custom-web-software",
+                },
+
+                {
+                  name:
+                    "Digital Marketing",
+                  path:
+                    "/solutions/digital-marketing",
+                },
+
+                {
+                  name:
+                    "Commerce RevOps",
+                  path:
+                    "/solutions/commerce-revops-pods",
+                },
+
+                {
+                  name:
+                    "Cloud & DevOps",
+                  path:
+                    "/solutions/cloud-devops-engineering",
+                },
+
+                {
+                  name:
+                    "Cyber Security",
+                  path:
+                    "/solutions/cyber-security-mdr",
+                },
+
+                {
+                  name:
+                    "Automation & AI",
+                  path:
+                    "/solutions/ai-automation-pods",
+                },
+
+                {
+                  name:
+                    "Personal AI",
+                  path:
+                    "/personal-ai",
+                },
               ].map((item) => (
-                <li key={item}>
-                  <a href="#" className={linkClass}>
-                    {item}
-                  </a>
+                <li key={item.name}>
+                  <Link
+                    to={item.path}
+                    onClick={
+                      handleScrollTop
+                    }
+                    className={`group relative inline-block transition-all duration-300 pb-1 whitespace-nowrap
+                    ${
+                      isActive(
+                        item.path
+                      )
+                        ? "text-cyan-400 font-bold"
+                        : "text-white/60 hover:text-cyan-400"
+                    }`}
+                  >
+                    {item.name}
+
+                    <span
+                      className={`absolute left-0 -bottom-1 h-[2px] bg-cyan-400 transition-all duration-300
+                      ${
+                        isActive(
+                          item.path
+                        )
+                          ? "w-full"
+                          : "w-0 group-hover:w-full"
+                      }`}
+                    />
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* NEWSLETTER */}
+          {/* RIGHT SECTION */}
+
           <div className="lg:col-span-3">
             <h4 className="text-xs uppercase tracking-[0.18em] text-white font-semibold mb-4">
-              Stay Ahead
+              Let’s Build Together
             </h4>
 
-            <p className="text-sm text-white/60 mb-4">
-              Get the latest digital growth strategies and tech insights.
+            <p className="text-sm text-white/60 mb-4 leading-relaxed">
+              We craft modern
+              digital experiences,
+              scalable web
+              solutions, and
+              growth-driven
+              strategies for
+              ambitious brands.
             </p>
 
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                alert("Subscribed 🚀");
-                e.target.reset();
-              }}
-              className="flex gap-2"
-            >
-              <input
-                type="email"
-                required
-                placeholder="Email address..."
-                className="h-11 w-full rounded-lg bg-white/5 border border-white/10 px-4 text-white outline-none focus:border-cyan-400"
-              />
+            <div className="space-y-3 text-sm text-white/70">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+                Creative UI/UX
+                Design
+              </div>
 
-              <button
-                type="submit"
-                className="h-11 px-4 rounded-lg bg-cyan-400 text-black flex items-center justify-center hover:scale-105 transition"
-              >
-                <Send className="w-4 h-4" />
-              </button>
-            </form>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+                Modern Web
+                Development
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+                SEO & Growth
+                Marketing
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+                AI Automation
+                Solutions
+              </div>
+            </div>
           </div>
         </div>
 
         {/* BOTTOM */}
-        <div className="pt-8 border-t border-white/10 flex justify-center items-center gap-4 text-sm text-white/50">
-          <p>© 2026 Uddan Promotions Pvt. Ltd.</p>
 
-          <div className="flex items-center justify-center gap-5">
-            <a href="#" className={linkClass}>Privacy</a>
-            <a href="#" className={linkClass}>Terms</a>
+        <div className="pt-8 border-t border-white/10 flex flex-col items-center justify-center gap-4 text-sm text-white/50 text-center">
+          <p>
+            © 2026{" "}
+            {info?.companyName ||
+              "Company"}
+            . All Rights
+            Reserved.
+          </p>
+
+          <div className="flex items-center justify-center gap-5 flex-wrap">
+            <Link
+              to="/privacy"
+              onClick={
+                handleScrollTop
+              }
+              className={linkClass(
+                "/privacy"
+              )}
+            >
+              Privacy
+
+              <span className="absolute left-0 -bottom-1 h-[2px] bg-cyan-400 w-0 group-hover:w-full transition-all duration-300" />
+            </Link>
+
+            <Link
+              to="/terms"
+              onClick={
+                handleScrollTop
+              }
+              className={linkClass(
+                "/terms"
+              )}
+            >
+              Terms
+
+              <span className="absolute left-0 -bottom-1 h-[2px] bg-cyan-400 w-0 group-hover:w-full transition-all duration-300" />
+            </Link>
           </div>
         </div>
       </div>

@@ -17,28 +17,25 @@ export default {
       },
 
       animation: {
-        // Testimonials
-        marquee: "marquee 35s linear infinite",
-        "marquee-reverse": "marqueeReverse 35s linear infinite",
-        "marquee-slow": "marquee 60s linear infinite",
-        "marquee-fast": "marquee 20s linear infinite",
-        "marquee-reverse-slow": "marqueeReverse 60s linear infinite",
-        "marquee-reverse-fast": "marqueeReverse 20s linear infinite",
+        marquee: "marquee 20s linear infinite",
+        "marquee-reverse": "marqueeReverse 20s linear infinite",
 
-        // Tech Stack
-        "marquee-left": "marqueeLeft 30s linear infinite",
-        "marquee-right": "marqueeRight 30s linear infinite",
+        "marquee-slow": "marquee 40s linear infinite",
+        "marquee-fast": "marquee 12s linear infinite",
+
+        "marquee-left": "marqueeLeft 25s linear infinite",
+        "marquee-right": "marqueeRight 25s linear infinite",
       },
 
       keyframes: {
         marquee: {
-          "0%": { transform: "translateX(0%)" },
-          "100%": { transform: "translateX(-50%)" },
+          "0%": { transform: "translate3d(0, 0, 0)" },
+          "100%": { transform: "translate3d(-50%, 0, 0)" },
         },
 
         marqueeReverse: {
-          "0%": { transform: "translateX(-50%)" },
-          "100%": { transform: "translateX(0%)" },
+          "0%": { transform: "translate3d(-50%, 0, 0)" },
+          "100%": { transform: "translate3d(0, 0, 0)" },
         },
 
         marqueeLeft: {

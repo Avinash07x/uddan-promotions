@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import logo from "../../assets/uddan1.png";
+import logo from "../../assets/uddan1.webp";
 
 export function SelectedWork() {
   const projects = [

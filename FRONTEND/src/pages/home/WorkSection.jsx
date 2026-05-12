@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 // ─── Animations ─────────────────────────
 const staggerParent = {
@@ -17,7 +18,10 @@ const fadeUp = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
   },
 };
 
@@ -27,6 +31,7 @@ function TiltCard({ children }) {
 
   function handleMove(e) {
     const rect = e.currentTarget.getBoundingClientRect();
+
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
@@ -34,19 +39,21 @@ function TiltCard({ children }) {
     const rotateY = (x - rect.width / 2) / 18;
 
     setStyle({
-      transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
+      transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
     });
   }
 
   function reset() {
-    setStyle({ transform: "rotateX(0deg) rotateY(0deg)" });
+    setStyle({
+      transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)",
+    });
   }
 
   return (
     <div
       onMouseMove={handleMove}
       onMouseLeave={reset}
-      className="transition-transform duration-300 will-change-transform"
+      className="transition-transform duration-300 will-change-transform h-full"
       style={style}
     >
       {children}
@@ -55,10 +62,12 @@ function TiltCard({ children }) {
 }
 
 // ─── Component ─────────────────────────
-export default function WorkSection({ work }) {
+export default function WorkSection({ work = [] }) {
   return (
-    <section id="work" className="py-24 bg-[#1A202C] md:py-32 relative overflow-hidden">
-
+    <section
+      id="work"
+      className="relative overflow-hidden py-24 md:py-32 bg-gradient-to-b from-[#1e3a8a] to-[#020617]"
+    >
       {/* Top divider */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
@@ -69,17 +78,23 @@ export default function WorkSection({ work }) {
 
         {/* Heading */}
         <div className="mb-14 md:mb-20 text-center">
-          <p className="text-xs tracking-[0.3em] uppercase text-white/40 mb-3">
-            Selected Work
-          </p>
-          <h2 className="text-3xl md:text-5xl font-bold text-white">
+          <div className="container mx-auto px-5 md:px-10 mb-6 flex items-center gap-3">
+            <span className="h-px flex-1 bg-white" />
+            <span className="text-[11px] uppercase tracking-[0.22em] text-white/60 font-semibold text-center whitespace-nowrap">
+              Selected Work
+            </span>
+            <span className="h-px flex-1 bg-white" />
+          </div>
+
+          <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight">
             Systems driving{" "}
             <span className="bg-gradient-to-r from-orange-400 to-pink-500 bg-clip-text text-transparent">
               real impact
             </span>
           </h2>
-          <p className="text-white/50 mt-4 max-w-2xl mx-auto text-sm">
-            A snapshot of platforms our team has shipped across SaaS and growth systems.
+
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/50">
+            A snapshot of projects our team has delivered recently.
           </p>
         </div>
 
@@ -88,72 +103,99 @@ export default function WorkSection({ work }) {
           variants={staggerParent}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true }}
-          className="grid lg:grid-cols-3 gap-6"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid gap-6 lg:grid-cols-3"
         >
-          {work.map((w) => {
+          {work.map((w, index) => {
             const Icon = w.icon;
 
             return (
-              <motion.div key={w.name} variants={fadeUp}>
+              <motion.div
+                key={w.name || index}
+                variants={fadeUp}
+                className="h-full"
+              >
                 <TiltCard>
-                  <div className="group relative rounded-xl p-[1px] bg-[#2D374E] hover:from-orange-400/40 hover:to-pink-500/40 transition-all duration-300">
+                  <div className="group relative h-full rounded-3xl border border-white/10 bg-[#0F172A]/80 backdrop-blur-xl overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:border-orange-400/30 hover:shadow-[0_0_40px_rgba(249,115,22,0.18)]">
 
-                    <div className="bg-[#0F172A]/80 backdrop-blur-xl rounded-xl overflow-hidden border border-white/10 relative h-full">
+                    {/* IMAGE */}
+                    <div className="relative h-56 overflow-hidden">
 
-                      {/* IMAGE / TOP */}
-                      <div className="relative h-52 overflow-hidden">
+                      {/* Gradient BG */}
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-br ${w.gradient} transition duration-700 group-hover:scale-110`}
+                      />
 
-                        {/* Gradient BG */}
-                        <div className={`absolute inset-0 bg-gradient-to-br ${w.gradient} group-hover:scale-110 transition duration-700`} />
+                      {/* Grid Overlay */}
+                      <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:20px_20px]" />
 
-                        {/* Shine Sweep */}
-                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700">
-                          <div className="absolute -left-40 top-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-[1200ms]" />
-                        </div>
-
-                        {/* Grid overlay */}
-                        <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:20px_20px]" />
-
-                        {/* Big image */}
-                        <img src={Icon} alt={w.name} className="w-full h-full object-cover" />
-
-                        {/* Chips */}
-                        <div className="absolute top-4 left-4 flex flex-wrap gap-1.5">
-                          {w.chips.map((c) => (
-                            <span
-                              key={c}
-                              className="text-[12px] font-semibold text-black px-2 py-0.5 rounded bg-white border border-white/10  backdrop-blur"
-                            >
-                              {c}
-                            </span>
-                          ))}
-                        </div>
+                      {/* Shine Effect */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700 overflow-hidden">
+                        <div className="absolute -left-[120%] top-0 h-full w-[80%] rotate-12 bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-[1200ms] group-hover:left-[140%]" />
                       </div>
 
-                      {/* CONTENT */}
-                      <div className="p-7">
-                        <p className="text-[11px] uppercase tracking-[0.18em] text-orange-400 mb-2">
-                          {w.tag}
-                        </p>
+                      {/* Image */}
+                      <img
+                        src={Icon}
+                        alt={w.name}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                      />
 
-                        <h3 className="text-2xl font-bold text-white mb-3">
-                          {w.name}
-                        </h3>
+                      {/* Dark Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#020617]/90 via-[#020617]/20 to-transparent" />
 
-                        <p className="text-sm text-white/60 mb-5 leading-relaxed">
-                          {w.desc}
-                        </p>
-
-                        {/* CTA */}
-                        <span className="inline-flex items-center gap-2 text-sm font-medium text-white group-hover:gap-3 transition-all">
-                          View case study
-                          <ArrowUpRight className="w-4 h-4 group-hover:rotate-45 transition" />
-                        </span>
+                      {/* Chips */}
+                      <div className="absolute top-4 left-4 flex flex-wrap gap-2 z-10">
+                        {w.chips?.map((c, i) => (
+                          <span
+                            key={i}
+                            className="rounded-full border border-white/10 bg-white px-2.5 py-1 text-[11px] font-semibold text-black backdrop-blur"
+                          >
+                            {c}
+                          </span>
+                        ))}
                       </div>
+                    </div>
 
-                      {/* Hover Glow */}
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-orange-500/10 to-pink-500/10" />
+                    {/* CONTENT */}
+                    <div className="flex h-[calc(100%-14rem)] flex-col p-7">
+
+                      {/* TAG */}
+                      <p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-orange-400">
+                        {w.tag}
+                      </p>
+
+                      {/* TITLE */}
+                      <h3 className="mb-3 text-2xl font-bold text-white leading-snug">
+                        {w.name}
+                      </h3>
+
+                      {/* DESCRIPTION */}
+                      <p className="text-sm leading-relaxed text-white/60">
+                        {w.desc}
+                      </p>
+
+                      {/* CTA */}
+                      <div className="mt-auto pt-6">
+                        <Link
+                          to="/about/contact-us#ContactForm"
+                          className="group/link inline-flex items-center gap-2 text-sm font-medium text-white transition-all duration-300 hover:gap-3"
+                        >
+                          <span className="relative">
+                            View case study
+
+                            <span className="absolute -bottom-1 left-0 h-px w-0 bg-orange-400 transition-all duration-300 group-hover/link:w-full" />
+                          </span>
+
+                          <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover/link:rotate-45 group-hover/link:translate-x-0.5" />
+                        </Link>
+                      </div>
+                    </div>
+
+                    {/* Hover Glow */}
+                    <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100">
+                      <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-pink-500/10" />
                     </div>
                   </div>
                 </TiltCard>
