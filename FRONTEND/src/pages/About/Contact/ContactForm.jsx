@@ -40,7 +40,7 @@ export default function ContactForm() {
     fetchCompanyInfo();
   }, []);
 
-  /* ================= FETCH OPTIONS ================= */
+  /*  FETCH OPTIONS  */
 
   const fetchOptions = async () => {
     try {
@@ -56,7 +56,7 @@ export default function ContactForm() {
     }
   };
 
-  /* ================= FETCH COMPANY INFO ================= */
+  /*  FETCH COMPANY INFO  */
 
   const fetchCompanyInfo =
     async () => {
@@ -76,7 +76,7 @@ export default function ContactForm() {
       }
     };
 
-  /* ================= HANDLE CHANGE ================= */
+  /*  HANDLE CHANGE  */
 
   const handleChange = (e) => {
     const {
@@ -95,7 +95,7 @@ export default function ContactForm() {
     });
   };
 
-  /* ================= SUBMIT ================= */
+  /*  SUBMIT  */
 
   const handleSubmit =
     async (e) => {
@@ -151,7 +151,7 @@ export default function ContactForm() {
 
   return (
     <section
-      id="ContactForm"
+      id="contact-form"
       className="bg-[#0B1220] text-white py-20 px-6 md:px-16"
     >
       <div className="max-w-7xl mx-auto">
@@ -173,7 +173,7 @@ export default function ContactForm() {
 
         <div className="grid md:grid-cols-3 gap-8">
 
-          {/* ================= FORM ================= */}
+          {/*  FORM  */}
 
           <form
             onSubmit={
@@ -350,7 +350,7 @@ export default function ContactForm() {
 
           </form>
 
-          {/* ================= CONTACT CARD ================= */}
+          {/*  CONTACT CARD  */}
 
           <div className="bg-[#0f172a] border border-white/10 rounded-2xl p-6 shadow-xl">
 
@@ -499,7 +499,7 @@ export default function ContactForm() {
   );
 }
 
-/* ================= INPUT ================= */
+/*  INPUT  */
 
 function Input({
   label,
@@ -525,7 +525,7 @@ function Input({
   );
 }
 
-/* ================= SELECT ================= */
+/*  SELECT  */
 
 function Select({
   label,

@@ -6,7 +6,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ================= ROOT ================= */
+/*  ROOT  */
 :root {
   --background: 232 47% 4%;
   --foreground: 210 40% 98%;
@@ -25,7 +25,7 @@
   --font-display: 'Space Grotesk', system-ui, sans-serif;
 }
 
-/* ================= BASE ================= */
+/*  BASE  */
 @layer base {
   * {
     border-color: hsl(var(--border));
@@ -60,7 +60,7 @@
   }
 }
 
-/* ================= COMPONENTS ================= */
+/*  COMPONENTS  */
 @layer components {
 
   /* Button */
@@ -93,7 +93,7 @@
   }
 }
 
-/* ================= UTILITIES ================= */
+/*  UTILITIES  */
 @layer utilities {
 
   /* Gradient Text */

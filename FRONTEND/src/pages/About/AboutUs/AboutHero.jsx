@@ -36,7 +36,7 @@ export default function AboutHero() {
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-14 items-center">
 
-        {/* ================= LEFT ================= */}
+        {/*  LEFT  */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -64,18 +64,20 @@ export default function AboutHero() {
 
           {/* CTA */}
           <div className="mt-8 flex gap-4 flex-wrap">
-            <button className="flex items-center gap-2 px-6 py-3 rounded-full bg-blue-500 text-white font-semibold hover:scale-110 transition shadow-lg hover:shadow-blue-500/40">
-              <Zap size={16} />
-              Initiate Project
-            </button>
-
-            <button className="px-6 py-3 rounded-full border border-white/20 hover:bg-white/10 transition">
-              Our Protocol
-            </button>
+            <a href="/about/contact-us#contact-form">
+              <button className="flex items-center gap-2 px-6 py-3 rounded-full bg-blue-500 text-white font-semibold hover:scale-110 transition shadow-lg hover:shadow-blue-500/40">
+                <Zap size={16} />
+                Initiate Project
+              </button>
+            </a>
+            <a href="#evolution" >
+              <button className="px-6 py-3 rounded-full border border-white/20 hover:bg-white/10 transition">
+                Our Protocol
+              </button>
+            </a>
           </div>
         </motion.div>
-
-        {/* ================= RIGHT ================= */}
+        {/*  RIGHT  */}
         <div className="grid grid-cols-2 gap-6">
           {stats.map((s, i) => (
             <StatCard key={i} {...s} delay={i * 0.2} />

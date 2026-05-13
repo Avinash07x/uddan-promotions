@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Server, Activity, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const badges = [
   "10x faster release cycles",
@@ -31,7 +32,7 @@ export default function AutomationHero() {
       />
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-14 items-center">
-        
+
         {/*  LEFT  */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
@@ -87,13 +88,15 @@ export default function AutomationHero() {
 
           {/* CTA */}
           <div className="mt-8 flex gap-4 flex-wrap">
-            <button className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:scale-110 transition shadow-lg">
-              Plan a Pipeline Audit
-            </button>
-
-            <button className="px-6 py-3 rounded-full border border-white/30 hover:bg-white/10 transition">
-              Explore Reliability Wins
-            </button>
+            <Link to="/about/contact-us#contact-form" >
+              <button className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:scale-110 transition shadow-lg">
+                Plan a Pipeline Audit
+              </button>
+            </Link>
+            <Link to="/" >
+              <button className="px-6 py-3 rounded-full border border-white/30 hover:bg-white/10 transition">
+                Explore Reliability Wins
+              </button></Link>
           </div>
         </motion.div>
 

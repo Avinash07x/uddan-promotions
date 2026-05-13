@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 
 import A1 from "../../assets/1.webp";
+import { Link } from "react-router-dom";
 
 export default function HeroServices() {
   const sectionRef = useRef(null);
@@ -215,13 +216,16 @@ export default function HeroServices() {
             variants={bottomItem}
             className="mt-10 flex flex-wrap gap-4"
           >
-            <button className="px-7 py-3 rounded-full bg-cyan-400 text-black font-semibold hover:scale-105 transition duration-300 shadow-lg hover:shadow-cyan-400/40">
-              Book a strategy call
-            </button>
-
-            <button className="px-7 py-3 rounded-full border border-white/15 bg-white/5 backdrop-blur-md hover:bg-white/10 hover:scale-105 transition duration-300">
-              Explore our approach
-            </button>
+            <Link to="/social-media" >
+              <button className="px-7 py-3 rounded-full bg-cyan-400 text-black font-semibold hover:scale-105 transition duration-300 shadow-lg hover:shadow-cyan-400/40">
+                Book a strategy call
+              </button>
+            </Link>
+            <Link to="/social-media" >
+              <button className="px-7 py-3 rounded-full border border-white/15 bg-white/5 backdrop-blur-md hover:bg-white/10 hover:scale-105 transition duration-300">
+                Explore our approach
+              </button>
+            </Link>
           </motion.div>
         </motion.div>
 

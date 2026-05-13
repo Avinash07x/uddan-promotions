@@ -42,7 +42,7 @@ const createAdmin = async () => {
     // HASH PASSWORD
     const hashedPassword =
       await bcrypt.hash(
-        "itsavinash0@gmail.com",
+        "itsavinash0@gmail.com1",
         10
       );
 
@@ -63,15 +63,6 @@ const createAdmin = async () => {
 
 
 ✅ SUPER ADMIN CREATED
-
-
-
-EMAIL:
-itsavinash0@gmail.com
-
-PASSWORD:
-itsavinash0@gmail.com
-
 
 `);
 

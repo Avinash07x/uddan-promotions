@@ -13,7 +13,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= TIMELINE =================
+//  TIMELINE 
 const timeline = [
   {
     year: "2015",
@@ -42,7 +42,7 @@ const timeline = [
   },
 ];
 
-// ================= PROTOCOLS =================
+//  PROTOCOLS 
 const protocols = [
   {
     title: "Clean Code First",
@@ -76,7 +76,7 @@ const protocols = [
   },
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function Evolution() {
   const sectionRef = useRef(null);
   const itemRef = useRef([]);
@@ -123,12 +123,13 @@ export default function Evolution() {
 
   return (
     <section
+    id="evolution"
       ref={sectionRef}
       className="bg-[#020617] text-white py-24 px-6 md:px-16 overflow-hidden"
     >
       <div className="max-w-6xl mx-auto">
 
-        {/* ================= HEADER ================= */}
+        {/*  HEADER  */}
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-bold">
             The{" "}
@@ -142,7 +143,7 @@ export default function Evolution() {
           </p>
         </div>
 
-        {/* ================= TIMELINE ================= */}
+        {/*  TIMELINE  */}
         <div className="mt-16 relative">
 
           {/* vertical line */}
@@ -181,7 +182,7 @@ export default function Evolution() {
           </div>
         </div>
 
-        {/* ================= PROTOCOLS ================= */}
+        {/*  PROTOCOLS  */}
         <div className="mt-24">
           <h3 className="text-2xl md:text-4xl font-bold text-center">
             Core Protocols

@@ -78,6 +78,7 @@ export default function AICapabilities() {
 
   return (
     <section
+      id="ai-Capabilities"
       ref={sectionRef}
       className="relative bg-[#020617] text-white py-24 px-6 md:px-16 overflow-hidden"
     >

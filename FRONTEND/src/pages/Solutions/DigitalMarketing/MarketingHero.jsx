@@ -5,6 +5,7 @@ import {
   Target,
   Rocket,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const badges = [
   "150% avg. organic lift",
@@ -84,13 +85,16 @@ export default function MarketingHero() {
 
           {/* CTA */}
           <div className="mt-8 flex gap-4 flex-wrap">
-            <button className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:scale-110 transition shadow-lg">
-              Request a Growth Audit
-            </button>
-
-            <button className="px-6 py-3 rounded-full border border-white/30 hover:bg-white/10 transition">
-              See Client Results
-            </button>
+            <Link to="/about/contact-us#contact-form" >
+              <button className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:scale-110 transition shadow-lg">
+                Request a Growth Audit
+              </button>
+              </Link>
+              <Link to="/" >
+                <button className="px-6 py-3 rounded-full border border-white/30 hover:bg-white/10 transition">
+                  See Client Results
+                </button>
+              </Link>
           </div>
         </motion.div>
 
@@ -167,7 +171,7 @@ export default function MarketingHero() {
                   whileHover={{ scale: 1.05 }}
                   className="bg-pink-500/30 p-4 rounded-lg text-xs"
                 >
-                  Top Keywords 
+                  Top Keywords
                 </motion.div>
 
                 {/* CARD 4 */}

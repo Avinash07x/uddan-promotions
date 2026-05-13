@@ -75,7 +75,7 @@ export default function StrategiesServices() {
       : articles.filter((a) => a.category === active);
 
   return (
-    <section className="bg-[#020617] text-white py-24 px-6 md:px-16">
+    <section id="strategies" className="bg-[#020617] text-white py-24 px-6 md:px-16">
       <div className="max-w-6xl mx-auto">
 
         {/*  HEADER  */}

@@ -18,6 +18,7 @@ import testimonialRoutes from "./routes/testimonialRoutes.js";
 import jobRoutes from "./routes/jobRoutes.js";
 import companyInfoRoutes from "./routes/companyInfoRoutes.js";
 import contactOptionsRoutes from "./routes/contactOptionsRoutes.js";
+import applicationRoutes from "./routes/applicationRoutes.js";
 
 /*  APP  */
 const app = express();
@@ -54,6 +55,10 @@ app.use("/api/testimonial", testimonialRoutes);
 app.use("/api/job", jobRoutes);
 app.use("/api/company-info", companyInfoRoutes);
 app.use("/api/contact/options", contactOptionsRoutes);
+app.use(
+  "/api/application",
+  applicationRoutes
+);
 
 /*  ERROR  */
 app.use((err, req, res, next) => {

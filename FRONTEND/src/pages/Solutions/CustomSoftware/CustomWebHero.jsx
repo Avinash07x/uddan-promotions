@@ -6,6 +6,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import appImg from "../../../assets/2.webp";
+import { Link } from "react-router-dom";
 
 const stats = [
   { value: "120+", label: "Projects Delivered" },
@@ -59,9 +60,9 @@ export default function CustomWebHero() {
           </h1>
 
           <p className="mt-6 text-white/70 text-lg max-w-xl">
-           Co-create secure, scalable, and human-centred digital platforms that streamline 
-           operations, delight users, and unlock new revenue streams across every 
-           stakeholder touchpoint.
+            Co-create secure, scalable, and human-centred digital platforms that streamline
+            operations, delight users, and unlock new revenue streams across every
+            stakeholder touchpoint.
           </p>
 
           {/* ✅ Stats */}
@@ -81,13 +82,16 @@ export default function CustomWebHero() {
 
           {/* ✅ CTA */}
           <div className="mt-10 flex gap-4 flex-wrap">
-            <button className="px-6 py-3 rounded-full bg-cyan-400 text-black font-semibold hover:scale-110 transition shadow-lg hover:shadow-cyan-400/40">
-              Book a strategy call
-            </button>
-
-            <button className="px-6 py-3 rounded-full border border-white/20 backdrop-blur-md hover:bg-white/10 hover:scale-105 transition">
-              Explore all services
-            </button>
+            <Link to="/about/contact-us#contact-form" >
+              <button className="px-6 py-3 rounded-full bg-cyan-400 text-black font-semibold hover:scale-110 transition shadow-lg hover:shadow-cyan-400/40">
+                Book a strategy call
+              </button>
+            </Link>
+            <Link to="/services" >
+              <button className="px-6 py-3 rounded-full border border-white/20 backdrop-blur-md hover:bg-white/10 hover:scale-105 transition">
+                Explore all services
+              </button>
+            </Link>
           </div>
 
           {/* ✅ Trust Badges */}

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Star, Smartphone, LineChart, Rocket } from "lucide-react";
 import appImg from "../../../assets/1.webp";
+import { Link } from "react-router-dom";
 
 const stats = [
   { value: "1M+", label: "Secure Installs" },
@@ -59,8 +60,8 @@ export default function Hero() {
           </h2>
 
           <p className="mt-6 text-white/70 text-lg max-w-xl">
-            Partner with a mobile team that blends UX research, engineering and growth 
-            marketing. We design, develop and scale Android and iOS apps that users love and 
+            Partner with a mobile team that blends UX research, engineering and growth
+            marketing. We design, develop and scale Android and iOS apps that users love and
             algorithms recommend.
           </p>
 
@@ -76,13 +77,16 @@ export default function Hero() {
 
           {/* CTA */}
           <div className="mt-8 flex gap-4 flex-wrap">
-            <button className="px-6 py-3 rounded-full bg-cyan-400 text-black font-semibold hover:scale-110 transition shadow-lg hover:shadow-cyan-400/40">
-              Book a Product Workshop
-            </button>
-
-            <button className="px-6 py-3 rounded-full border border-white/20 hover:bg-white/10 transition">
-              View Success Stories
-            </button>
+            <Link to="/about/contact-us#contact-form" >
+              <button className="px-6 py-3 rounded-full bg-cyan-400 text-black font-semibold hover:scale-110 transition shadow-lg hover:shadow-cyan-400/40">
+                Book a Product Workshop
+              </button>
+            </Link>
+            <Link to="/" >
+              <button className="px-6 py-3 rounded-full border border-white/20 hover:bg-white/10 transition">
+                View Success Stories
+              </button>
+            </Link>
           </div>
         </motion.div>
 

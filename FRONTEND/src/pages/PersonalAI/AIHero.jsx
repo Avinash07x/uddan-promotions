@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
+import { Link } from "react-router-dom";
 
 export default function AIHero() {
   const heroRef = useRef(null);
@@ -92,25 +93,28 @@ export default function AIHero() {
           transition={{ delay: 0.6, duration: 0.8 }}
           className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <button className="
+          <a href="/about/contact-us#contact-form">
+            <button className="
             px-6 py-3 rounded-xl
             bg-gradient-to-r from-cyan-400 to-purple-500
             text-black font-semibold
             hover:scale-105 active:scale-95
             transition
           ">
-            Start Your AI Project
-          </button>
-
-          <button className="
+              Start Your AI Project
+            </button>
+          </a>
+          <Link to="#ai-Capabilities" >
+            <button className="
             px-6 py-3 rounded-xl
             border border-white/20
             text-white
             hover:border-cyan-400 hover:text-cyan-400
             transition
           ">
-            Explore Capabilities
-          </button>
+              Explore Capabilities
+            </button>
+          </Link>
         </motion.div>
 
       </div>

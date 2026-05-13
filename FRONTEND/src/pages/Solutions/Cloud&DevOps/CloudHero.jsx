@@ -5,6 +5,7 @@ import {
   Zap,
   DollarSign,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const badges = [
   "200+ workloads migrated",
@@ -80,13 +81,16 @@ export default function CloudHero() {
 
           {/* CTA */}
           <div className="mt-8 flex gap-4 flex-wrap">
-            <button className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:scale-110 transition shadow-lg">
-              Plan Your Migration
-            </button>
-
-            <button className="px-6 py-3 rounded-full border border-white/30 hover:bg-white/10 transition">
-              Explore Cloud Wins
-            </button>
+            <Link to="/about/contact-us#contact-form" >
+              <button className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:scale-110 transition shadow-lg">
+                Plan Your Migration
+              </button>
+            </Link>
+            <Link to="/" >
+              <button className="px-6 py-3 rounded-full border border-white/30 hover:bg-white/10 transition">
+                Explore Cloud Wins
+              </button>
+            </Link>
           </div>
         </motion.div>
 

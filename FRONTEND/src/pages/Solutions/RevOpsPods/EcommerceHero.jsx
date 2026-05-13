@@ -5,6 +5,7 @@ import {
   BarChart3,
   Package,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const badges = [
   "3x GMV growth",
@@ -84,13 +85,16 @@ export default function EcommerceHero() {
 
           {/* CTA */}
           <div className="mt-8 flex gap-4 flex-wrap">
-            <button className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:scale-110 transition shadow-lg">
-              Request a Marketplace Audit
-            </button>
-
-            <button className="px-6 py-3 rounded-full border border-white/30 hover:bg-white/10 transition">
-              View Success Metrics
-            </button>
+            <Link to="/about/contact-us#contact-form" >
+              <button className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:scale-110 transition shadow-lg">
+                Request a Marketplace Audit
+              </button>
+            </Link>
+            <Link to="/" >
+              <button className="px-6 py-3 rounded-full border border-white/30 hover:bg-white/10 transition">
+                View Success Metrics
+              </button>
+            </Link>
           </div>
         </motion.div>
 
@@ -164,7 +168,7 @@ export default function EcommerceHero() {
                   whileHover={{ scale: 1.05 }}
                   className="bg-orange-500/30 p-4 rounded-lg text-xs"
                 >
-                  Top SKUs 
+                  Top SKUs
                 </motion.div>
 
                 <motion.div

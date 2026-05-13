@@ -48,10 +48,12 @@ export default function ContactHero() {
 
           {/* CTA */}
           <div className="flex gap-4 mt-8 flex-wrap">
+            <a href="#contact-form">
             <button className="flex items-center gap-2 px-6 py-3 rounded-full bg-blue-500 hover:bg-blue-600 transition shadow-lg">
               <Send size={16} />
               Share your project
             </button>
+            </a>
 
             <button className="flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 hover:bg-white/10 transition">
               <Calendar size={16} />

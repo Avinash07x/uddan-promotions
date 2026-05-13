@@ -2,14 +2,16 @@ import {
   LayoutDashboard,
   Users,
   ShoppingCart,
+  Logs,
   CreditCard,
+  TableOfContents,
   Activity,
-  Settings,
+  BriefcaseBusiness,
   LogOut,
   Menu,
+  Info,
   ShieldCheck,
   Bell,
-  FileText,
   Briefcase,
   MessageSquare,
   ChevronRight,
@@ -36,6 +38,7 @@ import AdminTestimonials from "./AdminTestimonials";
 import AdminJobs from "./AdminJobs";
 import AdminBlogs from "./AdminBlogs";
 import AdminCompanyInfo from "./AdminCompanyInfo";
+import AdminApplications from "./AdminApplications";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -142,7 +145,7 @@ export default function AdminDashboard() {
     },
 
     {
-      icon: ShieldCheck,
+      icon: Info,
       label: "CompanyInfo",
     },
 
@@ -152,12 +155,12 @@ export default function AdminDashboard() {
     },
 
     {
-      icon: ShoppingCart,
+      icon: Logs,
       label: "Blogs",
     },
 
     {
-      icon: CreditCard,
+      icon: TableOfContents,
       label: "FAQS",
     },
 
@@ -167,8 +170,13 @@ export default function AdminDashboard() {
     },
 
     {
-      icon: Settings,
+      icon: Briefcase,
       label: "Jobs",
+    },
+
+    {
+      icon: BriefcaseBusiness,
+      label: "JobApplications",
     },
   ];
 
@@ -183,7 +191,7 @@ export default function AdminDashboard() {
     },
 
     {
-      icon: FileText,
+      icon: Logs,
       title: "Blog Management",
       desc: "Create, edit and publish SEO blogs.",
       page: "Blogs",
@@ -230,7 +238,7 @@ export default function AdminDashboard() {
     },
 
     {
-      icon: FileText,
+      icon: Logs,
       title: "Blogs Published",
       value: "4",
       color:
@@ -275,6 +283,9 @@ export default function AdminDashboard() {
 
       case "Jobs":
         return <AdminJobs />;
+
+      case "JobApplications":  
+        return <AdminApplications />;
 
       default:
         return (
@@ -585,7 +596,7 @@ export default function AdminDashboard() {
               <div>
 
                 <h2 className="text-3xl font-black bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                  AdminX
+                  Uddan
                 </h2>
 
                 <p className="text-white/40 text-xs mt-1">
@@ -630,8 +641,8 @@ export default function AdminDashboard() {
                       );
                     }}
                     className={`
-                      w-full flex items-center gap-3
-                      px-4 py-3 rounded-2xl
+                      w-full flex items-center gap-2
+                      px-2 py-2 rounded-2xl
                       transition-all duration-300
                       ${
                         activePage ===

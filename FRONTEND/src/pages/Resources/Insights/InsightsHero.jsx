@@ -54,16 +54,6 @@ export default function InsightsHero() {
             crafted for teams scaling across India and beyond.
           </p>
 
-          {/* CTA */}
-          <div className="mt-8 flex gap-4 flex-wrap">
-            <button className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:scale-110 transition shadow-lg">
-              Book a Strategy Call
-            </button>
-
-            <button className="px-6 py-3 rounded-full border border-white/30 hover:bg-white/10 transition">
-              Download Agency Profile
-            </button>
-          </div>
         </motion.div>
 
         {/*  RIGHT  */}

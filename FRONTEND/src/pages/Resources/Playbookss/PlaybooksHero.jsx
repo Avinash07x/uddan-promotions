@@ -118,17 +118,6 @@ export default function PlaybooksHero() {
             ))}
           </div>
 
-          {/* CTA */}
-          <div className="mt-8 flex gap-4 flex-wrap">
-            <button className="flex items-center gap-2 px-6 py-3 rounded-full bg-cyan-400 text-black font-semibold hover:scale-110 transition shadow-lg">
-              <BookOpen size={18} />
-              Browse Playbooks
-            </button>
-
-            <button className="flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 hover:bg-white/10 transition">
-              View Case Studies <ArrowRight size={16} />
-            </button>
-          </div>
         </motion.div>
 
         {/*  RIGHT  */}

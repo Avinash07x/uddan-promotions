@@ -14,6 +14,8 @@ import {
 } from "react-router-dom";
 
 import Lenis from "lenis";
+import ApplyPage from "./pages/About/Careers/ApplyPage";
+import SocialHero from "./pages/SocialMedia/SocialHero";
 
 /* 
    LAZY IMPORTS
@@ -284,7 +286,7 @@ function AppLayout() {
 
   const hideLayout =
     location.pathname ===
-      "/login-admin" ||
+    "/login-admin" ||
     location.pathname.startsWith(
       "/admin"
     );
@@ -339,6 +341,12 @@ function AppLayout() {
               element={<Services />}
             />
 
+            {/* SOCIAL MEDIA */}
+            <Route
+              path="/social-media"
+              element={<SocialHero />}
+            />
+            
             {/* SOLUTIONS */}
             <Route
               path="/solutions/web-design-development"
@@ -423,6 +431,11 @@ function AppLayout() {
             <Route
               path="/about/careers"
               element={<Careers />}
+            />
+
+            <Route
+              path="/apply/:id"
+              element={<ApplyPage />}
             />
 
             <Route

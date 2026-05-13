@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { BookOpen, MessageCircle, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function TechStrategiesHero() {
   const [gradientX, setGradientX] = useState(0);
@@ -68,15 +69,18 @@ export default function TechStrategiesHero() {
           transition={{ delay: 0.4 }}
           className="mt-10 flex justify-center gap-4 flex-wrap"
         >
-          <button className="flex items-center gap-2 px-6 py-3 rounded-full bg-cyan-400 text-black font-semibold hover:scale-110 transition shadow-lg hover:shadow-cyan-400/40">
-            <BookOpen size={18} />
-            Browse Library
-          </button>
-
-          <button className="flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 hover:bg-white/10 hover:scale-105 transition">
-            <MessageCircle size={18} />
-            Consult an Expert
-          </button>
+          <Link to="#strategies" >
+            <button className="flex items-center gap-2 px-6 py-3 rounded-full bg-cyan-400 text-black font-semibold hover:scale-110 transition shadow-lg hover:shadow-cyan-400/40">
+              <BookOpen size={18} />
+              Browse Library
+            </button>
+          </Link>
+          <Link to="/about/contact-us#contact-form" >
+            <button className="flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 hover:bg-white/10 hover:scale-105 transition">
+              <MessageCircle size={18} />
+              Consult an Expert
+            </button>
+          </Link>
         </motion.div>
       </div>
 

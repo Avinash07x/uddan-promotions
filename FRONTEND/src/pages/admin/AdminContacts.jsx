@@ -2,7 +2,7 @@ import {
   Mail,
   Phone,
   Trash2,
-  Eye,
+  SendHorizontal,
   Search,
   RefreshCcw,
   Send,
@@ -64,7 +64,7 @@ export default function AdminContacts() {
       if (!res.ok) {
         return alert(
           data.message ||
-            "Failed to fetch contacts"
+          "Failed to fetch contacts"
         );
       }
 
@@ -261,7 +261,7 @@ export default function AdminContacts() {
       if (!res.ok) {
         return alert(
           data.message ||
-            `Server Error (${res.status})`
+          `Server Error (${res.status})`
         );
       }
 
@@ -289,7 +289,7 @@ export default function AdminContacts() {
         setContacts((prev) =>
           prev.map((item) =>
             item._id ===
-            selectedContact._id
+              selectedContact._id
               ? updatedContact
               : item
           )
@@ -500,15 +500,14 @@ export default function AdminContacts() {
 
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-semibold capitalize border
-                      ${
-                        contact.status ===
-                        "unread"
+                      ${contact.status ===
+                          "unread"
                           ? "bg-red-500/20 text-red-400 border-red-500/20"
                           : contact.status ===
                             "read"
-                          ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/20"
-                          : "bg-green-500/20 text-green-400 border-green-500/20"
-                      }`}
+                            ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/20"
+                            : "bg-green-500/20 text-green-400 border-green-500/20"
+                        }`}
                     >
                       {contact.status}
                     </span>
@@ -528,7 +527,7 @@ export default function AdminContacts() {
                       className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center hover:bg-cyan-500/20 transition"
                     >
 
-                      <Eye size={18} />
+                      <SendHorizontal size={18} />
 
                     </button>
 
@@ -564,25 +563,19 @@ export default function AdminContacts() {
 
         {selectedContact && (
           <motion.div
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            exit={{
-              opacity: 0,
-            }}
-            className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm overflow-y-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm"
           >
 
-            <div className="min-h-screen flex items-center justify-center p-3 sm:p-5">
+            <div className="h-screen w-screen overflow-hidden">
 
               <motion.div
                 initial={{
                   opacity: 0,
-                  scale: 0.95,
-                  y: 30,
+                  scale: 0.96,
+                  y: 20,
                 }}
                 animate={{
                   opacity: 1,
@@ -591,34 +584,34 @@ export default function AdminContacts() {
                 }}
                 exit={{
                   opacity: 0,
-                  scale: 0.95,
+                  scale: 0.96,
+                  y: 20,
                 }}
-                className="w-full max-w-4xl rounded-3xl border border-white/10 bg-[#111827] p-4 sm:p-6 lg:p-8 max-h-[95vh] overflow-y-auto"
+                transition={{
+                  duration: 0.25,
+                }}
+                className="h-screen w-screen bg-[#111827] border border-white/10 overflow-hidden flex flex-col"
               >
 
-                {/* TOP */}
+                {/* HEADER */}
 
-                <div className="flex items-start justify-between gap-4 mb-8">
+                <div className="flex items-center justify-between px-5 sm:px-8 py-5 border-b border-white/10">
 
                   <div>
 
-                    <h2 className="text-2xl sm:text-3xl font-black">
+                    <h2 className="text-2xl sm:text-3xl font-black text-white">
                       Contact Details
                     </h2>
 
-                    <p className="text-white/50 mt-2 text-sm sm:text-base">
-                      Inquiry &
-                      conversation
-                      details
+                    <p className="text-white/50 mt-1 text-sm sm:text-base">
+                      Inquiry & conversation details
                     </p>
 
                   </div>
 
                   <button
                     onClick={() =>
-                      setSelectedContact(
-                        null
-                      )
+                      setSelectedContact(null)
                     }
                     className="w-11 h-11 rounded-2xl bg-white/5 hover:bg-white/10 flex items-center justify-center transition flex-shrink-0"
                   >
@@ -629,199 +622,207 @@ export default function AdminContacts() {
 
                 </div>
 
-                {/* INFO GRID */}
+                {/* BODY */}
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                <div className="flex-1 overflow-hidden">
 
-                  <InfoCard
-                    icon={
-                      <Mail size={18} />
-                    }
-                    title="Email"
-                    value={
-                      selectedContact.email
-                    }
-                  />
+                  <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
 
-                  <InfoCard
-                    icon={
-                      <Phone size={18} />
-                    }
-                    title="Phone"
-                    value={
-                      selectedContact.phone ||
-                      "N/A"
-                    }
-                  />
+                    {/* LEFT SIDE */}
 
-                  <InfoCard
-                    icon={
-                      <Building2 size={18} />
-                    }
-                    title="Company"
-                    value={
-                      selectedContact.company ||
-                      "N/A"
-                    }
-                  />
+                    <div className="overflow-y-auto border-r border-white/10 p-5 sm:p-8">
 
-                  <InfoCard
-                    icon={
-                      <Briefcase size={18} />
-                    }
-                    title="Help Type"
-                    value={
-                      selectedContact.helpType ||
-                      "N/A"
-                    }
-                  />
+                      {/* INFO GRID */}
 
-                  <InfoCard
-                    icon={
-                      <BadgeDollarSign size={18} />
-                    }
-                    title="Budget"
-                    value={
-                      selectedContact.budget ||
-                      "N/A"
-                    }
-                  />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
 
-                  <InfoCard
-                    icon={
-                      <Clock3 size={18} />
-                    }
-                    title="Best Time"
-                    value={
-                      selectedContact.bestTime ||
-                      "N/A"
-                    }
-                  />
+                        <InfoCard
+                          icon={<Mail size={18} />}
+                          title="Email"
+                          value={
+                            selectedContact.email
+                          }
+                        />
 
-                </div>
+                        <InfoCard
+                          icon={<Phone size={18} />}
+                          title="Phone"
+                          value={
+                            selectedContact.phone ||
+                            "N/A"
+                          }
+                        />
 
-                {/* MESSAGE */}
+                        <InfoCard
+                          icon={
+                            <Building2 size={18} />
+                          }
+                          title="Company"
+                          value={
+                            selectedContact.company ||
+                            "N/A"
+                          }
+                        />
 
-                <div className="mb-8">
+                        <InfoCard
+                          icon={
+                            <Briefcase size={18} />
+                          }
+                          title="Help Type"
+                          value={
+                            selectedContact.helpType ||
+                            "N/A"
+                          }
+                        />
 
-                  <div className="flex items-center gap-2 mb-3">
+                        <InfoCard
+                          icon={
+                            <BadgeDollarSign size={18} />
+                          }
+                          title="Budget"
+                          value={
+                            selectedContact.budget ||
+                            "N/A"
+                          }
+                        />
 
-                    <MessageSquare
-                      size={18}
-                      className="text-cyan-400"
-                    />
+                        <InfoCard
+                          icon={<Clock3 size={18} />}
+                          title="Best Time"
+                          value={
+                            selectedContact.bestTime ||
+                            "N/A"
+                          }
+                        />
 
-                    <h3 className="font-semibold">
-                      User Message
-                    </h3>
+                      </div>
 
-                  </div>
+                      {/* USER MESSAGE */}
 
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-white/80 leading-relaxed break-words">
+                      <div className="mb-8">
 
-                    {
-                      selectedContact.message
-                    }
+                        <div className="flex items-center gap-2 mb-3">
 
-                  </div>
+                          <MessageSquare
+                            size={18}
+                            className="text-cyan-400"
+                          />
 
-                </div>
+                          <h3 className="font-semibold text-white">
+                            User Message
+                          </h3>
 
-                {/* PREVIOUS REPLY */}
+                        </div>
 
-                {selectedContact.reply
-                  ?.message && (
-                  <div className="mb-8">
+                        <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-white/80 leading-relaxed break-words">
 
-                    <div className="flex items-center gap-2 mb-3">
+                          {
+                            selectedContact.message
+                          }
 
-                      <Send
-                        size={18}
-                        className="text-green-400"
-                      />
+                        </div>
 
-                      <h3 className="font-semibold text-green-400">
-                        Previous Reply
-                      </h3>
+                      </div>
 
                     </div>
 
-                    <div className="rounded-2xl border border-green-500/20 bg-green-500/10 p-5 text-white/80 break-words">
+                    {/* RIGHT SIDE */}
 
-                      {
-                        selectedContact
-                          .reply.message
-                      }
+                    <div className="overflow-y-auto p-3 sm:p-6 flex flex-col">
 
-                      <p className="text-xs text-white/40 mt-3">
-                        Replied on{" "}
-                        {new Date(
-                          selectedContact
-                            .reply
-                            .repliedAt
-                        ).toLocaleString()}
-                      </p>
+                      {/* PREVIOUS REPLY */}
+
+                      {selectedContact.reply
+                        ?.message && (
+                          <div className="mb-8">
+
+                            <div className="flex items-center gap-2 mb-1">
+
+                              <Send
+                                size={18}
+                                className="text-green-400"
+                              />
+
+                              <h3 className="font-semibold text-green-400">
+                                Previous Reply
+                              </h3>
+
+                            </div>
+
+                            <div className="rounded-2xl border border-green-500/20 bg-green-500/10 p-3 text-white/80 break-words">
+
+                              {
+                                selectedContact
+                                  .reply.message
+                              }
+
+                              <p className="text-xs text-white/40 mt-1">
+
+                                Replied on{" "}
+
+                                {new Date(
+                                  selectedContact
+                                    .reply
+                                    .repliedAt
+                                ).toLocaleString()}
+
+                              </p>
+
+                            </div>
+
+                          </div>
+                        )}
+
+                      {/* SEND REPLY */}
+
+                      <div className="mt-4">
+
+                        <h3 className="font-semibold mb-1 text-white">
+                          Send Reply
+                        </h3>
+
+                        <textarea
+                          rows="8"
+                          value={replyMessage}
+                          onChange={(e) =>
+                            setReplyMessage(
+                              e.target.value
+                            )
+                          }
+                          placeholder="Write your reply here..."
+                          className="w-full rounded-2xl border border-white/10 bg-white/5 p-2 outline-none resize-none focus:border-cyan-400 text-sm sm:text-base text-white"
+                        />
+
+                        <div className="flex flex-col sm:flex-row gap-1 mt-2">
+
+                          <button
+                            onClick={sendReply}
+                            disabled={replyLoading}
+                            className="bg-cyan-500 hover:bg-cyan-400 transition text-black px-3 py-1 rounded-2xl flex items-center justify-center gap-2 font-semibold disabled:opacity-60"
+                          >
+
+                            <Send size={18} />
+
+                            {replyLoading
+                              ? "Sending..."
+                              : "Send Reply"}
+
+                          </button>
+
+                          <button
+                            onClick={() =>
+                              setSelectedContact(null)
+                            }
+                            className="bg-white/5 border border-white/10 hover:bg-white/10 transition px-3 py-2 rounded-2xl text-white"
+                          >
+                            Close
+                          </button>
+
+                        </div>
+
+                      </div>
 
                     </div>
-
-                  </div>
-                )}
-
-                {/* REPLY */}
-
-                <div>
-
-                  <h3 className="font-semibold mb-3">
-                    Send Reply
-                  </h3>
-
-                  <textarea
-                    rows="6"
-                    value={
-                      replyMessage
-                    }
-                    onChange={(e) =>
-                      setReplyMessage(
-                        e.target
-                          .value
-                      )
-                    }
-                    placeholder="Write your reply here..."
-                    className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 outline-none resize-none focus:border-cyan-400 text-sm sm:text-base"
-                  />
-
-                  <div className="flex flex-col sm:flex-row gap-3 mt-4">
-
-                    <button
-                      onClick={
-                        sendReply
-                      }
-                      disabled={
-                        replyLoading
-                      }
-                      className="bg-cyan-500 hover:bg-cyan-400 transition text-black px-6 py-3 rounded-2xl flex items-center justify-center gap-2 font-semibold disabled:opacity-60"
-                    >
-
-                      <Send
-                        size={18}
-                      />
-
-                      {replyLoading
-                        ? "Sending..."
-                        : "Send Reply"}
-
-                    </button>
-
-                    <button
-                      onClick={() =>
-                        setSelectedContact(
-                          null
-                        )
-                      }
-                      className="bg-white/5 border border-white/10 hover:bg-white/10 transition px-6 py-3 rounded-2xl"
-                    >
-                      Close
-                    </button>
 
                   </div>
 

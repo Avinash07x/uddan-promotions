@@ -5,6 +5,7 @@ import {
   AlertTriangle,
   Activity,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const badges = [
   "24x7 managed SOC",
@@ -79,13 +80,16 @@ export default function CyberSecurityHero() {
 
           {/* CTA */}
           <div className="mt-8 flex gap-4 flex-wrap">
-            <button className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:scale-110 transition shadow-lg">
-              Request a Security Audit
-            </button>
-
-            <button className="px-6 py-3 rounded-full border border-white/30 hover:bg-white/10 transition">
-              View Resilience Stories
-            </button>
+            <Link to="/about/contact-us#contact-form" >
+              <button className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:scale-110 transition shadow-lg">
+                Request a Security Audit
+              </button>
+            </Link>
+            <Link to="/" >
+              <button className="px-6 py-3 rounded-full border border-white/30 hover:bg-white/10 transition">
+                View Resilience Stories
+              </button>
+            </Link>
           </div>
         </motion.div>
 

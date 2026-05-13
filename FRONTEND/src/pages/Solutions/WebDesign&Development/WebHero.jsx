@@ -7,6 +7,7 @@ import {
   Code2,
   Globe,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function WebDevelopmentHero() {
   const stats = [
@@ -142,36 +143,39 @@ export default function WebDevelopmentHero() {
             transition={{ delay: 0.7 }}
             className="mt-10 sm:mt-12 flex flex-col sm:flex-row gap-4 sm:gap-5"
           >
-            <motion.button
-              whileHover={{
-                scale: 1.05,
-                y: -2,
-              }}
-              whileTap={{ scale: 0.98 }}
-              className="group relative overflow-hidden bg-white text-black px-6 sm:px-8 py-4 rounded-2xl font-semibold text-base sm:text-lg shadow-2xl w-full sm:w-auto"
-            >
-              <span className="relative z-10 flex items-center justify-center gap-2">
-                <Rocket size={20} />
-                Request a proposal
-              </span>
+            <Link to="/about/contact-us#contact-form" >
+              <motion.button
+                whileHover={{
+                  scale: 1.05,
+                  y: -2,
+                }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative overflow-hidden bg-white text-black px-6 sm:px-8 py-4 rounded-2xl font-semibold text-base sm:text-lg shadow-2xl w-full sm:w-auto"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <Rocket size={20} />
+                  Request a proposal
+                </span>
 
-              <motion.div
-                initial={{ x: "-100%" }}
-                whileHover={{ x: "100%" }}
-                transition={{ duration: 0.8 }}
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent"
-              />
-            </motion.button>
-
-            <motion.button
-              whileHover={{
-                scale: 1.04,
-                backgroundColor: "rgba(255,255,255,0.08)",
-              }}
-              className="border border-white/20 bg-white/5 backdrop-blur-xl px-6 sm:px-8 py-4 rounded-2xl text-base sm:text-lg font-medium w-full sm:w-auto"
-            >
-              Explore all services
-            </motion.button>
+                <motion.div
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "100%" }}
+                  transition={{ duration: 0.8 }}
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent"
+                />
+              </motion.button>
+            </Link>
+            <Link to="/services" >
+              <motion.button
+                whileHover={{
+                  scale: 1.04,
+                  backgroundColor: "rgba(255,255,255,0.08)",
+                }}
+                className="border border-white/20 bg-white/5 backdrop-blur-xl px-6 sm:px-8 py-4 rounded-2xl text-base sm:text-lg font-medium w-full sm:w-auto"
+              >
+                Explore all services
+              </motion.button>
+            </Link>
           </motion.div>
         </motion.div>
 
@@ -358,6 +362,6 @@ export default function WebDevelopmentHero() {
           </motion.div>
         </motion.div>
       </div>
-    </section>
+    </section >
   );
 }
