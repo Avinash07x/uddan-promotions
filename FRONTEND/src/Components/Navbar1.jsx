@@ -531,7 +531,7 @@ const Navbar1 = () => {
         {/*  MOBILE MENU  */}
 
         <div
-          className={`lg:hidden fixed top-0 left-0 h-screen w-[85%] max-w-[340px]
+          className={`lg:hidden fixed top-0 left-0 h-[95vh] w-[85%] max-w-[340px]
           bg-gray-900/95 backdrop-blur-md z-[999]
           flex flex-col transition-transform duration-300 ease-in-out
           
@@ -692,7 +692,7 @@ const Navbar1 = () => {
 
           {/* MOBILE CTA */}
 
-          <div className="p-5 border-t border-white/10 bg-gray-900">
+          <div className="p-5 pt-0 border-t border-white/10 bg-gray-900">
 
             <Link
               to="/about/contact-us"
