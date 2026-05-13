@@ -1,0 +1,1 @@
+var e=`/assets/services4-DcqBPyGK.webp`;export{e as t};
