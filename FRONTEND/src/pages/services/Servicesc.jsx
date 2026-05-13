@@ -103,7 +103,7 @@ export default function Servicesc() {
           scrub: 1,
 
           pin: true,
-          pinSpacing: true, // 🔥 allows next section to appear properly
+          pinSpacing: true, //  allows next section to appear properly
 
           invalidateOnRefresh: true,
           anticipatePin: 1,

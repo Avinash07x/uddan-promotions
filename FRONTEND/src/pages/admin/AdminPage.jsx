@@ -1,19 +1,22 @@
 import { useState, useEffect } from "react";
+
 import { motion } from "framer-motion";
+
 import {
   ShieldCheck,
   Lock,
   Mail,
-  User,
   Eye,
   EyeOff,
   ArrowRight,
 } from "lucide-react";
 
+import { useNavigate } from "react-router-dom";
+
 export default function AdminPage() {
-  // STATES 
-  const [isLogin, setIsLogin] =
-    useState(true);
+  /*  STATES  */
+
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] =
     useState(false);
@@ -21,26 +24,27 @@ export default function AdminPage() {
   const [loading, setLoading] =
     useState(false);
 
-  // FORM 
+  /*  FORM  */
+
   const [formData, setFormData] =
     useState({
-      name: "",
       email: "",
       password: "",
     });
 
-  //  CHECK TOKEN 
+  /*  CHECK TOKEN  */
+
   useEffect(() => {
     const token =
       localStorage.getItem("token");
 
     if (token) {
-      window.location.href =
-        "/admin/dashboard";
+      navigate("/admin/dashboard");
     }
-  }, []);
+  }, [navigate]);
 
-  //  HANDLE CHANGE 
+  /*  HANDLE CHANGE  */
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -49,75 +53,83 @@ export default function AdminPage() {
     });
   };
 
-  //  HANDLE SUBMIT 
+  /*  HANDLE SUBMIT  */
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       setLoading(true);
 
-      const url = isLogin
-        ? "http://localhost:5000/api/auth/login"
-        : "http://localhost:5000/api/auth/register";
+      const res = await fetch(
+        "http://localhost:5000/api/auth/login",
+        {
+          method: "POST",
 
-      const res = await fetch(url, {
-        method: "POST",
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
 
-        headers: {
-          "Content-Type":
-            "application/json",
-        },
+          body: JSON.stringify(
+            formData
+          ),
+        }
+      );
 
-        body: JSON.stringify(formData),
-      });
+      const data =
+        await res.json();
 
-      const data = await res.json();
+      /*  SUCCESS  */
 
-      //  SUCCESS 
       if (data.success) {
-        // LOGIN
-        if (isLogin) {
-          localStorage.setItem(
-            "token",
-            data.token
-          );
+        localStorage.setItem(
+          "token",
+          data.token
+        );
 
-          localStorage.setItem(
-            "admin",
-            JSON.stringify(data.admin)
-          );
+        localStorage.setItem(
+          "admin",
+          JSON.stringify(data.admin)
+        );
 
-          alert("Login successful");
+        alert("Login successful");
 
-          window.location.href =
-            "/admin/dashboard";
-        }
-
-        // SIGNUP
-        else {
-          alert(
-            "Account created successfully"
-          );
-
-          setFormData({
-            name: "",
-            email: "",
-            password: "",
-          });
-
-          setIsLogin(true);
-        }
+        navigate("/admin/dashboard");
       }
 
-      //  ERROR 
+      /*  ERROR  */
+
       else {
+        localStorage.removeItem(
+          "token"
+        );
+
+        localStorage.removeItem(
+          "admin"
+        );
+
+        navigate("/login-admin");
+
         alert(
           data.message ||
-            "Something went wrong"
+            "Invalid Credentials"
         );
+
+        return;
       }
     } catch (error) {
       console.log(error);
+
+      localStorage.removeItem(
+        "token"
+      );
+
+      localStorage.removeItem(
+        "admin"
+      );
+
+      navigate("/login-admin");
 
       alert("Server Error");
     } finally {
@@ -146,23 +158,22 @@ export default function AdminPage() {
             }}
             className="mx-auto w-20 h-20 rounded-3xl bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center"
           >
+
             <ShieldCheck
               size={38}
               className="text-black"
             />
+
           </motion.div>
 
           <h2 className="mt-6 text-4xl font-black">
-            {isLogin
-              ? "Admin Login"
-              : "Create Account"}
+            Admin Login
           </h2>
 
           <p className="mt-3 text-white/60">
-            {isLogin
-              ? "Secure dashboard access"
-              : "Create admin profile"}
+            Secure dashboard access
           </p>
+
         </div>
 
         {/* FORM */}
@@ -170,27 +181,6 @@ export default function AdminPage() {
           onSubmit={handleSubmit}
           className="space-y-5"
         >
-
-          {/* NAME */}
-          {!isLogin && (
-            <div className="relative">
-
-              <User
-                size={18}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40"
-              />
-
-              <input
-                type="text"
-                name="name"
-                required
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Full Name"
-                className="w-full rounded-2xl border border-white/10 bg-white/5 px-12 py-4 outline-none backdrop-blur-xl focus:border-cyan-400"
-              />
-            </div>
-          )}
 
           {/* EMAIL */}
           <div className="relative">
@@ -209,6 +199,7 @@ export default function AdminPage() {
               placeholder="Admin Email"
               className="w-full rounded-2xl border border-white/10 bg-white/5 px-12 py-4 outline-none backdrop-blur-xl focus:border-cyan-400"
             />
+
           </div>
 
           {/* PASSWORD */}
@@ -242,12 +233,15 @@ export default function AdminPage() {
               }
               className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50"
             >
+
               {showPassword ? (
                 <EyeOff size={20} />
               ) : (
                 <Eye size={20} />
               )}
+
             </button>
+
           </div>
 
           {/* BUTTON */}
@@ -262,38 +256,23 @@ export default function AdminPage() {
             disabled={loading}
             className="w-full rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 py-4 font-bold text-black text-lg"
           >
+
             <span className="flex items-center justify-center gap-2">
 
               {loading
                 ? "Please Wait..."
-                : isLogin
-                ? "Access Dashboard"
-                : "Create Account"}
+                : "Access Dashboard"}
 
               <ArrowRight size={20} />
+
             </span>
+
           </motion.button>
+
         </form>
 
-        {/* SWITCH */}
-        <div className="mt-8 text-center text-white/60">
-
-          {isLogin
-            ? "Don’t have an account?"
-            : "Already have an account?"}
-
-          <button
-            onClick={() =>
-              setIsLogin(!isLogin)
-            }
-            className="ml-2 text-cyan-400 font-semibold"
-          >
-            {isLogin
-              ? "Sign Up"
-              : "Login"}
-          </button>
-        </div>
       </div>
+
     </section>
   );
 }

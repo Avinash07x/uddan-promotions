@@ -29,7 +29,7 @@ export default function InsightsBlogs() {
   const [loading, setLoading] =
     useState(true);
 
-  /* ================= FETCH BLOGS ================= */
+  /*  FETCH BLOGS  */
   useEffect(() => {
     fetchBlogs();
   }, []);
@@ -52,7 +52,7 @@ export default function InsightsBlogs() {
     }
   };
 
-  /* ================= FEATURED BLOG ================= */
+  /*  FEATURED BLOG  */
   const featuredBlog = blogs.find(
     (blog) => blog.featured
   );
@@ -109,7 +109,7 @@ export default function InsightsBlogs() {
 
         </motion.div>
 
-        {/* ================= FEATURED BLOG ================= */}
+        {/*  FEATURED BLOG  */}
         {featuredBlog && (
           <motion.div
             initial={{
@@ -255,7 +255,7 @@ export default function InsightsBlogs() {
           </motion.div>
         )}
 
-        {/* ================= BLOG GRID ================= */}
+        {/*  BLOG GRID  */}
         {loading ? (
           <div className="text-center py-20 text-white/50">
             Loading Blogs...

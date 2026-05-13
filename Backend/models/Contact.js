@@ -1,93 +1,122 @@
 import mongoose from "mongoose";
 
-const replySchema = new mongoose.Schema(
-  {
-    message: {
-      type: String,
-      required: true,
+/*  REPLY SCHEMA  */
+
+const replySchema =
+  new mongoose.Schema(
+    {
+      message: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+
+      repliedAt: {
+        type: Date,
+        default: Date.now,
+      },
     },
+    {
+      _id: false,
+    }
+  );
 
-    repliedAt: {
-      type: Date,
-      default: Date.now,
+/*  CONTACT SCHEMA  */
+
+const contactSchema =
+  new mongoose.Schema(
+    {
+      name: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+
+      email: {
+        type: String,
+        required: true,
+        trim: true,
+        lowercase: true,
+      },
+
+      phone: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+
+      company: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+
+      helpType: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+
+      budget: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+
+      bestTime: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+
+      targetGoLive: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+
+      preferredContact: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+
+      keepUpdated: {
+        type: Boolean,
+        default: false,
+      },
+
+      message: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+
+      status: {
+        type: String,
+
+        enum: [
+          "unread",
+          "read",
+          "replied",
+        ],
+
+        default: "unread",
+      },
+
+      reply: replySchema,
     },
-  },
-  {
-    _id: false,
-  }
-);
+    {
+      timestamps: true,
+    }
+  );
 
-const contactSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
+/*  EXPORT MODEL  */
 
-    company: {
-      type: String,
-      default: "",
-    },
+const Contact =
+  mongoose.model(
+    "Contact",
+    contactSchema
+  );
 
-    email: {
-      type: String,
-      required: true,
-    },
-
-    phone: {
-      type: String,
-      default: "",
-    },
-
-    helpType: {
-      type: String,
-      default: "",
-    },
-
-    budget: {
-      type: String,
-      default: "",
-    },
-
-    targetGoLive: {
-      type: String,
-      default: "",
-    },
-
-    preferredContact: {
-      type: String,
-      default: "",
-    },
-
-    bestTime: {
-      type: String,
-      default: "",
-    },
-
-    keepUpdated: {
-      type: Boolean,
-      default: false,
-    },
-
-    message: {
-      type: String,
-      required: true,
-    },
-
-    status: {
-      type: String,
-      enum: ["unread", "read", "replied"],
-      default: "unread",
-    },
-
-    reply: replySchema,
-  },
-  {
-    timestamps: true,
-  }
-);
-
-export default mongoose.model(
-  "Contact",
-  contactSchema
-);
+export default Contact;

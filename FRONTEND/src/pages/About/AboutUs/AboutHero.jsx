@@ -12,7 +12,7 @@ const stats = [
 export default function AboutHero() {
   const ref = useRef(null);
 
-  // 🔥 Parallax
+  //  Parallax
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],

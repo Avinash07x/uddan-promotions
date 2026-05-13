@@ -24,11 +24,11 @@ export default function ProcessSection({ certifications = [], process = [] }) {
   const sectionRef = useRef(null);
   const lineRefs = useRef([]);
 
-  /* ================= SCROLL + RESPONSIVE ANIMATION ================= */
+  /*  SCROLL + RESPONSIVE ANIMATION  */
   useEffect(() => {
     const mm = gsap.matchMedia();
 
-    // 🔥 MOBILE + TABLET (scroll animation)
+    //  MOBILE + TABLET (scroll animation)
     mm.add("(max-width: 1023px)", () => {
       lineRefs.current.forEach((line) => {
         if (!line) return;

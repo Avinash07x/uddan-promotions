@@ -27,7 +27,7 @@ export default function AdminTestimonials() {
       row: 1,
     });
 
-  // ================= FETCH =================
+  //  FETCH 
   useEffect(() => {
     fetchTestimonials();
   }, []);
@@ -52,7 +52,7 @@ export default function AdminTestimonials() {
       }
     };
 
-  // ================= HANDLE CHANGE =================
+  //  HANDLE CHANGE 
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -61,7 +61,7 @@ export default function AdminTestimonials() {
     });
   };
 
-  // ================= CREATE =================
+  //  CREATE 
   const handleSubmit = async (
     e
   ) => {
@@ -101,7 +101,7 @@ export default function AdminTestimonials() {
     }
   };
 
-  // ================= UPDATE =================
+  //  UPDATE 
   const updateTestimonial =
     async (e) => {
       e.preventDefault();
@@ -142,7 +142,7 @@ export default function AdminTestimonials() {
       }
     };
 
-  // ================= DELETE =================
+  //  DELETE 
   const deleteTestimonial =
     async (id) => {
       const confirmDelete =
@@ -171,7 +171,7 @@ export default function AdminTestimonials() {
       }
     };
 
-  // ================= EDIT =================
+  //  EDIT 
   const startEdit = (item) => {
     setEditingId(item._id);
 
@@ -190,7 +190,7 @@ export default function AdminTestimonials() {
     });
   };
 
-  // ================= RESET =================
+  //  RESET 
   const resetForm = () => {
     setFormData({
       name: "",
@@ -202,7 +202,7 @@ export default function AdminTestimonials() {
     });
   };
 
-  // ================= CANCEL =================
+  //  CANCEL 
   const cancelEdit = () => {
     setEditingId(null);
 

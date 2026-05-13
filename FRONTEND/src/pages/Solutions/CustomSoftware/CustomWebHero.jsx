@@ -40,7 +40,7 @@ export default function CustomWebHero() {
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-14 items-center">
 
-        {/* ================= LEFT ================= */}
+        {/*  LEFT  */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -99,7 +99,7 @@ export default function CustomWebHero() {
           </div>
         </motion.div>
 
-        {/* ================= RIGHT ================= */}
+        {/*  RIGHT  */}
         <motion.div
           initial={{ opacity: 0, x: 60, rotate: 2 }}
           whileInView={{ opacity: 1, x: 0, rotate: 0 }}
@@ -195,7 +195,7 @@ export default function CustomWebHero() {
         </motion.div>
       </div>
 
-      {/* ================= FEATURES ================= */}
+      {/*  FEATURES  */}
       <div className="max-w-7xl mx-auto mt-20 grid md:grid-cols-3 gap-6">
         {features.map((f, i) => {
           const Icon = f.icon;

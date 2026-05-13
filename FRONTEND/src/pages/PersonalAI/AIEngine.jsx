@@ -41,7 +41,7 @@ export default function AIEngine() {
   const [lineIndex, setLineIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
 
-  // ================= GSAP =================
+  //  GSAP 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
@@ -79,7 +79,7 @@ export default function AIEngine() {
     return () => ctx.revert();
   }, []);
 
-  // ================= TYPEWRITER LOOP =================
+  //  TYPEWRITER LOOP 
   useEffect(() => {
     const typingSpeed = 25;
 

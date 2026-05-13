@@ -11,7 +11,7 @@ import {
   Code,
 } from "lucide-react";
 
-// ================= DATA =================
+//  DATA 
 const categories = [
   "All",
   "Cloud",
@@ -65,7 +65,7 @@ const articles = [
   },
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function StrategiesServices() {
   const [active, setActive] = useState("All");
 
@@ -78,7 +78,7 @@ export default function StrategiesServices() {
     <section className="bg-[#020617] text-white py-24 px-6 md:px-16">
       <div className="max-w-6xl mx-auto">
 
-        {/* ================= HEADER ================= */}
+        {/*  HEADER  */}
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-bold">
             Knowledge{" "}
@@ -92,7 +92,7 @@ export default function StrategiesServices() {
           </p>
         </div>
 
-        {/* ================= FILTER ================= */}
+        {/*  FILTER  */}
         <div className="flex flex-wrap justify-center gap-3 mt-10">
           {categories.map((cat) => (
             <button
@@ -109,7 +109,7 @@ export default function StrategiesServices() {
           ))}
         </div>
 
-        {/* ================= GRID ================= */}
+        {/*  GRID  */}
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence>
             {filtered.map((item, i) => {
@@ -158,7 +158,7 @@ export default function StrategiesServices() {
           </AnimatePresence>
         </div>
 
-        {/* ================= FOOTER ================= */}
+        {/*  FOOTER  */}
         <div className="mt-20 text-center max-w-3xl mx-auto">
           <h3 className="text-2xl font-bold">
             Why we open-source our strategy

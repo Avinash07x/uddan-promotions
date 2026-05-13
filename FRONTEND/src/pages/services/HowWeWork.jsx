@@ -29,7 +29,7 @@ export default function HowWeWork() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      /* ================= HEADING ================= */
+      /*  HEADING  */
       gsap.fromTo(
         ".how-heading",
         { opacity: 0, y: 30 },
@@ -45,7 +45,7 @@ export default function HowWeWork() {
         }
       );
 
-      /* ================= CARDS ================= */
+      /*  CARDS  */
       cardsRef.current.forEach((card, i) => {
         if (!card) return;
 

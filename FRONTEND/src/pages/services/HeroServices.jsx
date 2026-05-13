@@ -12,10 +12,10 @@ import A1 from "../../assets/1.webp";
 export default function HeroServices() {
   const sectionRef = useRef(null);
 
-  // ================= POINT STATE =================
+  //  POINT STATE 
   const [currentPoint, setCurrentPoint] = useState(0);
 
-  // ================= SCROLL =================
+  //  SCROLL 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
@@ -27,13 +27,13 @@ export default function HeroServices() {
     mass: 0.5,
   });
 
-  // ================= PARALLAX =================
+  //  PARALLAX 
   const bgY = useTransform(smoothScroll, [0, 1], [0, 100]);
 
-  // ================= FLOAT =================
+  //  FLOAT 
   const floatY = useTransform(smoothScroll, [0, 1], [0, -30]);
 
-  // ================= POINTS =================
+  //  POINTS 
   const points = [
     "SEO-first delivery with Core Web Vitals, schema markup and conversion optimisation baked into every launch.",
 
@@ -42,7 +42,7 @@ export default function HeroServices() {
     "Transparent roadmaps, sprint reviews and performance dashboards to keep stakeholders informed.",
   ];
 
-  // ================= SHOW ONE POINT =================
+  //  SHOW ONE POINT 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentPoint((prev) =>
@@ -53,7 +53,7 @@ export default function HeroServices() {
     return () => clearInterval(interval);
   }, []);
 
-  // ================= ANIMATIONS =================
+  //  ANIMATIONS 
   const container = {
     hidden: {},
     show: {
@@ -115,7 +115,7 @@ export default function HeroServices() {
       ref={sectionRef}
       className="relative overflow-hidden bg-[#0B1220] text-white pt-10 pb-24 px-4 sm:px-6 md:px-16"
     >
-      {/* ================= BACKGROUND ================= */}
+      {/*  BACKGROUND  */}
       <motion.div
         style={{ y: bgY }}
         className="absolute inset-0 -z-10 bg-gradient-to-br from-[#0B1220] via-[#111827] to-[#020617]"
@@ -127,10 +127,10 @@ export default function HeroServices() {
       {/* Glow */}
       <div className="absolute top-[-120px] left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-cyan-500/10 blur-3xl rounded-full -z-10" />
 
-      {/* ================= CONTENT ================= */}
+      {/*  CONTENT  */}
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-14 items-center">
 
-        {/* ================= LEFT ================= */}
+        {/*  LEFT  */}
         <motion.div
           variants={container}
           initial="hidden"
@@ -167,7 +167,7 @@ export default function HeroServices() {
             convert better and dominate digitally.
           </motion.p>
 
-          {/* ================= SINGLE POINT ================= */}
+          {/*  SINGLE POINT  */}
           <div className="mt-8 min-h-[90px]">
             <AnimatePresence mode="wait">
               <motion.div
@@ -210,7 +210,7 @@ export default function HeroServices() {
             </AnimatePresence>
           </div>
 
-          {/* ================= BUTTONS ================= */}
+          {/*  BUTTONS  */}
           <motion.div
             variants={bottomItem}
             className="mt-10 flex flex-wrap gap-4"
@@ -225,7 +225,7 @@ export default function HeroServices() {
           </motion.div>
         </motion.div>
 
-        {/* ================= RIGHT ================= */}
+        {/*  RIGHT  */}
         <motion.div
           variants={rightItem}
           initial="hidden"

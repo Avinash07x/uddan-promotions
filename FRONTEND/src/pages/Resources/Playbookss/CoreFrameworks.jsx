@@ -11,7 +11,7 @@ import {
   BarChart3,
 } from "lucide-react";
 
-// ================= DATA =================
+//  DATA 
 const frameworks = [
   {
     category: "Digital Marketing",
@@ -78,7 +78,7 @@ const frameworks = [
   },
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function CoreFrameworks() {
   return (
     <section className="bg-[#020617] text-white py-24 px-6 md:px-16">

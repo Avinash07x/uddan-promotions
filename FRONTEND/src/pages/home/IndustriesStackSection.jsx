@@ -40,12 +40,12 @@ export default function IndustriesStackSection() {
   return (
     <section className="bg-[#1e3a8a] text-white py-20 px-6 md:px-16 relative overflow-hidden">
 
-      {/* 🔥 Background Glow */}
+      {/*  Background Glow */}
       <div className="absolute top-[-120px] left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-500/10 blur-3xl rounded-full" />
 
       <div className="max-w-7xl mx-auto">
 
-        {/* ================= INDUSTRIES ================= */}
+        {/*  INDUSTRIES  */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -81,7 +81,7 @@ export default function IndustriesStackSection() {
           </div>
         </motion.div>
 
-        {/* ================= STACK ================= */}
+        {/*  STACK  */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}

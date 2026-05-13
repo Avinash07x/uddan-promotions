@@ -40,7 +40,7 @@ import AdminCompanyInfo from "./AdminCompanyInfo";
 export default function AdminDashboard() {
   const navigate = useNavigate();
 
-  /* ================= STATES ================= */
+  /*  STATES  */
 
   const [sidebarOpen, setSidebarOpen] =
     useState(false);
@@ -57,7 +57,7 @@ export default function AdminDashboard() {
   const [activePage, setActivePage] =
     useState("Dashboard");
 
-  /* ================= TOKEN CHECK ================= */
+  /*  TOKEN CHECK  */
 
   useEffect(() => {
     const token =
@@ -77,7 +77,7 @@ export default function AdminDashboard() {
     fetchDashboardData();
   }, []);
 
-  /* ================= FETCH DASHBOARD ================= */
+  /*  FETCH DASHBOARD  */
 
   const fetchDashboardData =
     async () => {
@@ -123,7 +123,7 @@ export default function AdminDashboard() {
       }
     };
 
-  /* ================= LOGOUT ================= */
+  /*  LOGOUT  */
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -133,7 +133,7 @@ export default function AdminDashboard() {
     navigate("/login-admin");
   };
 
-  /* ================= SIDEBAR ITEMS ================= */
+  /*  SIDEBAR ITEMS  */
 
   const sidebarItems = [
     {
@@ -172,7 +172,7 @@ export default function AdminDashboard() {
     },
   ];
 
-  /* ================= FEATURE CARDS ================= */
+  /*  FEATURE CARDS  */
 
   const featureCards = [
     {
@@ -218,7 +218,7 @@ export default function AdminDashboard() {
     },
   ];
 
-  /* ================= ADMIN ACTIVITY ================= */
+  /*  ADMIN ACTIVITY  */
 
   const adminActivity = [
     {
@@ -254,7 +254,7 @@ export default function AdminDashboard() {
     },
   ];
 
-  /* ================= RENDER PAGE ================= */
+  /*  RENDER PAGE  */
 
   const renderPage = () => {
     switch (activePage) {

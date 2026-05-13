@@ -22,7 +22,7 @@ export default function LocalServicePages() {
   cardRefs.current = [];
   serviceRefs.current = [];
 
-  /* ================= SCROLL ================= */
+  /*  SCROLL  */
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
@@ -45,7 +45,7 @@ export default function LocalServicePages() {
     return () => ctx.revert();
   }, []);
 
-  /* ================= HOVER ================= */
+  /*  HOVER  */
   const handleEnter = (i) => {
     const data = serviceRefs.current[i];
     if (!data) return;

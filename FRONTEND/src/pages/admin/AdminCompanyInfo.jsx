@@ -42,7 +42,7 @@ export default function AdminCompanyInfo() {
       ],
     });
 
-  /* ================= FETCH ================= */
+  /*  FETCH  */
 
   useEffect(() => {
     fetchCompanyInfo();
@@ -131,7 +131,7 @@ export default function AdminCompanyInfo() {
       }
     };
 
-  /* ================= INPUT CHANGE ================= */
+  /*  INPUT CHANGE  */
 
   const handleChange = (e) => {
     setFormData({
@@ -141,7 +141,7 @@ export default function AdminCompanyInfo() {
     });
   };
 
-  /* ================= LOGO UPLOAD ================= */
+  /*  LOGO UPLOAD  */
 
   const handleLogoUpload =
     async (e) => {
@@ -185,7 +185,7 @@ export default function AdminCompanyInfo() {
       }
     };
 
-  /* ================= LOCATION ================= */
+  /*  LOCATION  */
 
   const handleLocationChange = (
     index,
@@ -231,7 +231,7 @@ export default function AdminCompanyInfo() {
     });
   };
 
-  /* ================= CERTIFICATIONS ================= */
+  /*  CERTIFICATIONS  */
 
   const handleCertificationChange =
     (index, value) => {
@@ -271,7 +271,7 @@ export default function AdminCompanyInfo() {
     });
   };
 
-  /* ================= SUBMIT ================= */
+  /*  SUBMIT  */
 
   const handleSubmit = async (
     e

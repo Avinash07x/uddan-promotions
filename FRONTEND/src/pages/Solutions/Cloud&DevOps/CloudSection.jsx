@@ -14,7 +14,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= DATA =================
+//  DATA 
 const phases = [
   {
     title: "Discover",
@@ -56,7 +56,7 @@ const services = [
   },
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function CloudSection() {
   const sectionRef = useRef(null);
   const phaseRef = useRef([]);
@@ -110,7 +110,7 @@ export default function CloudSection() {
 
       <div className="max-w-6xl mx-auto">
 
-        {/* ================= HEADER ================= */}
+        {/*  HEADER  */}
         <div className="text-center max-w-3xl mx-auto">
           <p className="text-cyan-400 text-sm mb-3">
             Optimised for Core Web Vitals & Discoverability
@@ -129,7 +129,7 @@ export default function CloudSection() {
           </p>
         </div>
 
-        {/* ================= PHASES ================= */}
+        {/*  PHASES  */}
         <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {phases.map((phase, i) => {
             const Icon = phase.icon;
@@ -164,7 +164,7 @@ export default function CloudSection() {
           })}
         </div>
 
-        {/* ================= SERVICES ================= */}
+        {/*  SERVICES  */}
         <div className="mt-24">
           <h3 className="text-2xl md:text-4xl font-bold text-center">
             Cloud Solutions Portfolio

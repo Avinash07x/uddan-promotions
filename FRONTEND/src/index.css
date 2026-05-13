@@ -34,7 +34,7 @@
   body {
     background-color: hsl(var(--background));
     -webkit-font-smoothing: antialiased;
-    /* cursor: none; */
+    cursor: none;
     height: 100%;
     position: relative;
     overflow-x: hidden;

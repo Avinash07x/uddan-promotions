@@ -1,4 +1,4 @@
-// ================= AdminBlogs.jsx =================
+//  AdminBlogs.jsx 
 
 import {
   Plus,
@@ -39,7 +39,7 @@ export default function AdminBlogs() {
       image: null,
     });
 
-  // ================= FETCH =================
+  //  FETCH 
   useEffect(() => {
     fetchBlogs();
   }, []);
@@ -60,7 +60,7 @@ export default function AdminBlogs() {
     }
   };
 
-  // ================= CHANGE =================
+  //  CHANGE 
   const handleChange = (e) => {
     const {
       name,
@@ -90,7 +90,7 @@ export default function AdminBlogs() {
     }
   };
 
-  // ================= SUBMIT =================
+  //  SUBMIT 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -176,7 +176,7 @@ export default function AdminBlogs() {
     }
   };
 
-  // ================= DELETE =================
+  //  DELETE 
   const deleteBlog = async (id) => {
     const confirmDelete =
       window.confirm(
@@ -199,7 +199,7 @@ export default function AdminBlogs() {
     }
   };
 
-  // ================= EDIT =================
+  //  EDIT 
   const editBlog = (blog) => {
     setEditingId(blog._id);
 
@@ -226,7 +226,7 @@ export default function AdminBlogs() {
   return (
     <section className="p-6 text-white">
 
-      {/* ================= HEADER ================= */}
+      {/*  HEADER  */}
       <div className="mb-8">
         <h2 className="text-3xl font-black">
           Blogs Management
@@ -238,7 +238,7 @@ export default function AdminBlogs() {
         </p>
       </div>
 
-      {/* ================= FORM ================= */}
+      {/*  FORM  */}
       <form
         onSubmit={handleSubmit}
         className="grid md:grid-cols-2 gap-5 bg-white/5 border border-white/10 p-6 rounded-3xl backdrop-blur-xl"
@@ -378,7 +378,7 @@ export default function AdminBlogs() {
 
       </form>
 
-      {/* ================= BLOGS ================= */}
+      {/*  BLOGS  */}
       <div className="grid lg:grid-cols-3 gap-6 mt-10">
 
         {blogs.map((blog) => (

@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 
 export default function AdminFAQS() {
-  // ================= STATES =================
+  //  STATES 
   const [faqs, setFaqs] =
     useState([]);
 
@@ -26,7 +26,7 @@ export default function AdminFAQS() {
   const [loading, setLoading] =
     useState(false);
 
-  // ================= FETCH FAQS =================
+  //  FETCH FAQS 
   useEffect(() => {
     fetchFaqs();
   }, []);
@@ -47,14 +47,14 @@ export default function AdminFAQS() {
     }
   };
 
-  // ================= ADD / UPDATE FAQ =================
+  //  ADD / UPDATE FAQ 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       setLoading(true);
 
-      // ================= UPDATE =================
+      //  UPDATE 
       if (editingId) {
         await fetch(
           `http://localhost:5000/api/faq/${editingId}`,
@@ -74,7 +74,7 @@ export default function AdminFAQS() {
         );
       }
 
-      // ================= ADD =================
+      //  ADD 
       else {
         await fetch(
           "http://localhost:5000/api/faq",
@@ -109,7 +109,7 @@ export default function AdminFAQS() {
     }
   };
 
-  // ================= DELETE FAQ =================
+  //  DELETE FAQ 
   const deleteFaq = async (id) => {
     const confirmDelete =
       window.confirm(
@@ -132,7 +132,7 @@ export default function AdminFAQS() {
     }
   };
 
-  // ================= EDIT FAQ =================
+  //  EDIT FAQ 
   const editFaq = (faq) => {
     setQuestion(faq.question);
 
@@ -146,7 +146,7 @@ export default function AdminFAQS() {
     });
   };
 
-  // ================= CANCEL EDIT =================
+  //  CANCEL EDIT 
   const cancelEdit = () => {
     setQuestion("");
 
@@ -158,7 +158,7 @@ export default function AdminFAQS() {
   return (
     <section className="p-6 text-white">
 
-      {/* ================= HEADING ================= */}
+      {/*  HEADING  */}
       <div className="flex items-center justify-between mb-6">
 
         <div>
@@ -183,7 +183,7 @@ export default function AdminFAQS() {
         )}
       </div>
 
-      {/* ================= FORM ================= */}
+      {/*  FORM  */}
       <form
         onSubmit={handleSubmit}
         className="bg-white/5 border border-white/10 p-6 rounded-3xl space-y-5"
@@ -226,7 +226,7 @@ export default function AdminFAQS() {
         </button>
       </form>
 
-      {/* ================= FAQ LIST ================= */}
+      {/*  FAQ LIST  */}
       <div className="space-y-4 mt-8">
 
         {faqs.length === 0 ? (

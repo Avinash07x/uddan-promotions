@@ -15,7 +15,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= DATA =================
+//  DATA 
 const journey = [
   {
     title: "Workshop",
@@ -68,7 +68,7 @@ const why = [
   },
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function DevOpsJourney() {
   const sectionRef = useRef(null);
   const stepRef = useRef([]);
@@ -136,7 +136,7 @@ export default function DevOpsJourney() {
 
       <div className="max-w-6xl mx-auto">
 
-        {/* ================= HEADER ================= */}
+        {/*  HEADER  */}
         <div className="text-center max-w-3xl mx-auto">
           <p className="text-green-400 text-sm mb-3">
             Automation to Adoption Journey
@@ -154,7 +154,7 @@ export default function DevOpsJourney() {
           </p>
         </div>
 
-        {/* ================= JOURNEY ================= */}
+        {/*  JOURNEY  */}
         <div className="mt-16 space-y-8">
           {journey.map((step, i) => {
             const Icon = step.icon;
@@ -185,7 +185,7 @@ export default function DevOpsJourney() {
           })}
         </div>
 
-        {/* ================= OUTCOMES ================= */}
+        {/*  OUTCOMES  */}
         <div className="mt-24">
           <h3 className="text-2xl md:text-4xl font-bold text-center">
             Reliability Outcomes
@@ -212,7 +212,7 @@ export default function DevOpsJourney() {
           </div>
         </div>
 
-        {/* ================= WHY + CTA ================= */}
+        {/*  WHY + CTA  */}
         <div className="mt-24 text-center">
           <h3 className="text-2xl md:text-4xl font-bold">
             Why Partner with Uddan Promotions

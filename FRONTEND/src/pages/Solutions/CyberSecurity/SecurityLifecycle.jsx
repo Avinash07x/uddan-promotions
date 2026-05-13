@@ -15,7 +15,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= DATA =================
+//  DATA 
 const lifecycle = [
   {
     title: "Monitor",
@@ -68,7 +68,7 @@ const why = [
   },
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function SecurityLifecycle() {
   const sectionRef = useRef(null);
   const lifeRef = useRef([]);
@@ -135,7 +135,7 @@ export default function SecurityLifecycle() {
 
       <div className="max-w-6xl mx-auto">
 
-        {/* ================= HEADER ================= */}
+        {/*  HEADER  */}
         <div className="text-center max-w-3xl mx-auto">
           <p className="text-red-400 text-sm mb-3">
             Security Operations Lifecycle
@@ -154,7 +154,7 @@ export default function SecurityLifecycle() {
           </p>
         </div>
 
-        {/* ================= LIFECYCLE ================= */}
+        {/*  LIFECYCLE  */}
         <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {lifecycle.map((step, i) => {
             const Icon = step.icon;
@@ -176,7 +176,7 @@ export default function SecurityLifecycle() {
           })}
         </div>
 
-        {/* ================= OUTCOMES ================= */}
+        {/*  OUTCOMES  */}
         <div className="mt-24">
           <h3 className="text-2xl md:text-4xl font-bold text-center">
             Security Outcomes
@@ -203,7 +203,7 @@ export default function SecurityLifecycle() {
           </div>
         </div>
 
-        {/* ================= WHY + CTA ================= */}
+        {/*  WHY + CTA  */}
         <div className="mt-24 text-center">
           <h3 className="text-2xl md:text-4xl font-bold">
             Why Choose Uddan Promotions for Cyber Security

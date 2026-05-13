@@ -23,12 +23,12 @@ export default function InsightsHero() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[#1e3a8a] via-[#1e40af] to-[#1e293b] text-white py-24 px-6 md:px-16">
 
-      {/* 🔥 Glow */}
+      {/*  Glow */}
       <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-blue-500/20 blur-3xl rounded-full" />
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-14 items-center">
 
-        {/* ================= LEFT ================= */}
+        {/*  LEFT  */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -66,7 +66,7 @@ export default function InsightsHero() {
           </div>
         </motion.div>
 
-        {/* ================= RIGHT ================= */}
+        {/*  RIGHT  */}
         <motion.div
           initial={{ opacity: 0, x: 60 }}
           whileInView={{ opacity: 1, x: 0 }}

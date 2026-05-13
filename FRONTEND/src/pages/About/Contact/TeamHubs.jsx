@@ -7,7 +7,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 
-/* ================= DATA ================= */
+/*  DATA  */
 
 const squads = [
   {
@@ -60,7 +60,7 @@ const locations = [
   },
 ];
 
-/* ================= COMPONENT ================= */
+/*  COMPONENT  */
 
 export default function TeamHubsMap() {
   return (
@@ -68,7 +68,7 @@ export default function TeamHubsMap() {
 
       <div className="max-w-7xl mx-auto">
 
-        {/* ================= HEADER ================= */}
+        {/*  HEADER  */}
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight">
             The right squad for every{" "}
@@ -83,7 +83,7 @@ export default function TeamHubsMap() {
           </p>
         </div>
 
-        {/* ================= SQUADS ================= */}
+        {/*  SQUADS  */}
         <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
           {squads.map((item, i) => {
             const Icon = item.icon;
@@ -116,7 +116,7 @@ export default function TeamHubsMap() {
           })}
         </div>
 
-        {/* ================= GLOBAL HUBS ================= */}
+        {/*  GLOBAL HUBS  */}
         <div className="mt-20">
 
           <h3 className="text-xl sm:text-2xl md:text-4xl font-bold text-center">
@@ -154,7 +154,7 @@ export default function TeamHubsMap() {
 
         </div>
 
-        {/* ================= GOOGLE MAP ================= */}
+        {/*  GOOGLE MAP  */}
         <div className="mt-20">
 
           <h3 className="text-xl sm:text-2xl md:text-4xl font-bold text-center">
@@ -210,7 +210,7 @@ export default function TeamHubsMap() {
 
         </div>
 
-        {/* ================= CTA ================= */}
+        {/*  CTA  */}
         <div className="mt-16 text-center">
           <h4 className="text-lg sm:text-xl font-semibold">
             Need a team in your city?

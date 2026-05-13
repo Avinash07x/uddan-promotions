@@ -11,7 +11,7 @@ import {
   Zap,
 } from "lucide-react";
 
-// ================= DATA =================
+//  DATA 
 const topics = [
   { title: "SaaS Pricing Strategies", cat: "Business", icon: BarChart3 },
   { title: "AI Chatbots for Support", cat: "AI", icon: Brain },
@@ -30,7 +30,7 @@ const topics = [
 // categories
 const categories = ["All", "AI", "Dev", "Cloud", "Security", "Business", "Marketing"];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function TrendingTopics() {
   const [active, setActive] = useState("All");
   const [visible, setVisible] = useState(9);

@@ -14,7 +14,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= DATA =================
+//  DATA 
 const phases = [
   {
     title: "Assess",
@@ -56,7 +56,7 @@ const services = [
   },
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function DevOpsSection() {
   const sectionRef = useRef(null);
   const phaseRef = useRef([]);
@@ -126,7 +126,7 @@ export default function DevOpsSection() {
 
       <div className="max-w-6xl mx-auto">
 
-        {/* ================= HEADER ================= */}
+        {/*  HEADER  */}
         <div className="text-center max-w-3xl mx-auto">
           <p className="text-green-400 text-sm mb-3">
             Performance-led automation frameworks
@@ -144,7 +144,7 @@ export default function DevOpsSection() {
           </p>
         </div>
 
-        {/* ================= PHASES ================= */}
+        {/*  PHASES  */}
         <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-8 relative">
 
           {/* pipeline line */}
@@ -174,7 +174,7 @@ export default function DevOpsSection() {
           })}
         </div>
 
-        {/* ================= SERVICES ================= */}
+        {/*  SERVICES  */}
         <div className="mt-24">
           <h3 className="text-2xl md:text-4xl font-bold text-center">
             DevOps & Automation Services

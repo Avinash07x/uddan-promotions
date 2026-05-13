@@ -22,12 +22,12 @@ export default function EcommerceHero() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[#1e293b] via-[#1e3a8a] to-[#0B1220] text-white py-24 px-6 md:px-16">
 
-      {/* 🔥 Glow */}
+      {/*  Glow */}
       <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-blue-500/20 blur-3xl rounded-full" />
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-14 items-center">
 
-        {/* ================= LEFT ================= */}
+        {/*  LEFT  */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -53,7 +53,7 @@ export default function EcommerceHero() {
             fulfilment and analytics—so your products stay on top.
           </p>
 
-          {/* 🔥 Badges */}
+          {/*  Badges */}
           <div className="flex flex-wrap gap-3 mt-6">
             {badges.map((b, i) => (
               <motion.span
@@ -94,7 +94,7 @@ export default function EcommerceHero() {
           </div>
         </motion.div>
 
-        {/* ================= RIGHT ================= */}
+        {/*  RIGHT  */}
         <motion.div
           initial={{ opacity: 0, x: 60, rotate: 2 }}
           whileInView={{ opacity: 1, x: 0, rotate: 0 }}
@@ -106,7 +106,7 @@ export default function EcommerceHero() {
           className="relative"
         >
 
-          {/* 🔥 BACKGROUND GLOW */}
+          {/*  BACKGROUND GLOW */}
           <div className="absolute -inset-10 bg-blue-500/10 blur-3xl rounded-full" />
 
           {/* CARD */}
@@ -130,7 +130,7 @@ export default function EcommerceHero() {
               </h3>
             </div>
 
-            {/* 🔥 ANIMATED IMAGE (CENTER) */}
+            {/*  ANIMATED IMAGE (CENTER) */}
             <motion.img
               src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop"
               alt="Marketplace Dashboard"
@@ -164,7 +164,7 @@ export default function EcommerceHero() {
                   whileHover={{ scale: 1.05 }}
                   className="bg-orange-500/30 p-4 rounded-lg text-xs"
                 >
-                  Top SKUs 🔥
+                  Top SKUs 
                 </motion.div>
 
                 <motion.div
@@ -177,7 +177,7 @@ export default function EcommerceHero() {
               </div>
             </div>
 
-            {/* 🔥 FLOATING INSIGHT */}
+            {/*  FLOATING INSIGHT */}
             <motion.div
               animate={{
                 y: [0, -10, 0],

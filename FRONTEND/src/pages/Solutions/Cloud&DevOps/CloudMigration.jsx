@@ -15,7 +15,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= DATA =================
+//  DATA 
 const steps = [
   {
     title: "Assess",
@@ -68,7 +68,7 @@ const why = [
   },
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function CloudMigration() {
   const sectionRef = useRef(null);
   const stepRef = useRef([]);
@@ -135,7 +135,7 @@ export default function CloudMigration() {
 
       <div className="max-w-6xl mx-auto">
 
-        {/* ================= HEADER ================= */}
+        {/*  HEADER  */}
         <div className="text-center max-w-3xl mx-auto">
           <p className="text-cyan-400 text-sm mb-3">
             Migration Playbook
@@ -153,7 +153,7 @@ export default function CloudMigration() {
           </p>
         </div>
 
-        {/* ================= STEPS ================= */}
+        {/*  STEPS  */}
         <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, i) => {
             const Icon = step.icon;
@@ -175,7 +175,7 @@ export default function CloudMigration() {
           })}
         </div>
 
-        {/* ================= VALUE ================= */}
+        {/*  VALUE  */}
         <div className="mt-24">
           <h3 className="text-2xl md:text-4xl font-bold text-center">
             Value Delivered
@@ -202,7 +202,7 @@ export default function CloudMigration() {
           </div>
         </div>
 
-        {/* ================= WHY + CTA ================= */}
+        {/*  WHY + CTA  */}
         <div className="mt-24 text-center">
           <h3 className="text-2xl md:text-4xl font-bold">
             Why Choose Uddan Promotions for Cloud Solutions

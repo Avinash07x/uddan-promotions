@@ -15,9 +15,9 @@ import {
 
 import Lenis from "lenis";
 
-/* =========================
+/* 
    LAZY IMPORTS
-========================= */
+ */
 
 /* Layout */
 const Footer = lazy(() =>
@@ -153,9 +153,9 @@ const AdminDashboard = lazy(() =>
   import("./pages/admin/AdminDashboard")
 );
 
-/* =========================
+/* 
    GLOBAL LOADER
-========================= */
+ */
 
 const Loader = ({ logo }) => {
   return (
@@ -239,9 +239,9 @@ const Loader = ({ logo }) => {
   );
 };
 
-/* =========================
+/* 
    APP LAYOUT
-========================= */
+ */
 
 function AppLayout() {
   const location = useLocation();
@@ -252,9 +252,9 @@ function AppLayout() {
   const API =
     "http://localhost:5000";
 
-  /* =========================
+  /* 
      FETCH COMPANY INFO
-  ========================= */
+   */
 
   const fetchCompanyInfo =
     useCallback(async () => {
@@ -278,9 +278,9 @@ function AppLayout() {
     fetchCompanyInfo();
   }, [fetchCompanyInfo]);
 
-  /* =========================
+  /* 
      HIDE NAVBAR + FOOTER
-  ========================= */
+   */
 
   const hideLayout =
     location.pathname ===
@@ -459,15 +459,15 @@ function AppLayout() {
   );
 }
 
-/* =========================
+/* 
    MAIN APP
-========================= */
+ */
 
 function App() {
 
-  /* =========================
+  /* 
      LENIS SMOOTH SCROLL
-  ========================= */
+   */
 
   useEffect(() => {
     const lenis = new Lenis({

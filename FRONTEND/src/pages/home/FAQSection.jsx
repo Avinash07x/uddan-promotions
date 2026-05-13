@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 
 export default function FAQSection() {
-  // ================= STATES =================
+  //  STATES 
   const [faqs, setFaqs] = useState([]);
 
   const [loading, setLoading] =
@@ -15,7 +15,7 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] =
     useState(null);
 
-  // ================= FETCH FAQS =================
+  //  FETCH FAQS 
   useEffect(() => {
     fetchFaqs();
   }, []);
@@ -38,7 +38,7 @@ export default function FAQSection() {
     }
   };
 
-  // ================= TOGGLE =================
+  //  TOGGLE 
   const toggle = (i) => {
     setOpenIndex(
       openIndex === i ? null : i

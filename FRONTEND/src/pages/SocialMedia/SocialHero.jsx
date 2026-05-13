@@ -65,17 +65,17 @@ export default function SocialHero() {
   return (
     <section className="relative overflow-hidden bg-[#0B1220] text-white py-24 px-6 md:px-16">
 
-      {/* ================= GRID BG ================= */}
+      {/*  GRID BG  */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:60px_60px]" />
 
-      {/* ================= GLOW ================= */}
+      {/*  GLOW  */}
       <div className="absolute top-[-120px] left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-cyan-500/10 blur-3xl rounded-full animate-pulse" />
 
       <div className="absolute bottom-[-120px] right-[-80px] w-[400px] h-[400px] bg-purple-600/10 blur-3xl rounded-full" />
 
       <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
 
-        {/* ================= LEFT ================= */}
+        {/*  LEFT  */}
         <motion.div
           initial={{ opacity: 0, x: -70 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -130,7 +130,7 @@ export default function SocialHero() {
           </p>
         </motion.div>
 
-        {/* ================= RIGHT PREMIUM VISUAL ================= */}
+        {/*  RIGHT PREMIUM VISUAL  */}
         <motion.div
           initial={{ opacity: 0, x: 120 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -147,7 +147,7 @@ export default function SocialHero() {
 
           <div className="absolute top-[80px] left-[40px] w-[280px] h-[280px] bg-purple-500/10 blur-3xl rounded-full" />
 
-          {/* ================= MAIN IMAGE ================= */}
+          {/*  MAIN IMAGE  */}
           <motion.div
             animate={{
               y: [0, -20, 0],
@@ -176,7 +176,7 @@ export default function SocialHero() {
             <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-t from-[#0B1220]/70 via-transparent to-transparent" />
           </motion.div>
 
-          {/* ================= ANALYTICS CARD ================= */}
+          {/*  ANALYTICS CARD  */}
           <motion.div
             initial={{ opacity: 0, y: 80 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -224,7 +224,7 @@ export default function SocialHero() {
             </div>
           </motion.div>
 
-          {/* ================= FLOATING REACH CARD ================= */}
+          {/*  FLOATING REACH CARD  */}
           <motion.div
             animate={{
               y: [0, -12, 0],
@@ -247,7 +247,7 @@ export default function SocialHero() {
             </h4>
           </motion.div>
 
-          {/* ================= TRUST BADGE ================= */}
+          {/*  TRUST BADGE  */}
           <motion.div
             animate={{
               y: [0, -10, 0],
@@ -265,7 +265,7 @@ export default function SocialHero() {
             Trusted by 250+ Brands
           </motion.div>
 
-          {/* ================= GLOW DOTS ================= */}
+          {/*  GLOW DOTS  */}
           <motion.div
             animate={{
               scale: [1, 1.3, 1],
@@ -292,7 +292,7 @@ export default function SocialHero() {
           />
         </motion.div>
       </div>
-                {/* ================= FEATURE LIST ================= */}
+                {/*  FEATURE LIST  */}
           <div className="grid sm:grid-cols-2 gap-5 mt-10">
             {features.map((item, i) => {
               const Icon = item.icon;

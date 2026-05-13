@@ -13,7 +13,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= DATA =================
+//  DATA 
 const pillars = [
   {
     title: "UX Research",
@@ -57,7 +57,7 @@ const techStack = [
   "Firebase, AWS & GraphQL",
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function MobileGrowth() {
   const sectionRef = useRef(null);
   const pillarsRef = useRef([]);
@@ -139,7 +139,7 @@ export default function MobileGrowth() {
 
       <div className="max-w-6xl mx-auto">
 
-        {/* ================= HERO ================= */}
+        {/*  HERO  */}
         <div className="text-center max-w-3xl mx-auto">
           <p className="text-cyan-400 text-sm mb-3">
             Designed to rank & retain
@@ -158,7 +158,7 @@ export default function MobileGrowth() {
           </p>
         </div>
 
-        {/* ================= PILLARS ================= */}
+        {/*  PILLARS  */}
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {pillars.map((item, i) => {
             const Icon = item.icon;
@@ -177,7 +177,7 @@ export default function MobileGrowth() {
           })}
         </div>
 
-        {/* ================= SERVICES ================= */}
+        {/*  SERVICES  */}
         <div className="mt-20 space-y-10">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-bold">
@@ -210,7 +210,7 @@ export default function MobileGrowth() {
           })}
         </div>
 
-        {/* ================= TECH STACK ================= */}
+        {/*  TECH STACK  */}
         <div className="mt-20 text-center">
           <h3 className="text-2xl md:text-4xl font-bold">
             Engineering Stack for{" "}

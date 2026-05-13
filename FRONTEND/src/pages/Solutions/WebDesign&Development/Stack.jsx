@@ -13,7 +13,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= DATA =================
+//  DATA 
 const techStack = [
   "PHP 8+ & Laravel",
   "React & Vue",
@@ -130,7 +130,7 @@ export default function Stack() {
 
       <div className="max-w-6xl mx-auto">
 
-        {/* ================= TECH STACK ================= */}
+        {/*  TECH STACK  */}
         <div className="text-center">
           <h2 className="text-3xl md:text-5xl font-bold">
             Technology Stack that Keeps You{" "}
@@ -159,7 +159,7 @@ export default function Stack() {
           </div>
         </div>
 
-        {/* ================= AGILE DELIVERY ================= */}
+        {/*  AGILE DELIVERY  */}
         <div
           ref={agileRef}
           className="mt-24 grid lg:grid-cols-2 gap-14 items-center"
@@ -202,7 +202,7 @@ export default function Stack() {
           </motion.div>
         </div>
 
-        {/* ================= WHY CHOOSE ================= */}
+        {/*  WHY CHOOSE  */}
         <div className="mt-24">
           <h3 className="text-2xl md:text-4xl font-bold text-center">
             Why Brands Choose{" "}

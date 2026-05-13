@@ -17,7 +17,7 @@ const playbooks = [
 export default function PlaybooksHero() {
   const ref = useRef(null);
 
-  // 🔥 Parallax
+  //  Parallax
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -63,7 +63,7 @@ export default function PlaybooksHero() {
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-14 items-center">
 
-        {/* ================= LEFT ================= */}
+        {/*  LEFT  */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -131,7 +131,7 @@ export default function PlaybooksHero() {
           </div>
         </motion.div>
 
-        {/* ================= RIGHT ================= */}
+        {/*  RIGHT  */}
         <motion.div
           initial={{ opacity: 0, x: 60 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -175,7 +175,7 @@ export default function PlaybooksHero() {
       </div>
 
       {/* ✨ Gradient Animation */}
-      <style jsx>{`
+      <style >{`
         .animate-gradient {
           background-size: 200% auto;
           animation: gradientMove 4s linear infinite;

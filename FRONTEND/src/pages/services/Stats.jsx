@@ -53,7 +53,7 @@ export default function Stats() {
   );
 }
 
-// ================= CARD =================
+//  CARD 
 function StatCard({ item, isInView, index }) {
   const [value, setValue] = useState(0);
 
@@ -123,7 +123,7 @@ function StatCard({ item, isInView, index }) {
 
 // gsap.registerPlugin(ScrollTrigger);
 
-// /* 🔥 Data */
+// /*  Data */
 // const statsData = [
 //   { id: 1, value: 120, suffix: "+", label: "Digital Launches" },
 //   { id: 2, value: 35, suffix: "%", label: "CAC Reduction" },
@@ -196,7 +196,7 @@ function StatCard({ item, isInView, index }) {
 //       ref={sectionRef}
 //       className="relative py-20 px-6 md:px-16 bg-gradient-to-br from-[#1A202C] via-[#2D374E] to-[#4A5568]"
 //     >
-//       {/* 🔥 GRID */}
+//       {/*  GRID */}
 //       <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
 
 //         {statsData.map((item) => (
@@ -213,7 +213,7 @@ function StatCard({ item, isInView, index }) {
 //             {/* 💎 Glass Card */}
 //             <div className="relative p-8 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl overflow-hidden">
 
-//               {/* 🔥 Hover Glow */}
+//               {/*  Hover Glow */}
 //               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-[radial-gradient(circle_at_center,rgba(200,255,0,0.15),transparent)]" />
 
 //               {/* ✨ Edge Glow */}

@@ -13,7 +13,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= DATA =================
+//  DATA 
 const features = [
   {
     title: "Listing Excellence",
@@ -57,7 +57,7 @@ const platforms = [
   "ERP, WMS & APIs",
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function MarketplaceSection() {
   const sectionRef = useRef(null);
   const featureRef = useRef([]);
@@ -124,7 +124,7 @@ export default function MarketplaceSection() {
 
       <div className="max-w-6xl mx-auto">
 
-        {/* ================= HERO ================= */}
+        {/*  HERO  */}
         <div className="text-center max-w-3xl mx-auto">
           <p className="text-cyan-400 text-sm mb-3">
             Optimised to win the buy box
@@ -143,7 +143,7 @@ export default function MarketplaceSection() {
           </p>
         </div>
 
-        {/* ================= FEATURES ================= */}
+        {/*  FEATURES  */}
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((item, i) => {
             const Icon = item.icon;
@@ -164,7 +164,7 @@ export default function MarketplaceSection() {
           })}
         </div>
 
-        {/* ================= SERVICES ================= */}
+        {/*  SERVICES  */}
         <div className="mt-20">
           <h3 className="text-2xl md:text-4xl font-bold text-center">
             Marketplace Management Services
@@ -191,7 +191,7 @@ export default function MarketplaceSection() {
           </div>
         </div>
 
-        {/* ================= PLATFORMS ================= */}
+        {/*  PLATFORMS  */}
         <div className="mt-20 text-center">
           <h3 className="text-2xl md:text-4xl font-bold">
             Technology & Integrations

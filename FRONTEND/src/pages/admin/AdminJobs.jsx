@@ -503,7 +503,7 @@ export default function AdminJobs() {
       </div>
 
       {/* INPUT STYLE */}
-      <style jsx>{`
+      <style >{`
         .input {
           background: rgba(
             255,

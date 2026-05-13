@@ -13,7 +13,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= DATA =================
+//  DATA 
 const pillars = [
   {
     title: "SEO & Content",
@@ -55,7 +55,7 @@ const services = [
   },
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function MarketingSection() {
   const sectionRef = useRef(null);
   const pillarRef = useRef([]);
@@ -118,7 +118,7 @@ export default function MarketingSection() {
 
       <div className="max-w-6xl mx-auto">
 
-        {/* ================= HERO ================= */}
+        {/*  HERO  */}
         <div className="text-center max-w-3xl mx-auto">
           <p className="text-cyan-400 text-sm mb-3">
             Built to dominate SERPs
@@ -137,7 +137,7 @@ export default function MarketingSection() {
           </p>
         </div>
 
-        {/* ================= PILLARS ================= */}
+        {/*  PILLARS  */}
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {pillars.map((item, i) => {
             const Icon = item.icon;
@@ -162,7 +162,7 @@ export default function MarketingSection() {
           })}
         </div>
 
-        {/* ================= SERVICES ================= */}
+        {/*  SERVICES  */}
         <div className="mt-20">
           <h3 className="text-2xl md:text-4xl font-bold text-center">
             End-to-End Digital Marketing Services

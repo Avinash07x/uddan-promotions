@@ -11,7 +11,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= DATA =================
+//  DATA 
 const features = [
   {
     title: "Enterprise-grade portals",
@@ -35,7 +35,7 @@ const features = [
   },
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function CustomCapabilities() {
   const sectionRef = useRef(null);
   const leftRef = useRef(null);
@@ -95,7 +95,7 @@ export default function CustomCapabilities() {
 
       <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
 
-        {/* ================= LEFT ================= */}
+        {/*  LEFT  */}
         <div ref={leftRef}>
           <p className="text-cyan-400 text-sm mb-3">
             Custom Software Capabilities
@@ -109,7 +109,7 @@ export default function CustomCapabilities() {
           </h2>
         </div>
 
-        {/* ================= RIGHT CARDS ================= */}
+        {/*  RIGHT CARDS  */}
         <div className="grid sm:grid-cols-2 gap-6">
           {features.map((item, i) => {
             const Icon = item.icon;

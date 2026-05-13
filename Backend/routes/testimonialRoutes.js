@@ -4,7 +4,7 @@ import Testimonial from "../models/Testimonial.js";
 const router = express.Router();
 
 
-// ================= GET ALL =================
+//  GET ALL 
 router.get("/", async (req, res) => {
   try {
     const testimonials =
@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
 });
 
 
-// ================= CREATE =================
+//  CREATE 
 router.post("/", async (req, res) => {
   try {
     const {
@@ -76,7 +76,7 @@ router.post("/", async (req, res) => {
 });
 
 
-// ================= UPDATE =================
+//  UPDATE 
 router.put("/:id", async (req, res) => {
   try {
     const updated =
@@ -110,7 +110,7 @@ router.put("/:id", async (req, res) => {
 });
 
 
-// ================= DELETE =================
+//  DELETE 
 router.delete("/:id", async (req, res) => {
   try {
     const deleted =

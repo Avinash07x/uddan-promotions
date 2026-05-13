@@ -1,299 +1,169 @@
 import express from "express";
-import nodemailer from "nodemailer";
-
 import Contact from "../models/Contact.js";
-import ContactOptions from "../models/ContactOptions.js";
+import sendEmail from "../middleware/sendEmail.js";
 
 const router = express.Router();
 
-/* ================= EMAIL ================= */
-
-const transporter =
-  nodemailer.createTransport({
-    service: "gmail",
-
-    auth: {
-      user:
-        process.env.EMAIL_USER,
-
-      pass:
-        process.env.EMAIL_PASS,
-    },
-  });
-
-/* ================= GET OPTIONS ================= */
-
-router.get(
-  "/options",
-  async (req, res) => {
-    try {
-      let options =
-        await ContactOptions.findOne();
-
-      if (!options) {
-        options =
-          await ContactOptions.create({
-            helpOptions: [
-              "Web Development",
-              "Mobile App",
-              "Digital Marketing",
-              "UI/UX Design",
-              "SEO",
-              "AI Automation",
-            ],
-
-            budgetOptions: [
-              "₹10k - ₹50k",
-              "₹50k - ₹1L",
-              "₹1L - ₹5L",
-              "₹5L+",
-            ],
-
-            goLiveOptions: [
-              "Immediately",
-              "1 Month",
-              "2-3 Months",
-              "Flexible",
-            ],
-
-            preferredContactOptions:
-              [
-                "Email",
-                "Phone",
-                "WhatsApp",
-                "Google Meet",
-              ],
-
-            bestTimeOptions: [
-              "Morning",
-              "Afternoon",
-              "Evening",
-            ],
-          });
-      }
-
-      res.json({
-        success: true,
-        options,
-      });
-    } catch (error) {
-      res.status(500).json({
-        success: false,
-        message:
-          error.message,
-      });
-    }
-  }
-);
-
-/* ================= GET CONTACTS ================= */
-
+//  GET ALL 
 router.get("/", async (req, res) => {
   try {
-    const contacts =
-      await Contact.find().sort({
-        createdAt: -1,
-      });
+    const contacts = await Contact.find().sort({ createdAt: -1 });
 
-    res.json({
+    return res.status(200).json({
       success: true,
       contacts,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message:
-        error.message,
+      message: error.message,
     });
   }
 });
 
-/* ================= CREATE CONTACT ================= */
 
+//  CREATE 
 router.post("/", async (req, res) => {
   try {
-    const contact =
-      await Contact.create(
-        req.body
-      );
-
-    /* EMAIL TO ADMIN */
-
-    await transporter.sendMail({
-      from:
-        process.env.EMAIL_USER,
-
-      to:
-        process.env.EMAIL_USER,
-
-      subject:
-        "New Contact Inquiry",
-
-      html: `
-        <h2>New Inquiry</h2>
-
-        <p><b>Name:</b> ${contact.name}</p>
-
-        <p><b>Company:</b> ${contact.company}</p>
-
-        <p><b>Email:</b> ${contact.email}</p>
-
-        <p><b>Phone:</b> ${contact.phone}</p>
-
-        <p><b>Help Type:</b> ${contact.helpType}</p>
-
-        <p><b>Budget:</b> ${contact.budget}</p>
-
-        <p><b>Go Live:</b> ${contact.targetGoLive}</p>
-
-        <p><b>Preferred Contact:</b> ${contact.preferredContact}</p>
-
-        <p><b>Best Time:</b> ${contact.bestTime}</p>
-
-        <p><b>Message:</b></p>
-
-        <p>${contact.message}</p>
-      `,
+    const contact = await Contact.create({
+      ...req.body,
+      status: "unread",
     });
 
-    res.json({
+    return res.status(201).json({
       success: true,
       contact,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message:
-        error.message,
+      message: error.message,
     });
   }
 });
 
-/* ================= MARK READ ================= */
 
-router.put(
-  "/read/:id",
-  async (req, res) => {
-    try {
-      const contact =
-        await Contact.findByIdAndUpdate(
-          req.params.id,
-          {
-            status: "read",
-          },
-          {
-            new: true,
-          }
-        );
+//  MARK AS READ 
+router.put("/read/:id", async (req, res) => {
+  try {
+    const contact = await Contact.findByIdAndUpdate(
+      req.params.id,
+      { status: "read" },
+      { new: true }
+    );
 
-      res.json({
-        success: true,
-        contact,
-      });
-    } catch (error) {
-      res.status(500).json({
+    if (!contact) {
+      return res.status(404).json({
         success: false,
-        message:
-          error.message,
+        message: "Contact not found",
       });
     }
+
+    return res.status(200).json({
+      success: true,
+      contact,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
-);
+});
 
-/* ================= REPLY ================= */
 
-router.post(
-  "/reply/:id",
-  async (req, res) => {
-    try {
-      const { message } =
-        req.body;
+//  REPLY 
+router.post("/reply/:id", async (req, res) => {
+  try {
+    const { message } = req.body;
 
-      const contact =
-        await Contact.findById(
-          req.params.id
-        );
+    if (!message) {
+      return res.status(400).json({
+        success: false,
+        message: "Message is required",
+      });
+    }
 
-      if (!contact) {
-        return res.status(404).json({
-          success: false,
-          message:
-            "Contact not found",
-        });
-      }
+    const contact = await Contact.findById(req.params.id);
 
-      contact.reply = {
-        message,
-      };
+    if (!contact) {
+      return res.status(404).json({
+        success: false,
+        message: "Contact not found",
+      });
+    }
 
-      contact.status =
-        "replied";
+    // update DB first
+    contact.status = "replied";
+    contact.reply = {
+      message,
+      repliedAt: new Date(),
+    };
 
-      await contact.save();
+    await contact.save();
 
-      /* SEND EMAIL */
+    // send response immediately
+    res.status(200).json({
+      success: true,
+      message: "Reply saved successfully",
+      contact,
+    });
 
-      await transporter.sendMail({
-        from:
-          process.env.EMAIL_USER,
-
-        to: contact.email,
-
-        subject:
-          "Reply From Uddan Promotions",
-
-        html: `
-          <div style="font-family:sans-serif">
-            <h2>Hello ${contact.name}</h2>
-
-            <p>${message}</p>
-
-            <br/>
-
-            <p>
-              Regards,
+    // email background (non-blocking safe)
+    setImmediate(async () => {
+      try {
+        await sendEmail({
+          to: contact.email,
+          subject: "Reply from Uddan Promotions",
+          html: `
+            <div style="font-family:Arial;padding:20px">
+              <h2>Hello ${contact.name},</h2>
+              <p>${message}</p>
               <br/>
-              Uddan Promotions
-            </p>
-          </div>
-        `,
-      });
+              <p>Regards,<br/><b>Uddan Promotions Team</b></p>
+            </div>
+          `,
+        });
 
-      res.json({
-        success: true,
-        contact,
-      });
-    } catch (error) {
-      res.status(500).json({
+        console.log("✅ Email sent successfully");
+      } catch (err) {
+        console.log("❌ Email failed:", err.message);
+      }
+    });
+
+  } catch (error) {
+    console.log("❌ REPLY ERROR:", error.message);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+
+//  DELETE 
+router.delete("/:id", async (req, res) => {
+  try {
+    const deleted = await Contact.findByIdAndDelete(req.params.id);
+
+    if (!deleted) {
+      return res.status(404).json({
         success: false,
-        message:
-          error.message,
+        message: "Contact not found",
       });
     }
+
+    return res.status(200).json({
+      success: true,
+      message: "Deleted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
-);
-
-/* ================= DELETE ================= */
-
-router.delete(
-  "/:id",
-  async (req, res) => {
-    try {
-      await Contact.findByIdAndDelete(
-        req.params.id
-      );
-
-      res.json({
-        success: true,
-      });
-    } catch (error) {
-      res.status(500).json({
-        success: false,
-        message:
-          error.message,
-      });
-    }
-  }
-);
+});
 
 export default router;

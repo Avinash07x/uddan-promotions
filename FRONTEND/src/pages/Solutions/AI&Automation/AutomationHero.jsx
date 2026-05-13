@@ -11,7 +11,7 @@ const badges = [
 export default function AutomationHero() {
   const ref = useRef(null);
 
-  // 🔥 Scroll Parallax
+  //  Scroll Parallax
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -24,7 +24,7 @@ export default function AutomationHero() {
       ref={ref}
       className="relative overflow-hidden bg-gradient-to-br from-[#1e293b] via-[#1e3a8a] to-[#0B1220] text-white py-24 px-6 md:px-16"
     >
-      {/* 🔥 Glow Background */}
+      {/*  Glow Background */}
       <motion.div
         style={{ y }}
         className="absolute top-[-120px] left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-indigo-500/20 blur-3xl rounded-full"
@@ -32,7 +32,7 @@ export default function AutomationHero() {
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-14 items-center">
         
-        {/* ================= LEFT ================= */}
+        {/*  LEFT  */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -58,7 +58,7 @@ export default function AutomationHero() {
             shipping faster with confidence.
           </p>
 
-          {/* 🔥 Badges */}
+          {/*  Badges */}
           {/* <div className="flex flex-wrap gap-3 mt-6">
             {badges.map((b, i) => (
               <motion.span
@@ -97,7 +97,7 @@ export default function AutomationHero() {
           </div>
         </motion.div>
 
-        {/* ================= RIGHT ================= */}
+        {/*  RIGHT  */}
         <motion.div
           initial={{ opacity: 0, x: 60 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -114,7 +114,7 @@ export default function AutomationHero() {
               </h3>
             </div>
 
-            {/* 🔥 Animated Dashboard */}
+            {/*  Animated Dashboard */}
             <div className="bg-gradient-to-br from-indigo-200/20 to-blue-300/20 p-6 rounded-xl space-y-4">
 
               {/* Code Block */}

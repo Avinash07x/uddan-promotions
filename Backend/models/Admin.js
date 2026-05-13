@@ -4,6 +4,7 @@ const adminSchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      required: true,
     },
 
     email: {
@@ -16,8 +17,16 @@ const adminSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
+    role: {
+      type: String,
+      default: "admin",
+    },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("Admin", adminSchema);
+export default mongoose.model(
+  "Admin",
+  adminSchema
+);

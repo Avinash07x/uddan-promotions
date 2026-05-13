@@ -17,7 +17,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 
 
-// ================= DATA =================
+//  DATA 
 const capabilities = [
   {
     title: "Discovery & Product Strategy",
@@ -64,7 +64,7 @@ const whyChoose = [
   },
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function Software() {
   const sectionRef = useRef(null);
   const capRef = useRef([]);
@@ -139,7 +139,7 @@ export default function Software() {
     >
       <div className="max-w-6xl mx-auto">
 
-        {/* ================= HERO ================= */}
+        {/*  HERO  */}
         <div className="max-w-4xl mx-auto text-center">
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
@@ -187,7 +187,7 @@ export default function Software() {
           </motion.p>
         </div>
 
-        {/* ================= CAPABILITIES ================= */}
+        {/*  CAPABILITIES  */}
         <div className="mt-16 space-y-8">
           {capabilities.map((item, i) => {
             const Icon = item.icon;
@@ -213,7 +213,7 @@ export default function Software() {
           })}
         </div>
 
-        {/* ================= SEO BLOCK ================= */}
+        {/*  SEO BLOCK  */}
         <div className="mt-20 p-8 rounded-2xl bg-white/5 border border-white/10">
           <h3 className="text-xl font-semibold">
             What makes our custom software pages rank?
@@ -226,7 +226,7 @@ export default function Software() {
           </ul>
         </div>
 
-        {/* ================= STATS ================= */}
+        {/*  STATS  */}
         <div
           ref={statsRef}
           className="mt-20 grid sm:grid-cols-2 gap-10 text-center"
@@ -250,7 +250,7 @@ export default function Software() {
           </div>
         </div>
 
-        {/* ================= WHY ================= */}
+        {/*  WHY  */}
                 <div className="mt-20 sm:mt-24 text-center max-w-4xl mx-auto">
           <h2
             className="
@@ -275,7 +275,7 @@ export default function Software() {
           </p>
         </div>
 
-        {/* ================= WHY GRID ================= */}
+        {/*  WHY GRID  */}
         <div
           className="
             mt-12

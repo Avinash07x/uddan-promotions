@@ -6,7 +6,7 @@ export default function ContactHero() {
     <section className="bg-[#0B1220] text-white py-24 px-6 md:px-16">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
 
-        {/* ================= LEFT ================= */}
+        {/*  LEFT  */}
         <div className="bg-[#0f172a] border border-white/10 rounded-2xl p-10 shadow-xl">
 
           {/* Tag */}
@@ -60,7 +60,7 @@ export default function ContactHero() {
           </div>
         </div>
 
-        {/* ================= RIGHT ================= */}
+        {/*  RIGHT  */}
         <div className="bg-[#0f172a] border border-white/10 rounded-2xl p-8 shadow-xl">
 
           <h3 className="text-lg font-semibold mb-6 text-white/80">

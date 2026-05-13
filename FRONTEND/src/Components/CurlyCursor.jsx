@@ -8,9 +8,9 @@ export default function CurlyCursor() {
     let particles = [];
     let lastTime = 0;
 
-    // ========================
+    // 
     // 🎯 Main Cursor Dot
-    // ========================
+    // 
     const cursor = document.createElement("div");
 
     Object.assign(cursor.style, {
@@ -27,9 +27,9 @@ export default function CurlyCursor() {
 
     document.body.appendChild(cursor);
 
-    // ========================
+    // 
     // ✨ Particle Create (FIXED ALIGN)
-    // ========================
+    // 
     const createParticle = (x, y) => {
       const el = document.createElement("span");
       el.innerHTML = "*";
@@ -57,14 +57,14 @@ export default function CurlyCursor() {
       };
     };
 
-    // ========================
+    // 
     // 🖱️ Mouse Move
-    // ========================
+    // 
     const move = (e) => {
       const x = e.clientX;
       const y = e.clientY;
 
-      // 🔥 dot EXACT same point
+      //  dot EXACT same point
       cursor.style.left = x + "px";
       cursor.style.top = y + "px";
 
@@ -84,9 +84,9 @@ export default function CurlyCursor() {
 
     window.addEventListener("mousemove", move);
 
-    // ========================
+    // 
     // 🎯 Animation Loop
-    // ========================
+    // 
     let rafId;
 
     const animate = () => {
@@ -111,9 +111,9 @@ export default function CurlyCursor() {
 
     animate();
 
-    // ========================
+    // 
     // 🧲 Hover Effect
-    // ========================
+    // 
     const hoverElements = document.querySelectorAll(
       "a, button, input, textarea"
     );
@@ -130,9 +130,9 @@ export default function CurlyCursor() {
       });
     });
 
-    // ========================
+    // 
     // 🧹 Cleanup
-    // ========================
+    // 
     return () => {
       window.removeEventListener("mousemove", move);
       cancelAnimationFrame(rafId);

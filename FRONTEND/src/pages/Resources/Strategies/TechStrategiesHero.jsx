@@ -5,7 +5,7 @@ import { BookOpen, MessageCircle, Zap } from "lucide-react";
 export default function TechStrategiesHero() {
   const [gradientX, setGradientX] = useState(0);
 
-  // 🔥 Moving gradient effect
+  //  Moving gradient effect
   useEffect(() => {
     const interval = setInterval(() => {
       setGradientX((prev) => (prev >= 100 ? 0 : prev + 1));
@@ -16,7 +16,7 @@ export default function TechStrategiesHero() {
   return (
     <section className="relative overflow-hidden bg-[#0B1220] text-white py-24 px-6 md:px-16">
 
-      {/* 🔥 Glow Background */}
+      {/*  Glow Background */}
       <div className="absolute top-[-120px] left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-cyan-500/20 blur-3xl rounded-full" />
 
       <div className="max-w-5xl mx-auto text-center">
@@ -80,7 +80,7 @@ export default function TechStrategiesHero() {
         </motion.div>
       </div>
 
-      {/* 🔥 Floating Knowledge Nodes */}
+      {/*  Floating Knowledge Nodes */}
       <motion.div
         animate={{ y: [0, -15, 0] }}
         transition={{ duration: 4, repeat: Infinity }}

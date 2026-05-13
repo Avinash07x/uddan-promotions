@@ -13,7 +13,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= DATA =================
+//  DATA 
 const capabilities = [
   {
     title: "Detection & Response",
@@ -55,7 +55,7 @@ const services = [
   },
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function CyberSecurityCapabilities() {
   const sectionRef = useRef(null);
   const capRef = useRef([]);
@@ -110,7 +110,7 @@ export default function CyberSecurityCapabilities() {
 
       <div className="max-w-6xl mx-auto">
 
-        {/* ================= HERO ================= */}
+        {/*  HERO  */}
         <div className="text-center max-w-3xl mx-auto">
           <p className="text-red-400 text-sm mb-3">
             Actionable insights for security & SEO teams
@@ -129,7 +129,7 @@ export default function CyberSecurityCapabilities() {
           </p>
         </div>
 
-        {/* ================= CAPABILITIES ================= */}
+        {/*  CAPABILITIES  */}
         <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {capabilities.map((item, i) => {
             const Icon = item.icon;
@@ -152,7 +152,7 @@ export default function CyberSecurityCapabilities() {
           })}
         </div>
 
-        {/* ================= SERVICES ================= */}
+        {/*  SERVICES  */}
         <div className="mt-24">
           <h3 className="text-2xl md:text-4xl font-bold text-center">
             Security Services Portfolio

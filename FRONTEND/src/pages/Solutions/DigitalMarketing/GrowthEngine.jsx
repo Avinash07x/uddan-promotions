@@ -13,7 +13,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= DATA =================
+//  DATA 
 const tools = [
   "Google Marketing Platform",
   "Meta & Instagram Ads",
@@ -57,7 +57,7 @@ const why = [
   },
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function GrowthEngine() {
   const sectionRef = useRef(null);
   const toolRef = useRef([]);
@@ -137,7 +137,7 @@ export default function GrowthEngine() {
 
       <div className="max-w-6xl mx-auto">
 
-        {/* ================= TOOLS ================= */}
+        {/*  TOOLS  */}
         <div className="text-center">
           <h2 className="text-3xl md:text-5xl font-bold">
             Platforms & Tool Stack
@@ -157,7 +157,7 @@ export default function GrowthEngine() {
           </div>
         </div>
 
-        {/* ================= FRAMEWORK ================= */}
+        {/*  FRAMEWORK  */}
         <div className="mt-24">
           <h3 className="text-2xl md:text-4xl font-bold text-center">
             Our Growth Framework
@@ -186,7 +186,7 @@ export default function GrowthEngine() {
           </div>
         </div>
 
-        {/* ================= WHY ================= */}
+        {/*  WHY  */}
         <div className="mt-24">
           <h3 className="text-2xl md:text-4xl font-bold text-center">
             Why High-Growth Brands Trust Us

@@ -22,12 +22,12 @@ export default function MarketingHero() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[#1e293b] via-[#1e3a8a] to-[#0B1220] text-white py-24 px-6 md:px-16">
 
-      {/* 🔥 Glow Background */}
+      {/*  Glow Background */}
       <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-blue-500/20 blur-3xl rounded-full" />
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-14 items-center">
 
-        {/* ================= LEFT ================= */}
+        {/*  LEFT  */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -53,7 +53,7 @@ export default function MarketingHero() {
             deliver marketing that ranks, converts and scales.
           </p>
 
-          {/* 🔥 Stats Badges */}
+          {/*  Stats Badges */}
           <div className="flex flex-wrap gap-3 mt-6">
             {badges.map((b, i) => (
               <motion.span
@@ -94,7 +94,7 @@ export default function MarketingHero() {
           </div>
         </motion.div>
 
-        {/* ================= RIGHT ================= */}
+        {/*  RIGHT  */}
         <motion.div
           initial={{ opacity: 0, x: 60, rotate: 2 }}
           whileInView={{ opacity: 1, x: 0, rotate: 0 }}
@@ -106,10 +106,10 @@ export default function MarketingHero() {
           className="relative"
         >
 
-          {/* 🔥 BACKGROUND GLOW */}
+          {/*  BACKGROUND GLOW */}
           <div className="absolute -inset-10 bg-blue-500/10 blur-3xl rounded-full" />
 
-          {/* 🔥 FLOATING IMAGE (ONLINE DASHBOARD MOCK) */}
+          {/*  FLOATING IMAGE (ONLINE DASHBOARD MOCK) */}
           <motion.img
             src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop"
             alt="Analytics Dashboard"
@@ -167,7 +167,7 @@ export default function MarketingHero() {
                   whileHover={{ scale: 1.05 }}
                   className="bg-pink-500/30 p-4 rounded-lg text-xs"
                 >
-                  Top Keywords 🔥
+                  Top Keywords 
                 </motion.div>
 
                 {/* CARD 4 */}
@@ -181,7 +181,7 @@ export default function MarketingHero() {
               </div>
             </div>
 
-            {/* 🔥 FLOATING TAG (UPGRADED) */}
+            {/*  FLOATING TAG (UPGRADED) */}
             <motion.div
               animate={{
                 y: [0, -10, 0],

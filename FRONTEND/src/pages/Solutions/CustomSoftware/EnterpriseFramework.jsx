@@ -19,7 +19,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ================= DATA =================
+//  DATA 
 const steps = [
   {
     title: "Discover & Align",
@@ -82,7 +82,7 @@ const extras = [
   },
 ];
 
-// ================= COMPONENT =================
+//  COMPONENT 
 export default function EnterpriseFramework() {
   const sectionRef = useRef(null);
   const stepRef = useRef([]);
@@ -146,7 +146,7 @@ export default function EnterpriseFramework() {
     >
       <div className="max-w-6xl mx-auto">
 
-        {/* ================= DELIVERY FRAMEWORK ================= */}
+        {/*  DELIVERY FRAMEWORK  */}
         <h2 className="text-3xl md:text-5xl font-bold text-center">
           Proven Delivery Framework
         </h2>
@@ -171,7 +171,7 @@ export default function EnterpriseFramework() {
           })}
         </div>
 
-        {/* ================= INDUSTRIES ================= */}
+        {/*  INDUSTRIES  */}
         <h3 className="mt-24 text-2xl md:text-4xl font-bold text-center">
           Industries We Empower
         </h3>
@@ -193,7 +193,7 @@ export default function EnterpriseFramework() {
           })}
         </div>
 
-        {/* ================= IMPACT ================= */}
+        {/*  IMPACT  */}
         <div className="mt-20 p-8 rounded-2xl bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border border-white/10 text-center">
           <p className="text-gray-300">
             A manufacturing client reduced manual reporting time by{" "}
@@ -206,7 +206,7 @@ export default function EnterpriseFramework() {
           </button>
         </div>
 
-        {/* ================= TECH STACK ================= */}
+        {/*  TECH STACK  */}
         <h3 className="mt-24 text-2xl md:text-4xl font-bold text-center">
           Technology Stack & Integrations
         </h3>
@@ -223,7 +223,7 @@ export default function EnterpriseFramework() {
           ))}
         </div>
 
-        {/* ================= EXTRA ================= */}
+        {/*  EXTRA  */}
         <div className="mt-20 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {extras.map((item, i) => {
             const Icon = item.icon;

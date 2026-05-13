@@ -7,13 +7,13 @@ import CompanyInfo from "../models/CompanyInfo.js";
 
 const router = express.Router();
 
-/* ================= CREATE UPLOAD FOLDER ================= */
+/*  CREATE UPLOAD FOLDER  */
 
 if (!fs.existsSync("uploads")) {
   fs.mkdirSync("uploads");
 }
 
-/* ================= MULTER STORAGE ================= */
+/*  MULTER STORAGE  */
 
 const storage =
   multer.diskStorage({
@@ -40,7 +40,7 @@ const storage =
     },
   });
 
-/* ================= MULTER ================= */
+/*  MULTER  */
 
 const upload = multer({
   storage,
@@ -82,7 +82,7 @@ const upload = multer({
   },
 });
 
-/* ================= UPLOAD LOGO ================= */
+/*  UPLOAD LOGO  */
 
 router.post(
   "/upload-logo",
@@ -114,7 +114,7 @@ router.post(
   }
 );
 
-/* ================= GET ================= */
+/*  GET  */
 
 router.get("/", async (req, res) => {
   try {
@@ -134,7 +134,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-/* ================= CREATE / UPDATE ================= */
+/*  CREATE / UPDATE  */
 
 router.post("/", async (req, res) => {
   try {

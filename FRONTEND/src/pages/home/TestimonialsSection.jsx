@@ -3,7 +3,7 @@ import React, {
   useState,
 } from "react";
 
-/* ================= CARD ================= */
+/*  CARD  */
 const TestimonialCard = ({
   item,
 }) => {
@@ -41,7 +41,7 @@ const TestimonialCard = ({
   );
 };
 
-/* ================= MARQUEE ================= */
+/*  MARQUEE  */
 const MarqueeRow = ({
   items,
   reverse,
@@ -70,7 +70,7 @@ const MarqueeRow = ({
   );
 };
 
-/* ================= MAIN ================= */
+/*  MAIN  */
 export default function TestimonialsSection() {
   const [testimonials, setTestimonials] =
     useState([]);
@@ -141,7 +141,7 @@ export default function TestimonialsSection() {
         )}
       </div>
 
-      <style jsx>{`
+      <style >{`
         @keyframes marquee {
           0% {
             transform: translateX(0%);

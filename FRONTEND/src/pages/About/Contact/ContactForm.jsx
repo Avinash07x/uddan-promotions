@@ -42,23 +42,19 @@ export default function ContactForm() {
 
   /* ================= FETCH OPTIONS ================= */
 
-  const fetchOptions =
-    async () => {
-      try {
-        const res = await fetch(
-          "http://localhost:5000/api/contact/options"
-        );
+  const fetchOptions = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/contact/options");
 
-        const data =
-          await res.json();
+      const data = await res.json();
 
-        if (data.success) {
-          setOptions(data.options);
-        }
-      } catch (error) {
-        console.log(error);
+      if (data.success && data.options) {
+        setOptions(data.options);
       }
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   /* ================= FETCH COMPANY INFO ================= */
 
@@ -241,9 +237,7 @@ export default function ContactForm() {
                 onChange={
                   handleChange
                 }
-                options={
-                  options?.helpOptions
-                }
+                options={(options?.helpOptions || [])}
               />
 
               <Select
@@ -255,9 +249,7 @@ export default function ContactForm() {
                 onChange={
                   handleChange
                 }
-                options={
-                  options?.budgetOptions
-                }
+                options={options?.budgetOptions || []}
               />
 
               <Select
@@ -269,9 +261,7 @@ export default function ContactForm() {
                 onChange={
                   handleChange
                 }
-                options={
-                  options?.goLiveOptions
-                }
+                options={options?.goLiveOptions || []}
               />
 
               <Select
@@ -283,9 +273,7 @@ export default function ContactForm() {
                 onChange={
                   handleChange
                 }
-                options={
-                  options?.preferredContactOptions
-                }
+                options={options?.preferredContactOptions || []}
               />
 
               <Select
@@ -297,10 +285,8 @@ export default function ContactForm() {
                 onChange={
                   handleChange
                 }
-                options={
-                  options?.bestTimeOptions
-                }
-              />
+                options={options?.bestTimeOptions || []}
+                />
 
             </div>
 

@@ -11,24 +11,28 @@ import {
   Clock3,
   BadgeDollarSign,
   MessageSquare,
-  Calendar,
-  Globe,
-  User,
   X,
 } from "lucide-react";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
+const API = "http://localhost:5000";
+
 export default function AdminContacts() {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [selectedContact, setSelectedContact] = useState(null);
-  const [replyMessage, setReplyMessage] = useState("");
-  const [replyLoading, setReplyLoading] = useState(false);
+  const [selectedContact, setSelectedContact] =
+    useState(null);
 
-  /* ================= FETCH CONTACTS ================= */
+  const [replyMessage, setReplyMessage] =
+    useState("");
+
+  const [replyLoading, setReplyLoading] =
+    useState(false);
+
+  /*  FETCH CONTACTS  */
 
   useEffect(() => {
     fetchContacts();
@@ -38,10 +42,11 @@ export default function AdminContacts() {
     try {
       setLoading(true);
 
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token");
 
       const res = await fetch(
-        "http://localhost:5000/api/contact",
+        `${API}/api/contact`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -49,19 +54,33 @@ export default function AdminContacts() {
         }
       );
 
-      const data = await res.json();
+      let data = {};
+      try {
+        data = await res.json();
+      } catch (err) {
+        console.log("Invalid JSON response");
+      }
+
+      if (!res.ok) {
+        return alert(
+          data.message ||
+            "Failed to fetch contacts"
+        );
+      }
 
       if (data.success) {
-        setContacts(data.contacts);
+        setContacts(data.contacts || []);
       }
     } catch (error) {
       console.log(error);
+
+      alert("Server Error");
     } finally {
       setLoading(false);
     }
   };
 
-  /* ================= DELETE ================= */
+  /*  DELETE  */
 
   const deleteContact = async (id) => {
     const confirmDelete = window.confirm(
@@ -71,10 +90,11 @@ export default function AdminContacts() {
     if (!confirmDelete) return;
 
     try {
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token");
 
       const res = await fetch(
-        `http://localhost:5000/api/contact/${id}`,
+        `${API}/api/contact/${id}`,
         {
           method: "DELETE",
 
@@ -84,30 +104,52 @@ export default function AdminContacts() {
         }
       );
 
-      const data = await res.json();
+      let data = {};
+      try {
+        data = await res.json();
+      } catch (err) {
+        console.log("Invalid JSON response");
+      }
+
+      if (!res.ok) {
+        return alert(
+          data.message || "Delete failed"
+        );
+      }
 
       if (data.success) {
         setContacts((prev) =>
-          prev.filter((item) => item._id !== id)
+          prev.filter(
+            (item) => item._id !== id
+          )
         );
 
-        if (selectedContact?._id === id) {
+        if (
+          selectedContact?._id === id
+        ) {
           setSelectedContact(null);
         }
+
+        alert(
+          "Contact deleted successfully"
+        );
       }
     } catch (error) {
       console.log(error);
+
+      alert("Server Error");
     }
   };
 
-  /* ================= MARK READ ================= */
+  /*  MARK READ  */
 
   const markAsRead = async (id) => {
     try {
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token");
 
-      await fetch(
-        `http://localhost:5000/api/contact/read/${id}`,
+      const res = await fetch(
+        `${API}/api/contact/read/${id}`,
         {
           method: "PUT",
 
@@ -116,17 +158,27 @@ export default function AdminContacts() {
           },
         }
       );
+
+      try {
+        await res.json();
+      } catch (err) {
+        console.log("Invalid JSON response");
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  /* ================= OPEN CONTACT ================= */
+  /*  OPEN CONTACT  */
 
-  const openContact = async (contact) => {
+  const openContact = async (
+    contact
+  ) => {
     setReplyMessage("");
 
-    if (contact.status === "unread") {
+    if (
+      contact.status === "unread"
+    ) {
       await markAsRead(contact._id);
 
       const updatedContact = {
@@ -134,7 +186,9 @@ export default function AdminContacts() {
         status: "read",
       };
 
-      setSelectedContact(updatedContact);
+      setSelectedContact(
+        updatedContact
+      );
 
       setContacts((prev) =>
         prev.map((item) =>
@@ -148,52 +202,94 @@ export default function AdminContacts() {
     }
   };
 
-  /* ================= SEND REPLY ================= */
+  /*  SEND REPLY  */
 
   const sendReply = async () => {
-    if (!replyMessage.trim()) {
-      return alert("Please write reply message");
+    if (
+      !replyMessage.trim()
+    ) {
+      return alert(
+        "Please write reply message"
+      );
+    }
+
+    if (!selectedContact?._id) {
+      return alert(
+        "Contact not selected"
+      );
     }
 
     try {
       setReplyLoading(true);
 
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token");
 
       const res = await fetch(
-        `http://localhost:5000/api/contact/reply/${selectedContact._id}`,
+        `${API}/api/contact/reply/${selectedContact._id}`,
         {
           method: "POST",
 
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type":
+              "application/json",
+
             Authorization: `Bearer ${token}`,
           },
 
           body: JSON.stringify({
-            message: replyMessage,
+            message:
+              replyMessage.trim(),
           }),
         }
       );
 
-      const data = await res.json();
+      /* ===== FIX JSON ERROR ===== */
+
+      let data = {};
+
+      try {
+        data = await res.json();
+      } catch (err) {
+        console.log(
+          "Invalid JSON response"
+        );
+      }
+
+      /* ===== ERROR ===== */
+
+      if (!res.ok) {
+        return alert(
+          data.message ||
+            `Server Error (${res.status})`
+        );
+      }
+
+      /* ===== SUCCESS ===== */
 
       if (data.success) {
         const updatedContact = {
           ...selectedContact,
+
           status: "replied",
 
           reply: {
-            message: replyMessage,
-            repliedAt: new Date(),
+            message:
+              replyMessage,
+
+            repliedAt:
+              new Date(),
           },
         };
 
-        setSelectedContact(updatedContact);
+        setSelectedContact(
+          updatedContact
+        );
 
         setContacts((prev) =>
           prev.map((item) =>
-            item._id === selectedContact._id
+            item._id ===
+            selectedContact._id
               ? updatedContact
               : item
           )
@@ -201,59 +297,79 @@ export default function AdminContacts() {
 
         setReplyMessage("");
 
-        alert("Reply Sent Successfully 🚀");
+        alert(
+          "Reply Sent Successfully 🚀"
+        );
       }
     } catch (error) {
       console.log(error);
+
+      alert(
+        "Server Error while sending reply"
+      );
     } finally {
       setReplyLoading(false);
     }
   };
 
-  /* ================= FILTER ================= */
+  /*  FILTER  */
 
-  const filteredContacts = contacts.filter((item) => {
-    const value = search.toLowerCase();
+  const filteredContacts =
+    contacts.filter((item) => {
+      const value =
+        search.toLowerCase();
 
-    return (
-      item.name?.toLowerCase().includes(value) ||
-      item.email?.toLowerCase().includes(value) ||
-      item.phone?.toLowerCase().includes(value)
-    );
-  });
+      return (
+        item.name
+          ?.toLowerCase()
+          .includes(value) ||
+        item.email
+          ?.toLowerCase()
+          .includes(value) ||
+        item.phone
+          ?.toLowerCase()
+          .includes(value)
+      );
+    });
 
   return (
-    <section className="min-h-screen p-4 sm:p-6 lg:p-10 text-white bg-[#0B1120]">
+    <section className="min-h-screen bg-[#0B1120] text-white p-4 sm:p-6 lg:p-10">
 
-      {/* ================= HEADER ================= */}
+      {/*  HEADER  */}
 
-      <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-5 mb-8">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 mb-8">
 
         <div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black">
+
+          <h2 className="text-3xl sm:text-4xl font-black">
             Contact Messages
           </h2>
 
-          <p className="text-white/50 mt-2 text-sm sm:text-base">
-            Manage enquiries, replies & contact status
+          <p className="text-white/50 mt-2">
+            Manage enquiries, replies &
+            contact status
           </p>
+
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3 w-full xl:w-auto">
+        <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
 
           {/* SEARCH */}
 
           <div className="relative w-full sm:w-[320px]">
 
             <Search
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40"
               size={18}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40"
             />
 
             <input
+              type="text"
               value={search}
               onChange={(e) =>
-                setSearch(e.target.value)
+                setSearch(
+                  e.target.value
+                )
               }
               placeholder="Search contacts..."
               className="w-full bg-white/5 border border-white/10 rounded-2xl pl-11 pr-4 py-3 outline-none focus:border-cyan-400 transition"
@@ -278,11 +394,11 @@ export default function AdminContacts() {
 
       </div>
 
-      {/* ================= TABLE / CARDS ================= */}
+      {/*  TABLE  */}
 
       <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden">
 
-        {/* TABLE HEAD */}
+        {/* TABLE HEADER */}
 
         <div className="hidden lg:grid grid-cols-12 gap-4 p-5 border-b border-white/10 text-white/50 text-sm font-semibold">
 
@@ -314,147 +430,135 @@ export default function AdminContacts() {
           <div className="py-24 text-center text-white/50">
             Loading contacts...
           </div>
-        ) : filteredContacts.length === 0 ? (
+        ) : filteredContacts.length ===
+          0 ? (
           <div className="py-24 text-center text-white/40">
             No contacts found
           </div>
         ) : (
           <div className="divide-y divide-white/10">
 
-            {filteredContacts.map((contact, index) => (
-              <motion.div
-                key={contact._id}
-                initial={{
-                  opacity: 0,
-                  y: 15,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  delay: index * 0.03,
-                }}
+            {filteredContacts.map(
+              (contact, index) => (
+                <motion.div
+                  key={contact._id}
+                  initial={{
+                    opacity: 0,
+                    y: 15,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    delay:
+                      index * 0.03,
+                  }}
+                  className="grid grid-cols-1 lg:grid-cols-12 gap-5 p-5 hover:bg-white/5 transition"
+                >
 
-                className="
-                  p-5
-                  hover:bg-white/5
-                  transition
-                  grid
-                  grid-cols-1
-                  lg:grid-cols-12
-                  gap-5
-                "
-              >
+                  {/* USER */}
 
-                {/* USER */}
+                  <div className="lg:col-span-3">
 
-                <div className="lg:col-span-3">
+                    <h3 className="font-semibold break-words">
+                      {contact.name}
+                    </h3>
 
-                  <div className="flex items-center gap-3">
-
-                    <div className="w-11 h-11 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
-
-                      <User size={20} className="text-cyan-400" />
-
-                    </div>
-
-                    <div>
-
-                      <h3 className="font-semibold text-white break-words">
-                        {contact.name}
-                      </h3>
-
-                      <p className="text-xs text-white/40 mt-1">
-                        {new Date(
-                          contact.createdAt
-                        ).toLocaleDateString()}
-                      </p>
-
-                    </div>
+                    <p className="text-xs text-white/40 mt-1">
+                      {new Date(
+                        contact.createdAt
+                      ).toLocaleDateString()}
+                    </p>
 
                   </div>
 
-                </div>
+                  {/* EMAIL */}
 
-                {/* EMAIL */}
+                  <div className="lg:col-span-3 flex items-center gap-2 text-white/70 break-all">
 
-                <div className="lg:col-span-3 flex items-center gap-2 text-white/70 break-all">
+                    <Mail size={16} />
 
-                  <Mail size={16} />
+                    {contact.email}
 
-                  {contact.email}
+                  </div>
 
-                </div>
+                  {/* PHONE */}
 
-                {/* PHONE */}
+                  <div className="lg:col-span-2 flex items-center gap-2 text-white/70">
 
-                <div className="lg:col-span-2 flex items-center gap-2 text-white/70">
+                    <Phone size={16} />
 
-                  <Phone size={16} />
+                    {contact.phone ||
+                      "N/A"}
 
-                  {contact.phone || "N/A"}
+                  </div>
 
-                </div>
+                  {/* STATUS */}
 
-                {/* STATUS */}
+                  <div className="lg:col-span-2 flex items-center">
 
-                <div className="lg:col-span-2 flex items-center">
-
-                  <span
-                    className={`
-                      px-3 py-1 rounded-full text-xs font-semibold capitalize border
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-semibold capitalize border
                       ${
-                        contact.status === "unread"
+                        contact.status ===
+                        "unread"
                           ? "bg-red-500/20 text-red-400 border-red-500/20"
-                          : contact.status === "read"
+                          : contact.status ===
+                            "read"
                           ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/20"
                           : "bg-green-500/20 text-green-400 border-green-500/20"
+                      }`}
+                    >
+                      {contact.status}
+                    </span>
+
+                  </div>
+
+                  {/* ACTIONS */}
+
+                  <div className="lg:col-span-2 flex lg:justify-end gap-3">
+
+                    <button
+                      onClick={() =>
+                        openContact(
+                          contact
+                        )
                       }
-                    `}
-                  >
-                    {contact.status}
-                  </span>
+                      className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center hover:bg-cyan-500/20 transition"
+                    >
 
-                </div>
+                      <Eye size={18} />
 
-                {/* ACTIONS */}
+                    </button>
 
-                <div className="lg:col-span-2 flex lg:justify-end gap-3">
+                    <button
+                      onClick={() =>
+                        deleteContact(
+                          contact._id
+                        )
+                      }
+                      className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center justify-center hover:bg-red-500/20 transition"
+                    >
 
-                  <button
-                    onClick={() =>
-                      openContact(contact)
-                    }
-                    className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center hover:bg-cyan-500/20 transition"
-                  >
+                      <Trash2
+                        size={18}
+                      />
 
-                    <Eye size={18} />
+                    </button>
 
-                  </button>
+                  </div>
 
-                  <button
-                    onClick={() =>
-                      deleteContact(contact._id)
-                    }
-                    className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center justify-center hover:bg-red-500/20 transition"
-                  >
-
-                    <Trash2 size={18} />
-
-                  </button>
-
-                </div>
-
-              </motion.div>
-            ))}
+                </motion.div>
+              )
+            )}
 
           </div>
         )}
 
       </div>
 
-      {/* ================= MODAL ================= */}
+      {/*  MODAL  */}
 
       <AnimatePresence>
 
@@ -489,18 +593,7 @@ export default function AdminContacts() {
                   opacity: 0,
                   scale: 0.95,
                 }}
-
-                className="
-                  w-full
-                  max-w-4xl
-                  rounded-3xl
-                  border
-                  border-white/10
-                  bg-[#111827]
-                  p-5
-                  sm:p-7
-                  lg:p-8
-                "
+                className="w-full max-w-4xl rounded-3xl border border-white/10 bg-[#111827] p-4 sm:p-6 lg:p-8 max-h-[95vh] overflow-y-auto"
               >
 
                 {/* TOP */}
@@ -514,14 +607,18 @@ export default function AdminContacts() {
                     </h2>
 
                     <p className="text-white/50 mt-2 text-sm sm:text-base">
-                      Inquiry & conversation details
+                      Inquiry &
+                      conversation
+                      details
                     </p>
 
                   </div>
 
                   <button
                     onClick={() =>
-                      setSelectedContact(null)
+                      setSelectedContact(
+                        null
+                      )
                     }
                     className="w-11 h-11 rounded-2xl bg-white/5 hover:bg-white/10 flex items-center justify-center transition flex-shrink-0"
                   >
@@ -537,32 +634,45 @@ export default function AdminContacts() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
 
                   <InfoCard
-                    icon={<Mail size={18} />}
+                    icon={
+                      <Mail size={18} />
+                    }
                     title="Email"
-                    value={selectedContact.email}
+                    value={
+                      selectedContact.email
+                    }
                   />
 
                   <InfoCard
-                    icon={<Phone size={18} />}
+                    icon={
+                      <Phone size={18} />
+                    }
                     title="Phone"
                     value={
-                      selectedContact.phone || "N/A"
+                      selectedContact.phone ||
+                      "N/A"
                     }
                   />
 
                   <InfoCard
-                    icon={<Building2 size={18} />}
+                    icon={
+                      <Building2 size={18} />
+                    }
                     title="Company"
                     value={
-                      selectedContact.company || "N/A"
+                      selectedContact.company ||
+                      "N/A"
                     }
                   />
 
                   <InfoCard
-                    icon={<Briefcase size={18} />}
+                    icon={
+                      <Briefcase size={18} />
+                    }
                     title="Help Type"
                     value={
-                      selectedContact.helpType || "N/A"
+                      selectedContact.helpType ||
+                      "N/A"
                     }
                   />
 
@@ -572,39 +682,25 @@ export default function AdminContacts() {
                     }
                     title="Budget"
                     value={
-                      selectedContact.budget || "N/A"
-                    }
-                  />
-
-                  <InfoCard
-                    icon={<Clock3 size={18} />}
-                    title="Best Time"
-                    value={
-                      selectedContact.bestTime || "N/A"
-                    }
-                  />
-
-                  <InfoCard
-                    icon={<Calendar size={18} />}
-                    title="Go Live"
-                    value={
-                      selectedContact.targetGoLive ||
+                      selectedContact.budget ||
                       "N/A"
                     }
                   />
 
                   <InfoCard
-                    icon={<Globe size={18} />}
-                    title="Preferred Contact"
+                    icon={
+                      <Clock3 size={18} />
+                    }
+                    title="Best Time"
                     value={
-                      selectedContact.preferredContact ||
+                      selectedContact.bestTime ||
                       "N/A"
                     }
                   />
 
                 </div>
 
-                {/* USER MESSAGE */}
+                {/* MESSAGE */}
 
                 <div className="mb-8">
 
@@ -623,7 +719,9 @@ export default function AdminContacts() {
 
                   <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-white/80 leading-relaxed break-words">
 
-                    {selectedContact.message}
+                    {
+                      selectedContact.message
+                    }
 
                   </div>
 
@@ -631,7 +729,8 @@ export default function AdminContacts() {
 
                 {/* PREVIOUS REPLY */}
 
-                {selectedContact.reply?.message && (
+                {selectedContact.reply
+                  ?.message && (
                   <div className="mb-8">
 
                     <div className="flex items-center gap-2 mb-3">
@@ -649,12 +748,17 @@ export default function AdminContacts() {
 
                     <div className="rounded-2xl border border-green-500/20 bg-green-500/10 p-5 text-white/80 break-words">
 
-                      {selectedContact.reply.message}
+                      {
+                        selectedContact
+                          .reply.message
+                      }
 
                       <p className="text-xs text-white/40 mt-3">
                         Replied on{" "}
                         {new Date(
-                          selectedContact.reply.repliedAt
+                          selectedContact
+                            .reply
+                            .repliedAt
                         ).toLocaleString()}
                       </p>
 
@@ -673,48 +777,34 @@ export default function AdminContacts() {
 
                   <textarea
                     rows="6"
-                    value={replyMessage}
+                    value={
+                      replyMessage
+                    }
                     onChange={(e) =>
                       setReplyMessage(
-                        e.target.value
+                        e.target
+                          .value
                       )
                     }
                     placeholder="Write your reply here..."
-                    className="
-                      w-full
-                      rounded-2xl
-                      border
-                      border-white/10
-                      bg-white/5
-                      p-4
-                      outline-none
-                      resize-none
-                      focus:border-cyan-400
-                    "
+                    className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 outline-none resize-none focus:border-cyan-400 text-sm sm:text-base"
                   />
 
                   <div className="flex flex-col sm:flex-row gap-3 mt-4">
 
                     <button
-                      onClick={sendReply}
-                      disabled={replyLoading}
-                      className="
-                        bg-cyan-500
-                        hover:bg-cyan-400
-                        transition
-                        text-black
-                        px-6
-                        py-3
-                        rounded-2xl
-                        flex
-                        items-center
-                        justify-center
-                        gap-2
-                        font-semibold
-                      "
+                      onClick={
+                        sendReply
+                      }
+                      disabled={
+                        replyLoading
+                      }
+                      className="bg-cyan-500 hover:bg-cyan-400 transition text-black px-6 py-3 rounded-2xl flex items-center justify-center gap-2 font-semibold disabled:opacity-60"
                     >
 
-                      <Send size={18} />
+                      <Send
+                        size={18}
+                      />
 
                       {replyLoading
                         ? "Sending..."
@@ -724,18 +814,11 @@ export default function AdminContacts() {
 
                     <button
                       onClick={() =>
-                        setSelectedContact(null)
+                        setSelectedContact(
+                          null
+                        )
                       }
-                      className="
-                        bg-white/5
-                        border
-                        border-white/10
-                        hover:bg-white/10
-                        transition
-                        px-6
-                        py-3
-                        rounded-2xl
-                      "
+                      className="bg-white/5 border border-white/10 hover:bg-white/10 transition px-6 py-3 rounded-2xl"
                     >
                       Close
                     </button>
@@ -757,7 +840,7 @@ export default function AdminContacts() {
   );
 }
 
-/* ================= INFO CARD ================= */
+/*  INFO CARD  */
 
 function InfoCard({
   icon,
