@@ -88,7 +88,7 @@ export default function AmplifySection() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#020617] text-white py-24 px-6 md:px-16 overflow-hidden"
+      className="relative bg-gradient-to-b from-[#020617] to-[#1e3a8a] text-white py-24 px-6 md:px-16 overflow-hidden"
     >
       {/* glow */}
       <div className="absolute top-[-120px] left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-purple-500/10 blur-3xl rounded-full" />

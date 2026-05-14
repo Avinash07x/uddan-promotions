@@ -6,21 +6,21 @@ const LazyServicesc = React.lazy(() => import("../pages/services/Servicesc"));
 const LazyWhyChoose = React.lazy(() => import("./services/WhyChoose"));
 const LazyAmplifySection = React.lazy(() => import("./services/AmplifySection"));
 const LazyHowWeWork = React.lazy(() => import("./services/HowWeWork"));
-const LazyLocalServicePages = React.lazy(() => import("./services/LocalServicePages"));
+// const LazyLocalServicePages = React.lazy(() => import("./services/LocalServicePages"));
 const LazyFAQSection = React.lazy(() => import("./home/FAQSection"));
 
 export default function ServicesPage() {
 
   return (
-    <Suspense fallback={<div className="p-5">Loading Services...</div>}>
+    <>
       <LazyHeroServices />
       <LazyStats />
       <LazyServicesc />
       <LazyWhyChoose />
       <LazyAmplifySection />
       <LazyHowWeWork />
-      <LazyLocalServicePages />
+      {/* <LazyLocalServicePages /> */}
       <LazyFAQSection />
-    </Suspense>
+    </>
   );
 }

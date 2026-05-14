@@ -114,7 +114,7 @@ export default function HeroServices() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-[#0B1220] text-white pt-10 pb-24 px-4 sm:px-6 md:px-16"
+      className="relative overflow-hidden bg-gradient-to-b from-[#020617] to-[#1e3a8a] text-white pt-10 pb-24 px-4 sm:px-6 md:px-16"
     >
       {/*  BACKGROUND  */}
       <motion.div

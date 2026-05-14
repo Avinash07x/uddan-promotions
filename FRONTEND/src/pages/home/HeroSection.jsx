@@ -1,414 +1,1411 @@
-import { useState, useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import React, {
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+import Lenis from "@studio-freight/lenis";
+
+import { motion, AnimatePresence } from "framer-motion";
+
 import {
-  ArrowRight, ChevronRight, CheckCircle2,
-  LayoutGrid, Layers, Sparkles, ShieldCheck, Zap, Box,
+  Bot,
+  Code2,
+  Rocket,
+  Smartphone,
+  BarChart3,
+  Layers3,
+  Activity,
+  Cpu,
+  Sparkles,
+  Orbit,
+  ShieldCheck,
+  Bell,
+  TrendingUp,
+  Cloud,
+  Zap,
+  Database,
+  Server,
+  ArrowUpRight,
+  Users,
+  Home,
+  User,
+  Settings,
 } from "lucide-react";
 
+gsap.registerPlugin(ScrollTrigger);
 
-const FEATURES = ["ISO Security", "Agile MVP", "Global Delivery", "SEO Optimized", "High Performance"];
-const ORBIT_ICONS = [LayoutGrid, Layers, Sparkles, ShieldCheck, Zap, Box];
+/* =====================================================
+   SLIDES
+===================================================== */
 
-/* Floating background pills — scattered across whole section */
-const ORB_DATA = [
-  { Icon: LayoutGrid, top: "12%", left: "3%", size: 50, tw: "bg-blue-500/15   border-blue-400/25   text-blue-400" },
-  { Icon: Layers, top: "55%", left: "1%", size: 42, tw: "bg-green-500/15  border-green-400/25  text-green-400" },
-  { Icon: Sparkles, top: "80%", left: "6%", size: 46, tw: "bg-violet-500/15 border-violet-400/25 text-violet-400" },
-  { Icon: ShieldCheck, top: "8%", right: "5%", size: 38, tw: "bg-red-500/15    border-red-400/20    text-red-400" },
-  { Icon: Zap, top: "75%", right: "4%", size: 52, tw: "bg-amber-500/15  border-amber-400/22  text-amber-400" },
-  { Icon: Box, top: "38%", right: "2%", size: 40, tw: "bg-teal-500/15   border-teal-400/22   text-teal-400" },
+const slides = [
+  {
+    title: "Premium",
+    subtitle: "Software",
+    desc: "Enterprise-grade software engineering with realtime systems, cloud infrastructure, scalable architecture and immersive UI experiences.",
+    color:
+      "from-sky-400 via-blue-500 to-indigo-900",
+    icon: Code2,
+
+    stats: [
+      { label: "Projects", value: "320+" },
+      { label: "Growth", value: "12x" },
+    ],
+
+    analytics: [45, 70, 55, 90, 65, 100],
+
+    floating: {
+      title: "Software Analytics",
+      value: "+420%",
+      icon: TrendingUp,
+    },
+  },
+
+  {
+    title: "Modern",
+    subtitle: "Mobile Apps",
+    desc: "Modern iOS and Android experiences with realtime sync, AI integrations and ultra smooth animations.",
+    color:
+      "from-cyan-300 via-blue-500 to-slate-900",
+    icon: Smartphone,
+
+    stats: [
+      { label: "Downloads", value: "5M+" },
+      { label: "Retention", value: "89%" },
+    ],
+
+    analytics: [55, 85, 70, 110, 95, 120],
+
+    floating: {
+      title: "Mobile Reach",
+      value: "5M+",
+      icon: Smartphone,
+    },
+  },
+
+  {
+    title: "Autonomous",
+    subtitle: "AI Agents",
+    desc: "AI-powered automation systems with predictive analytics, autonomous workflows and intelligent monitoring.",
+    color:
+      "from-blue-400 via-indigo-600 to-slate-950",
+    icon: Bot,
+
+    stats: [
+      { label: "AI Requests", value: "12M" },
+      { label: "Accuracy", value: "99%" },
+    ],
+
+    analytics: [65, 95, 75, 120, 90, 135],
+
+    floating: {
+      title: "AI Engine",
+      value: "99%",
+      icon: Cpu,
+    },
+  },
+
+  {
+    title: "Future Scale",
+    subtitle: "SaaS",
+    desc: "Cloud-native SaaS systems with realtime dashboards, scalable APIs and enterprise infrastructure.",
+    color:
+      "from-sky-300 via-blue-600 to-black",
+    icon: Rocket,
+
+    stats: [
+      { label: "Revenue", value: "$84K" },
+      { label: "Users", value: "120K" },
+    ],
+
+    analytics: [70, 100, 85, 130, 95, 140],
+
+    floating: {
+      title: "Cloud Revenue",
+      value: "$84K",
+      icon: Rocket,
+    },
+  },
 ];
 
-/* ═══════════════════════════════════════════════════════════
-   ANIMATION VARIANTS
-═══════════════════════════════════════════════════════════ */
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-};
-const staggerParent = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
-};
+/* =====================================================
+   BG ICONS
+===================================================== */
 
-const WORDS = ["Software", "Mobile Apps", "AI Agents", "SaaS", "Platforms"];
+const bgIcons = [
+  Bot,
+  Code2,
+  Rocket,
+  Smartphone,
+  Sparkles,
+  BarChart3,
+  Layers3,
+  Activity,
+  Cpu,
+  Orbit,
+  ShieldCheck,
+  Database,
+  Server,
+  Cloud,
+  Zap,
+];
 
-function RotatingWord() {
-  const [wordIndex, setWordIndex] = useState(0);
-  const [text, setText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
+/* =====================================================
+   COMPONENT
+===================================================== */
 
-  useEffect(() => {
-    const currentWord = WORDS[wordIndex];
-    let speed = isDeleting ? 50 : 100;
+export default function HeroSection() {
+  const sectionRef = useRef(null);
 
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        setText(currentWord.substring(0, text.length + 1));
+  const phoneRef = useRef(null);
 
-        if (text === currentWord) {
-          setTimeout(() => setIsDeleting(true), 1200);
-        }
-      } else {
-        setText(currentWord.substring(0, text.length - 1));
+  const contentRef = useRef(null);
 
-        if (text === "") {
-          setIsDeleting(false);
-          setWordIndex((prev) => (prev + 1) % WORDS.length);
-        }
-      }
-    }, speed);
+  const bgRef = useRef([]);
 
-    return () => clearTimeout(timeout);
-  }, [text, isDeleting, wordIndex]);
+  const particlesRef = useRef([]);
 
-  return (
-    <span
-      style={{
-        display: "inline-block",
-        minWidth: "140px",
-        paddingRight: "5px",
-        whiteSpace: "nowrap",
-        background:
-          "linear-gradient(135deg, #3b82f6 0%, #1e3a8a 50%, #0f172a 100%)",
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-      }}
-    >
-      {text}
-    </span>
+  const [activeSlide, setActiveSlide] =
+    useState(0);
+
+  const current = slides[activeSlide];
+
+  /* =====================================================
+     BG POSITIONS
+  ===================================================== */
+
+  const bgPositions = useMemo(
+    () =>
+      bgIcons.map((_, i) => ({
+        top: `${5 + (i % 6) * 15}%`,
+        left: `${5 + (i % 5) * 18}%`,
+      })),
+    []
   );
-}
 
+  /* =====================================================
+     LENIS
+  ===================================================== */
 
-function DashboardCard({ mode = "inline" }) {
-  const reduce = useReducedMotion();
-  const isOrbit = mode === "orbit";
+  useLayoutEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      smoothWheel: true,
+      lerp: 0.08,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    lenis.on("scroll", ScrollTrigger.update);
+
+    return () => lenis.destroy();
+  }, []);
+
+  /* =====================================================
+     GSAP
+  ===================================================== */
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=3200",
+          scrub: 1,
+          pin: true,
+        },
+      });
+
+      tl.to(phoneRef.current, {
+        rotateY: 10,
+        rotateX: -5,
+        y: -40,
+        scale: 1.04,
+        ease: "none",
+      })
+        .to(phoneRef.current, {
+          rotateY: -10,
+          rotateX: 5,
+          y: 20,
+          scale: 0.96,
+          ease: "none",
+        })
+        .to(phoneRef.current, {
+          rotateY: 5,
+          rotateX: -3,
+          y: -10,
+          scale: 1.02,
+          ease: "none",
+        })
+        .to(phoneRef.current, {
+          rotateY: 0,
+          rotateX: 0,
+          y: 0,
+          scale: 1,
+          ease: "none",
+        });
+
+      /* SLIDE CHANGE */
+
+      let lastIndex = 0;
+
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top top",
+        end: "+=3200",
+        scrub: true,
+
+        onUpdate: (self) => {
+          const progress = self.progress;
+
+          const index = Math.min(
+            slides.length - 1,
+            Math.floor(
+              progress * slides.length
+            )
+          );
+
+          if (index !== lastIndex) {
+            lastIndex = index;
+
+            gsap.to(contentRef.current, {
+              opacity: 0,
+              y: 20,
+              duration: 0.2,
+
+              onComplete: () => {
+                setActiveSlide(index);
+
+                gsap.fromTo(
+                  contentRef.current,
+                  {
+                    opacity: 0,
+                    y: 20,
+                  },
+                  {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    ease: "power3.out",
+                  }
+                );
+              },
+            });
+          }
+        },
+      });
+
+      /* BG FLOAT */
+
+      bgRef.current.forEach((el, i) => {
+        gsap.to(el, {
+          y: gsap.utils.random(-40, 40),
+          x: gsap.utils.random(-30, 30),
+          rotate: gsap.utils.random(-20, 20),
+          duration: 8 + i,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      });
+
+      /* PARTICLES */
+
+      particlesRef.current.forEach(
+        (el, i) => {
+          gsap.to(el, {
+            y: gsap.utils.random(-40, 40),
+            x: gsap.utils.random(-20, 20),
+            opacity: gsap.utils.random(
+              0.2,
+              1
+            ),
+            duration: 2 + i * 0.2,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+          });
+        }
+      );
+
+      ScrollTrigger.refresh();
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  /* =====================================================
+     JSX
+  ===================================================== */
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.85 }}
-      animate={reduce ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1, y: [0, -10, 6, 0] }}
-      transition={{ duration: 0.6, y: { duration: 6, repeat: Infinity, ease: "easeInOut" } }}
-      className={
-        isOrbit
-          ? "absolute inset-0 m-auto rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl"
-          : "w-full rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl"
-      }
-      style={
-        isOrbit
-          ? { width: "clamp(160px,68%,210px)", height: "fit-content", top: 0, bottom: 0, padding: "14px" }
-          : { padding: "16px 20px" }
-      }
+    <section
+      ref={sectionRef}
+      className="
+      relative
+      h-[100svh]
+      overflow-hidden
+      bg-gradient-to-b from-[#020617] to-[#1e3a8a] 
+      text-white
+    "
     >
-      {/* Header */}
-      <p className={`text-white/50 tracking-[0.18em] uppercase mb-0.5 ${isOrbit ? "text-[8px]" : "text-[10px]"}`}>
-        Social Growth
-      </p>
-      <h3 className={`text-white font-semibold mb-3 ${isOrbit ? "text-[12px]" : "text-sm sm:text-base"}`}>
-        SEO + SMO Dashboard
-      </h3>
+      {/* =====================================================
+          BG
+      ===================================================== */}
 
-      {/* Progress */}
-      <div className="rounded-xl bg-white/5 border border-white/10 p-3 mb-3">
-        <div className="h-1.5 bg-white/10 rounded-full mb-3 overflow-hidden">
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: "72%" }}
-            transition={{ duration: 1.4, delay: 0.5 }}
-            className="h-full bg-gradient-to-r from-blue-500 to-green-400 rounded-full"
-          />
-        </div>
-        <div className="flex items-center justify-between">
-          <span className="px-2 py-0.5 text-[9px] rounded-full bg-cyan-400 text-black font-bold">FREE AUDIT</span>
-          {!isOrbit && <span className="text-white/40 text-[10px]">72% Complete</span>}
-        </div>
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[450px] h-[450px] rounded-full bg-blue-500/20 blur-[140px]" />
+
+        <div className="absolute bottom-[-10%] right-[-10%] w-[450px] h-[450px] rounded-full bg-cyan-500/20 blur-[140px]" />
+
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_45%)]" />
+
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:70px_70px]" />
       </div>
 
-      {/* Stats */}
-      <div className="flex justify-between text-center">
-        {[{ v: "+150%", l: "REACH" }, { v: "+65%", l: "LEADS" }, { v: "3.2x", l: "ENGAGE" }].map(s => (
-          <div key={s.l}>
-            <p className={`text-white font-semibold ${isOrbit ? "text-[11px]" : "text-sm sm:text-base"}`}>{s.v}</p>
-            <span className={`text-white/50 tracking-widest ${isOrbit ? "text-[7px]" : "text-[9px] sm:text-[10px]"}`}>{s.l}</span>
+      {/* =====================================================
+          BG ICONS
+      ===================================================== */}
+
+      <div className="absolute inset-0 pointer-events-none">
+        {bgIcons.map((Icon, i) => (
+          <div
+            key={i}
+            ref={(el) =>
+              (bgRef.current[i] = el)
+            }
+            className="absolute text-white/10"
+            style={bgPositions[i]}
+          >
+            <Icon size={32} />
           </div>
         ))}
       </div>
 
-      {/* AI badge — inline only */}
-      {!isOrbit && (
-        <div className="mt-3 pt-3 border-t border-white/10 flex items-center gap-2">
-          <div className="w-7 h-7 rounded-full bg-green-400/15 flex items-center justify-center flex-shrink-0">
-            <Zap className="w-3 h-3 text-green-400" />
-          </div>
-          <div>
-            <p className="text-white text-[11px] font-semibold leading-tight">AI Powered</p>
-            <span className="text-green-400 text-[10px]">Core Web Vitals: 98 / 100</span>
-          </div>
-        </div>
-      )}
-    </motion.div>
-  );
-}
+      {/* =====================================================
+          MAIN
+      ===================================================== */}
 
-
-function OrbitRing({ ringSize = 280, orbitRadius = 132, iconCls = "w-9 h-9" }) {
-  const reduce = useReducedMotion();
-  return (
-    <div className="relative" style={{ width: ringSize, height: ringSize }}>
-      {/* Ring border */}
-      <div className="absolute inset-0 rounded-full" />
-
-      {/* Spinning icons */}
-      {ORBIT_ICONS.map((Icon, i) => {
-        const angle = (i / ORBIT_ICONS.length) * 360;
-        return (
-          <motion.div
-            key={i}
-            animate={reduce ? {} : { rotate: 360 }}
-            transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 flex items-center justify-center"
-          >
-            <div
-              style={{ transform: `rotate(${angle}deg) translateY(-${orbitRadius}px) rotate(-${angle}deg)` }}
-              className={`${iconCls} rounded-full bg-white/10 border border-white/20 backdrop-blur-lg flex items-center justify-center`}
-            >
-              <Icon className="w-3.5 h-3.5 text-white" />
-            </div>
-          </motion.div>
-        );
-      })}
-
-      {/* Center dashboard card */}
-      <DashboardCard mode="orbit" />
-    </div>
-  );
-}
-
-function AnimLayer() {
-  const reduce = useReducedMotion();
-
-  const floatAnim = (i) =>
-    reduce
-      ? { opacity: 0.85, scale: 1 }
-      : {
-        opacity: 0.85, scale: 1,
-        y: [0, -14, 7, 0], rotate: [0, 4, -4, 0],
-        transition: { duration: 5 + i * 0.7, repeat: Infinity, ease: "easeInOut", delay: i * 0.45 },
-      };
-
-  return (
-    <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-
-      {/* Floating icon pills — scattered across full width */}
-      {ORB_DATA.map((o, i) => {
-        const Icon = o.Icon;
-        const posStyle = {
-          top: o.top,
-          width: o.size,
-          height: o.size,
-          ...(o.left ? { left: o.left } : {}),
-          ...(o.right ? { right: o.right } : {}),
-        };
-        return (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, scale: 0.4 }}
-            animate={floatAnim(i)}
-            style={posStyle}
-            className={`absolute rounded-2xl border backdrop-blur-lg grid place-items-center ${o.tw}`}
-          >
-            <Icon style={{ width: o.size * 0.44, height: o.size * 0.44 }} />
-          </motion.div>
-        );
-      })}
-
-      {/* AI Powered badge — bottom right, all devices */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={reduce ? { opacity: 1, y: 0 } : { opacity: 1, y: [0, -10, 6, 0] }}
-        transition={{ duration: 0.7, delay: 0.5, y: { duration: 5.5, repeat: Infinity, ease: "easeInOut" } }}
+      <div
         className="
-          absolute bottom-5 right-4
-          sm:bottom-7 sm:right-6
-          flex items-center gap-2.5
-          rounded-xl border border-green-400/20
-          bg-slate-900/90 backdrop-blur-lg
-          px-3 py-2.5 shadow-xl
-        "
+        relative
+        z-10
+
+        h-full
+
+        max-w-7xl
+        mx-auto
+
+        px-4
+        sm:px-6
+        lg:px-8
+
+        grid
+        grid-cols-1
+        lg:grid-cols-2
+
+        items-center
+        gap-10
+      "
       >
-        <div className="w-8 h-8 rounded-full bg-green-400/15 flex items-center justify-center flex-shrink-0">
-          <Zap className="w-3.5 h-3.5 text-green-400" />
-        </div>
-        <div>
-          <p className="text-white text-[12px] font-semibold leading-tight">AI Powered</p>
-          <span className="text-green-400 text-[10px] leading-tight">Core Web Vitals: 98 / 100</span>
-        </div>
-      </motion.div>
-    </div>
-  );
-}
+        {/* =====================================================
+            LEFT CONTENT
+        ===================================================== */}
 
-/* ═══════════════════════════════════════════════════════════
-   HERO SECTION — main export
-═══════════════════════════════════════════════════════════ */
-export default function HeroSection() {
-  return (
-    <section className="
-      relative overflow-hidden
-      bg-gradient-to-br from-[#020617] via-[#0f172a] to-[#1e3a8a]
-      min-h-[100dvh]
-      flex flex-col justify-center
-      px-4 sm:px-6 md:px-10 lg:px-14 xl:px-16 2xl:px-20
-      pt-2 pb-10
-      sm:pt-6 sm:pb-12
-      lg:pt-10 lg:pb-6
-    ">
+        <div
+          ref={contentRef}
+          className="
+          pt-24
+          lg:pt-0
 
-      {/* ── BACKGROUND: blobs + dot-grid + vignette ── */}
-      <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
-        <div className="absolute rounded-full bg-black/20 animate-blob"
-          style={{ top: "-12%", left: "-8%", width: "clamp(180px,40vw,520px)", height: "clamp(180px,40vw,520px)", filter: "blur(clamp(40px,7vw,120px))" }} />
-        <div className="absolute rounded-full bg-blue-500/20 animate-blob [animation-delay:-4s]"
-          style={{ top: "28%", right: "-8%", width: "clamp(200px,45vw,560px)", height: "clamp(200px,45vw,560px)", filter: "blur(clamp(45px,8vw,130px))" }} />
-        <div className="absolute rounded-full bg-violet-600/20 animate-blob [animation-delay:-8s]"
-          style={{ bottom: "0%", left: "28%", width: "clamp(160px,36vw,480px)", height: "clamp(160px,36vw,480px)", filter: "blur(clamp(40px,7vw,120px))" }} />
-        <div className="absolute inset-0 bg-dot-grid opacity-30" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/80" />
-      </div>
+          flex
+          flex-col
 
-      {/* ── ANIM LAYER: floating pills + AI badge (ALL devices) ── */}
-      <AnimLayer />
+          items-center
+          lg:items-start
 
-      {/* ── CONTENT GRID ── */}
-      <div className="relative z-10 w-full max-w-screen-2xl mx-auto grid lg:grid-cols-2 gap-10 xl:gap-16 items-center">
-
-        {/* LEFT: text content */}
-        <motion.div
-          variants={staggerParent}
-          initial="hidden"
-          animate="show"
-          className="text-center lg:text-left mx-auto lg:mx-0 w-full max-w-xl"
+          text-center
+          lg:text-left
+        "
         >
-          {/* Headline */}
-          <motion.h1
-            variants={fadeUp}
-            className="font-bold tracking-tight leading-[1.08] mb-4 sm:mb-5"
-            style={{ fontSize: "clamp(1.9rem, 6vw, 72px)" }}
-          >
-            <span className="text-blue-400 block ">Future-Ready</span>
-            <span className="block"><RotatingWord /></span>
-            <span className="text-white/70">&amp;</span>{" "}
-            <span className="text-blue-400"> Growth Engines.</span>
-          </motion.h1>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current.subtitle}
+              initial={{
+                opacity: 0,
+                y: 60,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                y: -60,
+              }}
+              transition={{
+                duration: 0.6,
+              }}
+              className="
+              text-[42px]
+              sm:text-6xl
+              md:text-7xl
+              lg:text-[88px]
 
-          {/* Subtext */}
-          <motion.p
-            variants={fadeUp}
-            className="text-white/70 leading-relaxed mb-7 sm:mb-8 max-w-[480px] mx-auto lg:mx-0"
-            style={{ fontSize: "clamp(0.85rem, 2vw, 1.1rem)" }}
-          >
-            We architect high-performance digital ecosystems. We blend advanced engineering with revenue-focused SEO strategies to build platforms that dominate search results and convert users across India and Global markets.
-          </motion.p>
-
-          {/* CTA buttons */}
-          <motion.div
-            variants={fadeUp}
-            className="flex flex-col min-[400px]:flex-row gap-3 justify-center lg:justify-start mb-7 sm:mb-8"
-          >
-            <a href="/about/contact-us#ContactForm"
-              className="inline-flex items-center justify-center gap-2 rounded-full font-semibold bg-cyan-400 text-black transition-all duration-200 hover:opacity-90 hover:scale-[1.02] active:scale-95 h-10 px-5 text-[13px] sm:h-11 sm:px-6 sm:text-sm md:h-12 md:px-7 md:text-base"
+              leading-[0.95]
+              font-black
+            "
             >
-              Initialize Project<ArrowRight className="w-4 h-4" />
-            </a>
-            <a href="#work"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 text-white transition-all duration-200 hover:border-cyan-400/40 hover:bg-white/5 active:scale-95 h-10 px-5 text-[13px] sm:h-11 sm:px-6 sm:text-sm md:h-12 md:px-7 md:text-base"
+              <div>{current.title}</div>
+
+              <div
+                className={`
+                text-transparent
+                bg-clip-text
+                bg-gradient-to-r
+                ${current.color}
+              `}
+              >
+                {current.subtitle}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={current.desc}
+              initial={{
+                opacity: 0,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                y: -20,
+              }}
+              transition={{
+                duration: 0.4,
+              }}
+              className="
+              mt-6
+
+              max-w-xl
+
+              text-sm
+              sm:text-base
+              md:text-lg
+
+              text-white/70
+              leading-relaxed
+            "
             >
-              View Work <ChevronRight className="w-4 h-4" />
-            </a>
-          </motion.div>
+              {current.desc}
+            </motion.p>
+          </AnimatePresence>
 
-          {/* Feature pills */}
-          <motion.div
-            variants={fadeUp}
-            className="flex flex-wrap gap-x-3 gap-y-2 justify-center lg:justify-start text-white/60 text-[11px] sm:text-xs mb-10 lg:mb-0"
-          >
-            {FEATURES.map(p => (
-              <span key={p} className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
-                {p}
-              </span>
-            ))}
-          </motion.div>
+          <div className="mt-10 flex flex-wrap gap-4 justify-center lg:justify-start">
+            <motion.button
+              whileHover={{
+                scale: 1.05,
+              }}
+              whileTap={{
+                scale: 0.95,
+              }}
+              className={`
+              px-8
+              py-4
 
-          {/* ── MOBILE / TABLET: dashboard card + orbit ring ── */}
+              rounded-2xl
+
+              bg-gradient-to-r
+              ${current.color}
+
+              font-bold
+
+              shadow-[0_20px_60px_rgba(59,130,246,0.35)]
+            `}
+            >
+              Start Project
+            </motion.button>
+
+            <motion.button
+              whileHover={{
+                scale: 1.05,
+              }}
+              whileTap={{
+                scale: 0.95,
+              }}
+              className="
+              px-8
+              py-4
+
+              rounded-2xl
+
+              bg-white/5
+              border
+              border-white/10
+
+              backdrop-blur-xl
+            "
+            >
+              Live Demo
+            </motion.button>
+          </div>
+        </div>
+
+        {/* =====================================================
+            PHONE AREA
+        ===================================================== */}
+
+        <div className="relative flex justify-center items-center">
           <motion.div
-            variants={fadeUp}
-            className="lg:hidden flex flex-col items-center gap-8"
+            ref={phoneRef}
+            whileHover={{
+              rotateY: -5,
+              rotateX: 4,
+              scale: 1.02,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 120,
+            }}
+            className="
+            relative
+
+            w-[200px]
+            h-[76vh]
+
+            sm:w-[280px]
+            sm:h-[80vh]
+
+            md:w-[330px]
+            md:h-[82vh]
+
+            lg:w-[360px]
+            lg:h-[88vh]
+
+            max-h-[720px]
+
+            rounded-[48px]
+
+            border-[8px]
+            border-[#1e293b]
+
+            bg-black
+
+            shadow-[0_40px_120px_rgba(0,0,0,0.6)]
+          "
+            style={{
+              transformPerspective: 1800,
+              transformStyle:
+                "preserve-3d",
+            }}
           >
-            {/* Orbit ring — centered, responsive size */}
-            <div className="flex justify-center">
-              <OrbitRing
-                ringSize={260}
-                orbitRadius={132}
-                iconCls="w-8 h-8"
+            {/* =====================================================
+                FLOATING CARDS
+            ===================================================== */}
+
+            <div className="absolute inset-0">
+              {/* CARD 1 */}
+
+              <motion.div
+                animate={{
+                  y: [-10, 10, -10],
+                  rotate: [-4, 4, -4],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 8,
+                }}
+                className="
+                absolute
+
+                left-[-30px]
+                top-[70px]
+
+                sm:left-[-40px]
+
+                md:left-[-60px]
+
+                w-[140px]
+                sm:w-[160px]
+                md:w-[180px]
+
+                rounded-[26px]
+
+                bg-white/85
+                backdrop-blur-3xl
+
+                border
+                border-white/20
+
+                shadow-[0_20px_80px_rgba(37,99,235,0.2)]
+
+                overflow-hidden
+
+                p-3
+                sm:p-4
+
+                z-40
+              "
+              >
+                <motion.div
+                  animate={{
+                    x: [-100, 180, -100],
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 5,
+                    ease: "linear",
+                  }}
+                  className="
+                  absolute
+                  inset-y-0
+                  left-0
+
+                  w-12
+
+                  bg-gradient-to-r
+                  from-transparent
+                  via-white/40
+                  to-transparent
+
+                  skew-x-[-20deg]
+                "
+                />
+
+                <div className="relative z-10 flex items-center justify-between">
+                  <div>
+                    <p className="text-[9px] text-black/50">
+                      {current.floating.title}
+                    </p>
+
+                    <motion.h3
+                      animate={{
+                        scale: [1, 1.04, 1],
+                      }}
+                      transition={{
+                        repeat: Infinity,
+                        duration: 2,
+                      }}
+                      className="text-lg sm:text-2xl font-black text-black"
+                    >
+                      {current.floating.value}
+                    </motion.h3>
+                  </div>
+
+                  <motion.div
+                    animate={{
+                      rotate: [0, 360],
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 10,
+                      ease: "linear",
+                    }}
+                    className={`
+                    w-9
+                    h-9
+
+                    sm:w-10
+                    sm:h-10
+
+                    rounded-2xl
+
+                    bg-gradient-to-r
+                    ${current.color}
+
+                    flex
+                    items-center
+                    justify-center
+
+                    text-white
+                  `}
+                  >
+                    <current.floating.icon
+                      size={16}
+                    />
+                  </motion.div>
+                </div>
+
+                <div className="relative z-10 mt-4 flex items-end gap-1 h-12">
+                  {current.analytics
+                    .slice(0, 5)
+                    .map((h, i) => (
+                      <motion.div
+                        key={i}
+                        animate={{
+                          height: [
+                            `${h}%`,
+                            `${h + 10}%`,
+                            `${h}%`,
+                          ],
+                        }}
+                        transition={{
+                          repeat: Infinity,
+                          duration: 1.5 + i * 0.2,
+                        }}
+                        className={`
+                        flex-1
+
+                        rounded-full
+
+                        bg-gradient-to-t
+                        ${current.color}
+                      `}
+                      />
+                    ))}
+                </div>
+              </motion.div>
+
+              {/* CARD 2 */}
+
+              <motion.div
+                animate={{
+                  y: [10, -10, 10],
+                  rotate: [4, -4, 4],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 7,
+                }}
+                className="
+                absolute
+
+                right-[-20px]
+                top-[180px]
+
+                sm:right-[-35px]
+
+                md:right-[-60px]
+
+                w-[145px]
+                sm:w-[170px]
+                md:w-[190px]
+
+                rounded-[26px]
+
+                bg-white/85
+                backdrop-blur-3xl
+
+                border
+                border-white/20
+
+                shadow-[0_20px_80px_rgba(37,99,235,0.2)]
+
+                overflow-hidden
+
+                p-3
+                sm:p-4
+
+                z-50
+              "
+              >
+                <motion.div
+                  animate={{
+                    scale: [1, 1.3, 1],
+                    opacity: [0.15, 0.3, 0.15],
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 4,
+                  }}
+                  className={`
+                  absolute
+                  -top-10
+                  -right-10
+
+                  w-28
+                  h-28
+
+                  rounded-full
+
+                  bg-gradient-to-r
+                  ${current.color}
+
+                  blur-3xl
+                `}
+                />
+
+                <div className="relative z-10 flex items-center justify-between">
+                  <div className="text-black font-black text-xs sm:text-sm">
+                    {current.subtitle}
+                  </div>
+
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.15, 1],
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 2,
+                    }}
+                    className="
+                    px-2
+                    py-1
+
+                    rounded-full
+
+                    bg-green-100
+
+                    text-[9px]
+                    font-bold
+                    text-green-600
+                  "
+                  >
+                    LIVE
+                  </motion.div>
+                </div>
+
+                <div className="relative z-10 mt-4 space-y-3">
+                  <motion.div
+                    animate={{
+                      x: [0, 4, 0],
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 3,
+                    }}
+                    className="
+                    w-fit
+
+                    rounded-2xl
+
+                    bg-black/5
+
+                    px-3
+                    py-2
+
+                    text-[10px]
+                    text-black/70
+                  "
+                  >
+                    AI synced 🚀
+                  </motion.div>
+
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.04, 1],
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 2,
+                    }}
+                    className={`
+                    ml-auto
+                    w-fit
+
+                    rounded-2xl
+
+                    bg-gradient-to-r
+                    ${current.color}
+
+                    px-3
+                    py-2
+
+                    text-[10px]
+                    font-semibold
+                    text-white
+                  `}
+                  >
+                    {current.title}
+                  </motion.div>
+                </div>
+
+                <div className="relative z-10 mt-4 space-y-2">
+                  {current.stats.map((item, i) => (
+                    <motion.div
+                      key={i}
+                      animate={{
+                        x: [0, 2, 0],
+                      }}
+                      transition={{
+                        repeat: Infinity,
+                        duration: 3 + i,
+                      }}
+                      className="
+                      flex
+                      items-center
+                      justify-between
+
+                      rounded-xl
+
+                      bg-black/5
+
+                      px-3
+                      py-2
+                    "
+                    >
+                      <span className="text-[10px] text-black/60">
+                        {item.label}
+                      </span>
+
+                      <span className="text-[10px] font-black text-black">
+                        {item.value}
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* CARD 3 */}
+
+              <motion.div
+                animate={{
+                  y: [-8, 8, -8],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 6,
+                }}
+                className="
+                absolute
+
+                left-[-10px]
+                bottom-[80px]
+
+                sm:left-[-20px]
+
+                md:left-[-35px]
+
+                w-[140px]
+                sm:w-[160px]
+                md:w-[175px]
+
+                rounded-[26px]
+
+                bg-white/85
+                backdrop-blur-3xl
+
+                border
+                border-white/20
+
+                shadow-[0_20px_80px_rgba(37,99,235,0.2)]
+
+                overflow-hidden
+
+                p-3
+                sm:p-4
+
+                z-30
+              "
+              >
+                <motion.div
+                  animate={{
+                    y: [-20, 20, -20],
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 5,
+                  }}
+                  className={`
+                  absolute
+                  bottom-[-40px]
+                  left-[-40px]
+
+                  w-32
+                  h-32
+
+                  rounded-full
+
+                  bg-gradient-to-r
+                  ${current.color}
+
+                  blur-3xl
+                `}
+                />
+
+                <div className="relative z-10 flex items-center justify-between">
+                  <div>
+                    <div className="text-xs sm:text-sm font-black text-black">
+                      {current.title}
+                    </div>
+
+                    <div className="text-[9px] text-black/50 mt-1">
+                      Workspace
+                    </div>
+                  </div>
+
+                  <motion.div
+                    animate={{
+                      rotate: [0, 10, -10, 0],
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 4,
+                    }}
+                    className={`
+                    w-8
+                    h-8
+
+                    sm:w-9
+                    sm:h-9
+
+                    rounded-2xl
+
+                    bg-gradient-to-r
+                    ${current.color}
+
+                    flex
+                    items-center
+                    justify-center
+
+                    text-white
+                  `}
+                  >
+                    <current.icon size={14} />
+                  </motion.div>
+                </div>
+
+                <div className="relative z-10 mt-4 space-y-3">
+                  {current.analytics
+                    .slice(0, 3)
+                    .map((item, i) => (
+                      <div key={i}>
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-[9px] text-black/50">
+                            Task {i + 1}
+                          </span>
+
+                          <span className="text-[9px] font-bold text-black">
+                            {item}%
+                          </span>
+                        </div>
+
+                        <div className="h-2 rounded-full bg-black/10 overflow-hidden">
+                          <motion.div
+                            animate={{
+                              width: [
+                                "20%",
+                                `${item}%`,
+                                `${item - 10}%`,
+                                `${item}%`,
+                              ],
+                            }}
+                            transition={{
+                              repeat: Infinity,
+                              duration: 4 + i,
+                            }}
+                            className={`
+                            h-full
+
+                            rounded-full
+
+                            bg-gradient-to-r
+                            ${current.color}
+                          `}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                </div>
+
+                <div className="relative z-10 mt-4 flex items-center justify-between">
+                  {[Home, Bell, User].map(
+                    (Icon, i) => (
+                      <motion.div
+                        key={i}
+                        whileHover={{
+                          scale: 1.1,
+                          y: -3,
+                        }}
+                        animate={{
+                          y: [0, -2, 0],
+                        }}
+                        transition={{
+                          repeat: Infinity,
+                          duration: 2 + i,
+                        }}
+                        className="
+                        w-8
+                        h-8
+
+                        rounded-xl
+
+                        bg-black/5
+
+                        flex
+                        items-center
+                        justify-center
+                      "
+                      >
+                        <Icon
+                          size={14}
+                          className="text-black/70"
+                        />
+                      </motion.div>
+                    )
+                  )}
+                </div>
+              </motion.div>
+            </div>
+
+            {/* =====================================================
+                PARTICLES
+            ===================================================== */}
+
+            {[...Array(20)].map((_, i) => (
+              <div
+                key={i}
+                ref={(el) =>
+                  (particlesRef.current[i] =
+                    el)
+                }
+                className="
+                absolute
+
+                w-2
+                h-2
+
+                rounded-full
+
+                bg-white/70
+
+                blur-[1px]
+              "
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                }}
               />
+            ))}
+
+            {/* CAMERA */}
+
+            <div className="absolute top-3 left-1/2 -translate-x-1/2 w-32 h-6 rounded-full bg-black z-50 border border-white/5" />
+
+            {/* =====================================================
+                SCREEN
+            ===================================================== */}
+
+            <div
+              className={`
+              relative
+
+              h-full
+
+              rounded-[40px]
+
+              overflow-hidden
+
+              p-5
+
+              bg-gradient-to-b
+              ${current.color}
+            `}
+            >
+              {/* LIGHT */}
+
+              <div className="absolute inset-0 overflow-hidden">
+                <motion.div
+                  animate={{
+                    x: [-100, 200, -100],
+                    y: [-50, 50, -50],
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 12,
+                  }}
+                  className="
+                  absolute
+                  top-0
+                  left-0
+
+                  w-72
+                  h-72
+
+                  rounded-full
+
+                  bg-white/20
+                  blur-[90px]
+                "
+                />
+
+                <motion.div
+                  animate={{
+                    x: [100, -100, 100],
+                    y: [50, -50, 50],
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 10,
+                  }}
+                  className="
+                  absolute
+                  bottom-0
+                  right-0
+
+                  w-72
+                  h-72
+
+                  rounded-full
+
+                  bg-cyan-300/20
+                  blur-[100px]
+                "
+                />
+              </div>
+
+              {/* HEADER */}
+
+              <div className="relative z-10 mt-8 flex items-center justify-between">
+                <div>
+                  <div className="text-[10px] tracking-[4px] uppercase text-white/60">
+                    Dashboard
+                  </div>
+
+                  <h2 className="mt-2 text-2xl sm:text-3xl font-black">
+                    {current.subtitle}
+                  </h2>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <Bell size={18} />
+
+                  <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                </div>
+              </div>
+
+              {/* ICON */}
+
+              <motion.div
+                key={activeSlide}
+                initial={{
+                  scale: 0,
+                  rotate: -90,
+                  opacity: 0,
+                }}
+                animate={{
+                  scale: 1,
+                  rotate: 0,
+                  opacity: 1,
+                }}
+                transition={{
+                  duration: 0.5,
+                }}
+                className="
+                relative
+                z-10
+
+                mt-6
+
+                w-16
+                h-16
+
+                rounded-3xl
+
+                bg-white/20
+                backdrop-blur-xl
+
+                flex
+                items-center
+                justify-center
+              "
+              >
+                <current.icon size={30} />
+              </motion.div>
+
+              {/* STATS */}
+
+              <div className="relative z-10 mt-6 grid grid-cols-2 gap-3">
+                {current.stats.map(
+                  (item, i) => (
+                    <div
+                      key={i}
+                      className="
+                      p-4
+
+                      rounded-3xl
+
+                      bg-white/15
+                      backdrop-blur-xl
+
+                      border
+                      border-white/10
+                    "
+                    >
+                      <div className="text-xs text-white/70">
+                        {item.label}
+                      </div>
+
+                      <div className="mt-2 text-xl sm:text-2xl font-black">
+                        {item.value}
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+
+              {/* ANALYTICS */}
+
+              <div className="relative z-10 mt-5 p-5 rounded-[30px] bg-black/20 border border-white/10 backdrop-blur-xl">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-sm text-white/70">
+                      Realtime Analytics
+                    </div>
+
+                    <div className="mt-1 text-xl font-black">
+                      Live Data
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+
+                    <span className="text-xs text-white/70">
+                      Live
+                    </span>
+                  </div>
+                </div>
+
+                <div className="relative mt-6 h-[150px] flex items-end gap-2 overflow-hidden">
+                  {current.analytics.map(
+                    (h, i) => (
+                      <motion.div
+                        key={i}
+                        animate={{
+                          height: [
+                            `${h}%`,
+                            `${h + 15}%`,
+                            `${h}%`,
+                          ],
+                        }}
+                        transition={{
+                          repeat: Infinity,
+                          duration:
+                            1.5 + i * 0.15,
+                        }}
+                        className="
+                        flex-1
+
+                        rounded-t-full
+
+                        bg-white
+                      "
+                      />
+                    )
+                  )}
+                </div>
+              </div>
             </div>
           </motion.div>
-        </motion.div>
-
-        {/* RIGHT: desktop orbit visual (lg+) */}
-        <motion.div
-          className="hidden lg:flex items-center justify-center relative"
-          style={{ height: "clamp(380px, 44vw, 520px)" }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.9, delay: 0.2 }}
-        >
-          {/* Soft glow behind orbit */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="rounded-full bg-gradient-to-tr from-cyan-500/20 to-purple-500/20"
-              style={{ width: "clamp(280px,36vw,440px)", height: "clamp(280px,36vw,440px)", filter: "blur(80px)" }} />
-          </div>
-
-          {/* Floating pills on desktop right side (z above glow) */}
-          <div className="pointer-events-none absolute inset-0">
-            {[
-              { Icon: LayoutGrid, top: "8%", left: "4%", size: 52, tw: "bg-blue-500/15   border-blue-400/25   text-blue-400" },
-              { Icon: Layers, top: "46%", left: "2%", size: 44, tw: "bg-green-500/15  border-green-400/25  text-green-400" },
-              { Icon: Sparkles, top: "78%", left: "6%", size: 48, tw: "bg-violet-500/15 border-violet-400/25 text-violet-400" },
-              { Icon: ShieldCheck, top: "14%", left: "58%", size: 40, tw: "bg-red-500/15    border-red-400/20    text-red-400" },
-              { Icon: Box, top: "70%", left: "52%", size: 42, tw: "bg-teal-500/15   border-teal-400/22   text-teal-400" },
-            ].map((o, i) => {
-              const reduce2 = false;
-              const Icon = o.Icon;
-              return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.4 }}
-                  animate={{
-                    opacity: 0.9, scale: 1,
-                    y: [0, -14, 7, 0], rotate: [0, 4, -4, 0],
-                    transition: { duration: 5.2 + i * 0.7, repeat: Infinity, ease: "easeInOut", delay: i * 0.45 },
-                  }}
-                  style={{ top: o.top, left: o.left, width: o.size, height: o.size }}
-                  className={`absolute rounded-2xl border backdrop-blur-lg grid place-items-center ${o.tw}`}
-                >
-                  <Icon style={{ width: o.size * 0.44, height: o.size * 0.44 }} />
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Orbit ring */}
-          <div className="relative z-10">
-            <OrbitRing
-              ringSize={300}
-              orbitRadius={150}
-              iconCls="w-10 h-10 xl:w-12 xl:h-12"
-            />
-          </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

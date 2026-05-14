@@ -80,7 +80,7 @@ export default function HowWeWork() {
     <section
       ref={sectionRef}
       className="
-        relative bg-[#020617] text-white
+        relative bg-gradient-to-b from-[#1e3a8a] to-[#020617] text-white
         py-14 sm:py-20 md:py-24
         px-4 sm:px-6 md:px-12 lg:px-16
         overflow-hidden

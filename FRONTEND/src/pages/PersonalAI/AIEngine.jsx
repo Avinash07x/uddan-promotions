@@ -85,30 +85,52 @@ export default function AIEngine() {
 
     const timeout = setTimeout(() => {
       if (lineIndex < terminalLines.length) {
+
         if (charIndex < terminalLines[lineIndex].length) {
+
           setCurrentLine(
-            (prev) + terminalLines[lineIndex][charIndex]
+            (prev) =>
+              prev + terminalLines[lineIndex][charIndex]
           );
-          setCharIndex(charIndex + 1);
+
+          setCharIndex((prev) => prev + 1);
+
         } else {
-          setLines((prev) => [...prev, currentLine]);
+
+          setLines((prev) => [
+            ...prev,
+            currentLine,
+          ]);
+
           setCurrentLine("");
           setCharIndex(0);
-          setLineIndex(lineIndex + 1);
+
+          setLineIndex((prev) => prev + 1);
         }
+
       } else {
+
         // restart loop after pause
         setTimeout(() => {
+
           setLines([]);
+          setCurrentLine("");
+
           setLineIndex(0);
           setCharIndex(0);
+
         }, 1500);
       }
     }, typingSpeed);
 
     return () => clearTimeout(timeout);
-  }, [charIndex, lineIndex, currentLine]);
 
+  }, [
+    charIndex,
+    lineIndex,
+    currentLine,
+    terminalLines,
+  ]);
   return (
     <section
       ref={sectionRef}

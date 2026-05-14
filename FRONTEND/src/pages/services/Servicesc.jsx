@@ -123,7 +123,7 @@ export default function Servicesc() {
 
       <section
         ref={sectionRef}
-        className="relative bg-[#020617] text-white overflow-hidden"
+        className="relative bg-gradient-to-b from-[#020617] to-[#1e3a8a] text-white overflow-hidden"
       >
         {/* PIN AREA */}
         <div className="h-screen flex items-center">

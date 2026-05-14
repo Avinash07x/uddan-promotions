@@ -27,7 +27,7 @@ const features = [
 
 export default function WhyChoose() {
   return (
-    <section className="bg-[#020617] text-white pt-8 py-28 px-6 md:px-16 relative overflow-hidden">
+    <section className="bg-gradient-to-b from-[#1e3a8a] to-[#020617] text-white pt-8 py-28 px-6 md:px-16 relative overflow-hidden">
       
       {/* Glow */}
       <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-purple-500/20 blur-3xl rounded-full" />

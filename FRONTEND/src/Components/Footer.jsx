@@ -82,7 +82,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className="border-t border-white/10 bg-[#070d1a] relative overflow-hidden">
+    <footer className="border-t border-white/10 bg-gradient-to-b from-[#020617] to-[#1e3a8a]  relative overflow-hidden">
       {/* GLOW EFFECTS */}
 
       <div className="absolute -top-40 -left-40 w-[400px] h-[400px] bg-cyan-500/10 blur-[120px]" />

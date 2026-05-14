@@ -36,7 +36,7 @@ export default function Stats() {
   return (
     <section
       ref={ref}
-      className="relative flex items-center justify-center bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#020617] py-16 overflow-hidden"
+      className="relative flex items-center justify-center bg-gradient-to-b from-[#1e3a8a] to-[#020617] py-16 overflow-hidden"
     >
       {/* Glow */}
       <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-blue-500/20 blur-3xl rounded-full" />

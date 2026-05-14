@@ -152,7 +152,7 @@ export default function ContactForm() {
   return (
     <section
       id="contact-form"
-      className="bg-[#0B1220] text-white py-20 px-6 md:px-16"
+      className="bg-gradient-to-b from-[#1e3a8a] to-[#020617] text-white py-20 px-6 md:px-16"
     >
       <div className="max-w-7xl mx-auto">
 
